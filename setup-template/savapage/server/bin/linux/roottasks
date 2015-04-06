@@ -1,0 +1,232 @@
+#!/bin/sh
+#
+# This file is part of the SavaPage project <http://savapage.org>.
+# Copyright (c) 2011-2015 Datraverse B.V.
+# Author: Rijk Ravestein.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# For more information, please contact Datraverse B.V. at this
+# address: info@datraverse.com
+#
+
+. `dirname $0`/.common.inc.sh
+
+if [ -z "${APP_NAME}" ]; then
+	echo "Error importing common file." 1>&2
+	exit 1
+fi
+
+userid=`id | sed "s/^uid=\([0-9][0-9]*\).*$/\1/"`
+if test "${userid}" -ne 0
+then
+	echo "Error: You must be root to run this program" 1>&2
+	exit 1
+fi
+
+cd "${SERVER_HOME}"
+
+############################################################################
+# Root-level installation tasks for App Server install
+############################################################################
+do_install() {
+    #
+    # Set permissions on binaries as required
+    #
+    echo "Setting savapage-pam as setuid root..."
+
+    chown root:root bin/linux-${ARCH}/savapage-pam
+    chmod 4511 bin/linux-${ARCH}/savapage-pam
+
+    echo "Configuring PAM..."
+    if [ -n "${PAM_SERVERNAME}" -a -f /etc/pam.d/passwd ]; then
+        # 
+        # PAM seems to be quite distribution specific so we'll
+        # take the approach of using passwd as a template. This
+        # should contain the basic stuff we need for password
+        # authentication.
+        #
+        cp /etc/pam.d/passwd "/etc/pam.d/${PAM_SERVERNAME}" 2>/dev/null
+    fi
+    
+    #
+    # Link in the rc style start scripts
+    #
+    hasinitd=
+    isdebian=
+    if [ -d "/etc/init.d" -a ! -e "/etc/init.d/${APP_NAME_SHORT}" ]; then
+        echo "Installing SysV style boot scripts..."
+        hasinitd=1
+        #
+        # Is this os a Debian offspring?
+        #
+        if [ ! -z `which dpkg` ]; then
+            isdebian=y
+        fi        
+    fi
+
+    #
+    # Make sure we always overwrite our symlink just in case the user switches
+    # architecture.
+    #
+    if [ -d "/etc/init.d" ]; then
+        cd /etc/init.d
+        ln -sf "${SERVER_HOME}/bin/linux-${ARCH}/app-server" "${APP_NAME_SHORT}"
+    fi
+
+    #
+    # Activate init scripts at runlevels in /etc/rc*.d location if found
+    #
+    if [ ! -z "${hasinitd}" -a -d "/etc/rc5.d" ]; then
+    
+        if [ ! -z "${isdebian}" ]; then
+            update-rc.d "${APP_NAME_SHORT}" defaults
+        else
+            # The part below does NOT work in Debian like systems.
+            # When booted the service does NOT start, even when...
+            # /etc/init.d/savapage start  (works OK)
+            # /etc/rc2.d/savapage start   (works OK)
+        
+            # Start in runlevel 3
+            if [ -d "/etc/rc3.d" ]; then
+                cd /etc/rc3.d
+                ln -s "../init.d/${APP_NAME_SHORT}" "S99${APP_NAME_SHORT}"
+            fi
+
+            # Start in runlevel 5
+            if [ -d "/etc/rc5.d" ]; then
+                cd /etc/rc5.d
+                ln -s "../init.d/${APP_NAME_SHORT}" "S99${APP_NAME_SHORT}"
+            fi
+
+            # Start in runlevel 2
+            if [ -d "/etc/rc2.d" ]; then
+                cd /etc/rc2.d
+                ln -s "../init.d/${APP_NAME_SHORT}" "S99${APP_NAME_SHORT}"
+            fi
+
+            # Kill in runlevel 0
+            if [ -d "/etc/rc0.d" ]; then
+                cd /etc/rc0.d
+                ln -s "../init.d/${APP_NAME_SHORT}" "K89${APP_NAME_SHORT}"
+            fi
+
+            # Kill in runlevel 1
+            if [ -d "/etc/rc1.d" ]; then
+                cd /etc/rc1.d
+                ln -s "../init.d/${APP_NAME_SHORT}" "K89${APP_NAME_SHORT}"
+            fi
+
+            # Kill in runlevel 6
+            if [ -d "/etc/rc6.d" ]; then
+                cd /etc/rc6.d
+                ln -s "../init.d/${APP_NAME_SHORT}" "K89${APP_NAME_SHORT}"
+            fi
+        fi
+    fi
+
+    #
+    # SuSE's rc*.d dir's are located under /etc/init.d. Activate here
+    # if found.
+    #
+    if [ ! -z "${hasinitd}" -a -d "/etc/init.d/rc5.d" ]; then
+        # Start in runlevel 3
+        if [ -d "/etc/init.d/rc3.d" ]; then
+            cd /etc/init.d/rc3.d
+            ln -s "../${APP_NAME_SHORT}" "S99${APP_NAME_SHORT}"
+        fi
+
+        # Start in runlevel 5
+        if [ -d "/etc/init.d/rc5.d" ]; then
+            cd /etc/init.d/rc5.d
+            ln -s "../${APP_NAME_SHORT}" "S99${APP_NAME_SHORT}"
+        fi
+
+        # Start in runlevel 2
+        if [ -d "/etc/init.d/rc2.d" ]; then
+            cd /etc/init.d/rc2.d
+            ln -s "../${APP_NAME_SHORT}" "S99${APP_NAME_SHORT}"
+        fi
+
+        # Kill in runlevel 0
+        if [ -d "/etc/init.d/rc0.d" ]; then
+            cd /etc/init.d/rc0.d
+            ln -s "../${APP_NAME_SHORT}" "K89${APP_NAME_SHORT}"
+        fi
+
+        # Kill in runlevel 1
+        if [ -d "/etc/init.d/rc1.d" ]; then
+            cd /etc/init.d/rc1.d
+            ln -s "../${APP_NAME_SHORT}" "K89${APP_NAME_SHORT}"
+        fi
+
+        # Kill in runlevel 6
+        if [ -d "/etc/init.d/rc6.d" ]; then
+            cd /etc/init.d/rc6.d
+            ln -s "../${APP_NAME_SHORT}" "K89${APP_NAME_SHORT}"
+        fi
+    fi
+}
+
+############################################################################
+# Uninstall our init scripts
+############################################################################
+do_uninstall() {
+
+	echo "Removing SysV style boot scripts..."
+                
+    # Remove init/rc scripts from all possible locations
+    RC_PREFIX="${APP_NAME_SHORT}"
+
+    # Stop if running
+    if [ -e "/etc/init.d/${RC_PREFIX}" ]; then
+        /etc/init.d/${RC_PREFIX} stop
+    fi
+
+    #
+    # Is this os a Debian offspring?
+    #
+    isdebian=
+    if [ ! -z `which dpkg` ]; then
+        isdebian=y
+    fi        
+
+    if [ ! -z "${isdebian}" ]; then
+        update-rc.d -f "${APP_NAME_SHORT}" remove
+        rm -f /etc/init.d/"${APP_NAME_SHORT}"
+    else
+        rm -f /etc/init.d/${RC_PREFIX} > /dev/null 2>&1
+        rm -f /etc/rc*.d/*${RC_PREFIX} > /dev/null 2>&1
+        rm -f /etc/init.d/rc*.d/*${RC_PREFIX} > /dev/null 2>&1
+    fi
+
+}
+
+############################################################################
+# Main
+############################################################################
+
+case "${1}" in
+    uninstall)
+        do_uninstall
+        ;;
+    install)
+        do_install
+        ;;
+    *)
+        # Assume install
+        do_install
+        ;;
+esac
+

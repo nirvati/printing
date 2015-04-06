@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# (c) Copyright 2013-2014 Datraverse B.V.
+#
+
+NFC_SERVICE=savapage-nfc
+
+sudo service ${NFC_SERVICE} stop
+sudo update-rc.d ${NFC_SERVICE} remove
+sudo rm /etc/init.d/${NFC_SERVICE}

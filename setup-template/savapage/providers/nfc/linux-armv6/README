@@ -1,0 +1,177 @@
+_______________________________________________________________________________
+
+                     SavaPage NFC Service on Raspberry Pi
+                    
+                    
+                               _______________      
+
+                                Prerequisites
+
+
+(1) Use Raspbian as OS.
+
+
+(2) Make sure the Pi has a static IP address.
+
+    A how-to to for assigning a static address can be found at:
+    
+    http://www.penguintutor.com/news/raspberrypi/linux-static
+        
+
+(3) Install dependent packages.
+    
+    $ sudo apt-get install libccid libacsccid1 pcscd
+
+    - - - - - - - - - - - - - - - -
+    According to the README of the libacsccid1 package the following readers 
+    are supported: 
+          
+    ACR38U-CCID
+    ACR3801
+    ACR83U
+    ACR85 PINPad Reader
+    ACR88U
+    ACR100-CCID
+    ACR100 ICC Reader
+    ACR101 ICC Reader
+    ACR102 ICC Reader
+    ACR122U
+    ACR122T
+    ACR122U-SAM
+    ACR1222 Dual Reader
+    ACR1222 1SAM Dual Reader
+    ACR1222L 3S CL Reader
+    ACR125 nPA plus
+    ACR128U
+    ACR1281 CL Reader (qPBOC)
+    ACR1281 Dual Reader (qPBOC)
+    ACR1281 PICC Reader (BSI)
+    ACR1281 Dual Reader (BSI)
+    APG8201
+
+    - - - - - - - - - - - - - - - -
+    Readers tested:
+    
+    ACS ACR122U-A2
+    ACS ACR122U-A9
+            
+
+(4) Disable pn533 and nfc drivers in Raspbian kernel
+
+    When an ACS Reader (ACR122U) plugs in, the Raspbian kernel(>3.5) will
+    automatically load the pn533 driver. However, with the pn533 driver, 
+    pcscd will report a "Can't claim interface" error. Therefore the pn533 
+    and nfc driver should be disabled in the kernel.
+
+    Edit the /etc/modprobe.d/blacklist.conf file like this:
+     
+    $ sudo vi /etc/modprobe.d/blacklist.conf
+    
+    .. and make sure that the file contains the following 2 lines:
+    
+    install nfc /bin/false
+    install pn533 /bin/false
+
+
+(5) Reboot the Raspberry Pi
+
+    $ sudo reboot
+    
+
+(6) Connect ACS USB NFC Reader and the speakers. 
+
+    Reader: ACS ACR122U
+    
+    
+                               _______________
+
+                                   Install
+
+
+(1) Create directory for the SavaPage files.
+     
+    $ sudo mkdir /usr/local/bin/savapage
+        
+        
+(2) Copy files from SavaPage Server.
+
+    $ sudo scp you@server:/home/savapage/providers/nfc/linux-armv6/* /usr/local/bin/savapage/
+
+
+(3) Create savapage-nfc-reader.ini from the template and edit the settings.
+
+    $ cd /usr/local/bin/savapage
+    $ sudo cp savapage-nfc-reader.ini.template savapage-nfc-reader.ini
+    $ sudo vi savapage-nfc-reader.ini
+
+    Change the IP address and check the port of the SavaPage Server. You can 
+    change the default port of the network reader service as well.
+
+    NOTE: Check that your firewall is open for the IP address and ports set 
+          in the .ini file.
+          
+    
+(4) Install the service.
+         
+    $ sudo /usr/local/bin/savapage/install
+
+
+(5) Swipe a card.
+
+    A sound must be heard through the speaker(s).             
+    
+    
+(6) Reboot.
+ 
+    $ sudo reboot        
+
+        
+(7) Check if the service is started by swiping a card.
+
+    A sound must be heard through the speaker(s).
+    
+
+                              _________________
+
+                               Troubleshooting
+
+
+(1) Inspect syslog entries.
+                                
+    $ cat /var/log/syslog | grep savapage-nfc-reader
+
+
+(2) Use telnet from the SavaPage server to check if the Network Card Reader can 
+    be reached. Telnet should echo 'savapage-nfc-reader' and close immediately. 
+    
+    As an example for Raspberry Pi 192.168.1.200:7772 ... 
+    
+    $ telnet 192.168.1.200 7772
+    
+    Trying 192.168.1.200...
+    Connected to 192.168.1.200.
+    Escape character is '^]'.
+    savapage-nfc-readerConnection closed by foreign host.
+
+
+(3) Execute pcsc_scan to scan PC/SC readers connected to the host
+
+    pcsc_scan is part of pcsc-tools package
+
+    $ sudo apt-get install pcsc-tools
+
+
+                               _______________
+
+                                  Uninstall
+
+
+(1) Uninstall the service.
+         
+    $ sudo /usr/local/bin/savapage/uninstall
+
+
+(2) Remove SavaPage directory.
+
+    $ sudo rm -rf /usr/local/bin/savapage
+

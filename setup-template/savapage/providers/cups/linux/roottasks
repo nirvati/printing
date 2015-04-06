@@ -1,0 +1,192 @@
+#!/bin/sh
+#
+# This file is part of the SavaPage project <http://savapage.org>.
+# Copyright (c) 2011-2015 Datraverse B.V.
+# Author: Rijk Ravestein.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# For more information, please contact Datraverse B.V. at this
+# address: info@datraverse.com
+#
+
+#-------------------------------------------------------------------------
+# A script to perform install and uninstall tasks requiring root access.  
+#-------------------------------------------------------------------------
+
+. "`dirname \"$0\"`/.common.inc.sh"
+
+userid=`id | sed "s/^uid=\([0-9][0-9]*\).*$/\1/"`
+if test "${userid}" -ne 0
+then
+	echo "Error: You must be root to run this program" 1>&2
+	exit 1
+fi
+
+if [ -z "${APP_NAME}" ]; then
+    echo "Error: Unable to source .common.inc.sh file. Does this file exist?" 1>&2
+    exit 2
+fi
+
+cd "${SCRIPT_HOME}"
+
+###########################################################################
+# Common Functions
+###########################################################################
+
+find_cupsd() {
+
+    if which cupsd >/dev/null 2>&1; then
+        which cupsd
+        exit 0
+    fi
+
+    #
+    # ... search in common locations
+    #
+    locs="/usr/sbin/cupsd
+            /usr/bin/cupsd
+            /opt/cup/bin/cupsd
+            /usr/local/sbin/cupsd
+            /usr/local/bin/cupsd
+            /usr/local/cups/bin/cupsd"
+
+    for d in ${locs}; do
+        if test -f "${d}"; then
+            echo "${d}"
+            exit 0
+        fi
+    done
+    exit 1
+}
+
+#
+# CUPS does not have a '-v' option so we'll grep strings for a version number
+#
+is_cups_v11() {
+
+    cupsd=`find_cupsd`
+    versionstr=`strings "${cupsd}" | grep "^CUPS/1\.1$"`
+    test ! -z "${versionstr}"
+}
+
+is_cups_v12_plus() {
+
+    cupsd=`find_cupsd`
+    versionstr=`strings "${cupsd}" | grep "^CUPS/1\.[2-9]$"`
+    test ! -z "${versionstr}"
+}
+
+############################################################################
+# Install SavaPage CUPS notifier
+############################################################################
+install_cups() {
+
+    echo "Installing CUPS notifier..."
+
+    #
+    # Copy provider into notifier directory
+    #
+    notifier_locs="/usr/lib/cups/notifier
+            /usr/libexec/cups/notifier
+            /usr/local/lib/cups/notifier 
+            /usr/local/cups/lib/cups/notifier 
+            /opt/cups/lib/cups/notifier
+            /usr/lib64/cups/notifier"
+    for d in ${notifier_locs}; do    
+	    if test -d "${d}"; then
+	
+		    echo "Found CUPS notifier directory at ${d}"
+		    echo "Installing ${APP_NAME} into CUPS notifier directory"
+		
+		    # Copy in notifier
+		    cd "${d}"
+		    cp -f "${SCRIPT_HOME}/${SP_NOTIFIER_NAME}" "${CUPS_NOTIFIER_NAME}"
+		
+		    # Set some default permissions
+		    echo "Setting notifier permissions"
+		    chmod 755 "${CUPS_NOTIFIER_NAME}"
+		    chown root "${CUPS_NOTIFIER_NAME}"
+		
+		    # Set logical defaults depending on CUPS version
+		    if is_cups_v12_plus; then
+		        echo "Found CUPS version 1.2 or higher"
+		        # Explicitly set notifier to run as root
+		        chmod 700 "${CUPS_NOTIFIER_NAME}" 
+		    fi
+		
+		    # Set permissions on the notifier.  We use 'mailto', 'rss' or 'dbus' 
+			# as our reference.  This ensures that our permissions are setup
+		    # in line with the target distribution (e.g. using setuid?)
+		    refnotifier=
+		    if [ -x "mailto" ]; then
+		        refnotifier=mailto
+		    fi
+		    if [ -z "${refnotifier}" -a -x "rss" ]; then
+		        refnotifier=rss
+		    fi
+		    if [ -z "${refnotifier}" -a -x "dbus" ]; then
+		        refnotifier=dbus
+		    fi
+		    if [ ! -z "{refnotifier}" ]; then
+		        chown --reference=${refnotifier} "${CUPS_NOTIFIER_NAME}" 2>/dev/null
+		        chmod --reference=${refnotifier} "${CUPS_NOTIFIER_NAME}" 2>/dev/null
+		    fi
+		    
+			echo "Starting the ${APP_NAME}..."
+			"${SP_HOME}/server/bin/linux-${ARCH}/savapage-client" --cups-subscription-start > /dev/null 2>&1
+	    fi
+	done
+}
+
+############################################################################
+# Uninstall SavaPage CUPS notifier
+############################################################################
+uninstall_cups() {
+    
+    # Remove notifier from all possible target locations
+    locs="/usr/lib/cups/notifier
+            /usr/libexec/cups/notifier
+            /usr/local/lib/cups/notifier 
+            /usr/local/cups/lib/cups/notifier 
+            /opt/cups/lib/cups/notifier 
+            /usr/lib64/cups/notifier"
+
+    for d in ${locs}; do
+        if [ -e "${d}/${CUPS_NOTIFIER_NAME}" ]; then
+            rm -f "${d}/${CUPS_NOTIFIER_NAME}" > /dev/null 2>&1
+        fi
+    done
+    
+}
+
+############################################################################
+# Main
+############################################################################
+
+echo "Stopping the ${APP_NAME}..."
+"${SP_HOME}/server/bin/linux-${ARCH}/savapage-client" --cups-subscription-stop > /dev/null 2>&1
+
+case "${1}" in
+    uninstall)
+        uninstall_cups
+        ;;
+    install)
+        install_cups
+        ;;
+    *)
+        # Assume install
+        install_cups
+        ;;
+esac

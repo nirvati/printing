@@ -1,0 +1,122 @@
+#
+# This file is part of the SavaPage project <http://savapage.org>.
+# Copyright (c) 2011-2015 Datraverse B.V.
+# Author: Rijk Ravestein.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# For more information, please contact Datraverse B.V. at this
+# address: info@datraverse.com
+#
+
+#-------------------------------------------------------------------
+# Common settings for package scripts.
+#-------------------------------------------------------------------
+
+#set -x
+
+#--------------------------------------------------------------------
+# Get the absolute path of this (symlinked) file
+#--------------------------------------------------------------------
+SP_SELF_PATH=$(cd -P -- "$(dirname -- "$0")" && pwd -P) && SP_SELF_PATH=$SP_SELF_PATH/$(basename -- "$0")
+# resolve symlinks
+while [ -h $SP_SELF_PATH ]; do
+    # 1) cd to directory of the symlink
+    # 2) cd to the directory of where the symlink points
+    # 3) get the pwd
+    # 4) append the basename
+    SP_DIR=$(dirname -- "$SP_SELF_PATH")
+    SP_SYM=$(readlink $SP_SELF_PATH)
+    SP_SELF_PATH=$(cd $SP_DIR && cd $(dirname -- "$SP_SYM") && pwd)/$(basename -- "$SP_SYM")
+done
+
+_CURRENTDIR=`dirname ${SP_SELF_PATH}`
+
+#=========================================================================
+# Location of SavaPage repositories
+#=========================================================================
+readonly _REPO_HOME=${_CURRENTDIR}/..
+
+#
+readonly _REPO_HOME_PUB=${_REPO_HOME}
+
+readonly _REPO_HOME_COMMON=${_REPO_HOME_PUB}/savapage-common
+readonly _REPO_HOME_SERVER=${_REPO_HOME_PUB}/savapage-server
+readonly _REPO_HOME_CLIENT=${_REPO_HOME_PUB}/savapage-client
+readonly _REPO_HOME_CORE=${_REPO_HOME_PUB}/savapage-core
+readonly _REPO_HOME_PPD=${_REPO_HOME_PUB}/savapage-ppd
+readonly _REPO_HOME_UTIL=${_REPO_HOME_PUB}/savapage-util
+
+#=========================================================================
+# NAME + VERSION
+#=========================================================================
+readonly APP_NAME=savapage
+readonly APP_VERSION=`${_REPO_HOME_COMMON}/VERSION.sh`
+
+#
+readonly _SAVED_BUILD_TARGETS_HOME=${_REPO_HOME}/../saved-build-targets
+
+#=========================================================================
+# Location of third party packages
+#=========================================================================
+readonly _THIRD_PARTY_HOME=${_REPO_HOME}/../thirdparty-savapage
+
+#=========================================================================
+# CONSTANTS
+#=========================================================================
+readonly _SETUP_TEMPLATE_HOME=${_CURRENTDIR}/setup-template/savapage
+
+readonly DIST_PARENT=${_CURRENTDIR}/target
+readonly DIST_DATETIME="$(date)"
+
+readonly DIST_NAME_INTERNAL="${APP_NAME}-${APP_VERSION}-internal"
+readonly DIST_NAME_PATCH=$APP_NAME-$APP_VERSION-patch
+
+# new _notation
+readonly _DIST_NAME_DERBY=$APP_NAME-$APP_VERSION-derby
+readonly _DIST_NAME_POSTGRES=$APP_NAME-$APP_VERSION-postgres
+
+readonly _DIST_HOME_INTERNAL=${DIST_PARENT}/${DIST_NAME_INTERNAL}
+readonly _DIST_HOME_DERBY=${DIST_PARENT}/${_DIST_NAME_DERBY}
+readonly _DIST_HOME_POSTGRES=${DIST_PARENT}/${_DIST_NAME_POSTGRES}
+
+# This is where the initialized Derby database is created
+readonly _DERBY_DBNAME=${_DIST_HOME_DERBY}/data/internal/Derby
+
+# home of the prepare step
+readonly _PREP_HOME=$DIST_PARENT/~prepare
+
+readonly _PREP_WEB_LIB_HOME=${_PREP_HOME}/lib-web
+
+readonly _SAVAPAGE_COMMON_JAR=savapage-common-${APP_VERSION}.jar
+readonly _SAVAPAGE_CORE_JAR=savapage-core-${APP_VERSION}.jar
+readonly _SAVAPAGE_SERVER_WAR=savapage-server-${APP_VERSION}.war
+
+readonly _SAVAPAGE_CLIENT_JAR=savapage-client-${APP_VERSION}.jar
+
+readonly _SAVAPAGE_AD_HOC_SERVER_JAR=savapage-server-${APP_VERSION}.jar
+
+# Tools
+readonly YUICOMPRESSOR_JAR=${_THIRD_PARTY_HOME}/java/yuicompressor/2.4.7/build/yuicompressor-2.4.7.jar
+
+# packaged fonts
+readonly _FONTS_PACKAGE_VERSION=0.9.6
+readonly _FONTS_PACKAGE_HOME=${_THIRD_PARTY_HOME}/fonts/savapage/${_FONTS_PACKAGE_VERSION}
+
+#
+#_WIN_PPD_DRIVER_DLL_VERSION=${APP_VERSION}
+readonly _WIN_PPD_DRIVER_DLL_VERSION=0.9.6
+readonly _WIN_PPD_DRIVER_DLL_HOME=${_SAVED_BUILD_TARGETS_HOME}/savapage-win7-ppd-${_WIN_PPD_DRIVER_DLL_VERSION}
+
+# end-of-file

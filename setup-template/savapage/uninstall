@@ -1,0 +1,118 @@
+#!/bin/sh
+#
+# This file is part of the SavaPage project <http://savapage.org>.
+# Copyright (c) 2011-2014 Datraverse B.V.
+# Author: Rijk Ravestein.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# For more information, please contact Datraverse B.V. at this
+# address: info@datraverse.com
+#
+
+cd `dirname $0`
+
+userid=`id | sed "s/^uid=\([0-9][0-9]*\).*$/\1/"`
+if test "${userid}" -ne 0
+then
+    echo "Error: You must be root to run this program" 1>&2
+    exit 1
+fi
+
+agreed=
+answered=
+while [ -z "${answered}" ]; do
+        echo
+        echo
+        echo "Would you like to uninstall ?  [yes or no] "
+        read reply leftover
+        case $reply in
+            [yY] | [yY][eE][sS])
+                agreed=1
+                answered=1
+                ;;
+            [nN] | [nN][oO])
+                answered=1
+                read
+                ;;
+        esac
+done
+
+if [ ! -z "${agreed}" ]; then
+
+    echo "Uninstalling..."
+
+    #
+    # Test to make sure we're in the correct directory
+    #
+    if [ ! -d server ]; then
+        echo "Problem! Are you running this script from the install directory?" 1>&2
+        exit 1
+    fi
+
+    #
+    # The server/bin/linux-* directory denotes the install architecture
+    #
+    if [ -x server/bin/linux-x64 ]; then
+        install_arch=x64
+    else
+        install_arch=i686
+    fi
+
+    #
+    # Stop the server if running.
+    #
+    if [ -f "server/bin/linux-${install_arch}/stop-server" ]; then
+        echo "Stopping the server..."
+        server/bin/linux-${install_arch}/stop-server >/dev/null 2>&1 
+        echo 
+    fi
+
+    #
+    # Remove any system level App Server files (e.g. init scripts)
+	#
+    server/bin/linux-${install_arch}/roottasks uninstall
+
+	#
+    # Remove CUPS provider files
+    #
+	if [ -f "providers/cups/linux-${install_arch}/roottasks" ]; then
+    	providers/cups/linux-${install_arch}/roottasks uninstall
+	fi
+	
+    #
+    # Remove files install... Note: we only remove files that we've put in
+    # our top directory.
+    #
+    rm -fr client
+    rm -fr providers
+	rm -fr server
+ 
+	rm -f .install-config.sh
+    rm -f docs
+    rm -f LICENSE.TXT
+    rm -f LICENSE  LICENSE_THIRDPARTIES
+    rm -f README-LINUX.TXT
+    rm -f MUST-RUN-AS-ROOT
+	rm -f THIRDPARTYLICENSEREADME.TXT
+    rm -f uninstall
+    rm -f patch
+
+    echo "Uninstall complete."
+    installdir=`pwd`
+    echo
+    echo "You may now remove the savapage system account and the \"${installdir}\" directory"
+    echo
+
+fi
