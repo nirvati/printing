@@ -69,8 +69,9 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
 
 0. Checkout develop branch of all repositories.
 
-        $ cd ~/savapage
-        $ ./repos/savapage-make/dev-git-all.sh "checkout develop"
+        $ cd ~/savapage/repos/savapage-make
+        $ git checkout develop
+        $ ./dev-git-all.sh "checkout develop"
         
 
 0. Initialize directory structure for drop-in components (optional).
@@ -79,19 +80,19 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
         $ ./repos/savapage-make/dev-init.sh
         
 
-0. Install prerequisite packages for make
+### Install prerequisite packages
 
-    * savapage-nfc-reader
+* savapage-nfc-reader
     
-            $ sudo apt-get install libpcsclite-dev
+        $ sudo apt-get install libpcsclite-dev
         
-    * savapage-cups-notifier
+* savapage-cups-notifier
     
-            $ sudo apt-get install libcups2-dev
+        $ sudo apt-get install libcups2-dev
             
-    * savapage-pam
+* savapage-pam
     
-            $ sudo apt-get install libpam0g-dev
+        $ sudo apt-get install libpam0g-dev
                             
 
 ### Build
