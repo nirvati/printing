@@ -38,18 +38,18 @@ help:
 	@echo "| Please specify one of the targets below.             |"
 	@echo "+------------------------------------------------------+"
 	@echo "| all       : init-base package-i686 package-x64       |"
-	@echo "|                (clean build)                         |"
-	@echo "|                                                      |"
 	@echo "| all-x64   : init-base package-x64                    |"
-	@echo "|                (clean build of x64 only)             |"
+	@echo "| jar-patch : create .tar.gz with *.jar, *.war files   |"
 	@echo "+------------------------------------------------------+"
-	
 
 .PHONY: all
 all: init-base package-i686 package-x64
 
 .PHONY: all-x64
 all-x64: init-base package-x64
+
+.PHONY: jar-patch
+jar-patch: clean-patch mvn-package-patch pkg-prepare package-patch 
 
 # Initializes a clean base for packaging
 .PHONY: init-base
@@ -76,18 +76,28 @@ db: clean mvn-package pkg-internal pkg-database
 clean: cleanc mvn-clean
 	rm -rf $(TRG_HOME)
 
+.PHONY: clean-patch
+clean-patch:
+	@make -C $(REPO_HOME_PUB)/savapage-common clean
+	@make -C $(REPO_HOME_PUB)/savapage-core clean
+	@make -C $(REPO_HOME_PUB)/savapage-client clean
+	@make -C $(REPO_HOME_PUB)/savapage-server clean
+
 #----------------------------------------------------------------------
 # Note the INSTALL of savapage-common and savapage-core, this makes the 
 # pom/jar part of the LOCAL maven repository, so the other maven projects 
 # can resolve this dependency. 
 #----------------------------------------------------------------------
 .PHONY: mvn-package
-mvn-package: 
+mvn-package: mvn-package-patch 
+	@make -C $(REPO_HOME_PUB)/savapage-util repackage
+
+.PHONY: mvn-package-patch
+mvn-package-patch:
 	@make -C $(REPO_HOME_PUB)/savapage-common install
 	@make -C $(REPO_HOME_PUB)/savapage-core install
 	@make -C $(REPO_HOME_PUB)/savapage-client repackage
 	@make -C $(REPO_HOME_PUB)/savapage-server repackage
-	@make -C $(REPO_HOME_PUB)/savapage-util repackage
 
 .PHONY: mvn-clean
 mvn-clean: 
@@ -122,6 +132,10 @@ package-i686:
 package-x64: 
 	./pkg-setup.sh x64
 
+.PHONY: package-patch
+package-patch:
+	./pkg-patch.sh
+
 #----------------------------------------
 # ppd
 #----------------------------------------
@@ -133,7 +147,7 @@ ppd:
 # c binaries
 #----------------------------------------
 $(C_TRG):
-	mkdir $(C_TRG)
+	mkdir -p $(C_TRG)
 
 .PHONY: cbuild
 cbuild: $(C_TRG) binaries savapage-pam savapage-nss savapage-notifier
