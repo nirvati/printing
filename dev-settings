@@ -39,6 +39,7 @@ readonly _REPOS_GIT_PUBLIC="savapage-make
 	savapage-client
     savapage-common
     savapage-core
+    savapage-ext
     savapage-server
 	savapage-cups-notifier
     savapage-nfc-reader

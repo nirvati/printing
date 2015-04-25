@@ -81,12 +81,13 @@ clean-patch:
 	@make -C $(REPO_HOME_PUB)/savapage-common clean
 	@make -C $(REPO_HOME_PUB)/savapage-core clean
 	@make -C $(REPO_HOME_PUB)/savapage-client clean
+	@make -C $(REPO_HOME_PUB)/savapage-ext clean
 	@make -C $(REPO_HOME_PUB)/savapage-server clean
 
 #----------------------------------------------------------------------
-# Note the INSTALL of savapage-common and savapage-core, this makes the 
-# pom/jar part of the LOCAL maven repository, so the other maven projects 
-# can resolve this dependency. 
+# Note the INSTALL of savapage-common, savapage-core and savapage-ext, 
+# this makes the pom/jar part of the LOCAL maven repository, so the
+# other maven projects can resolve this dependency. 
 #----------------------------------------------------------------------
 .PHONY: mvn-package
 mvn-package: mvn-package-patch 
@@ -96,6 +97,7 @@ mvn-package: mvn-package-patch
 mvn-package-patch:
 	@make -C $(REPO_HOME_PUB)/savapage-common install
 	@make -C $(REPO_HOME_PUB)/savapage-core install
+	@make -C $(REPO_HOME_PUB)/savapage-ext install
 	@make -C $(REPO_HOME_PUB)/savapage-client repackage
 	@make -C $(REPO_HOME_PUB)/savapage-server repackage
 

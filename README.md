@@ -43,6 +43,7 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
             savapage-common
             savapage-core
             savapage-cups-notifier
+            savapage-ext
             savapage-server
             savapage-make
             savapage-nfc-reader

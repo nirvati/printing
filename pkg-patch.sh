@@ -76,6 +76,10 @@ cp -p ${_REPO_HOME_CLIENT}/target/${_SAVAPAGE_CLIENT_JAR} ${_PREP_PATCH_LIB_CLIE
 # savapage-core-*.jar
 cp -p ${_PREP_WEB_LIB_HOME}/${_SAVAPAGE_CORE_JAR} ${_PREP_PATCH_LIB_WEB_HOME}
 
+# savapage-ext-*.jar
+cp -p ${_PREP_WEB_LIB_HOME}/${_SAVAPAGE_EXT_JAR} ${_PREP_PATCH_LIB_WEB_HOME}
+
+
 # savapage-server-*.jar
 cp -p ${_PREP_WEB_LIB_HOME}/${_SAVAPAGE_AD_HOC_SERVER_JAR} ${_PREP_PATCH_LIB_WEB_HOME}
 
