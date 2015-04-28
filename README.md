@@ -24,7 +24,11 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
 
 0. Maven 3
 
-        $ sudo apt-get install maven         
+        $ sudo apt-get install maven
+        
+0. GNU project C and C++ compiler
+               
+        $ sudo apt-get install g++
 
 
 ### Getting started
@@ -58,7 +62,7 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
         done
 
     Execute the script:
-    
+    chmod +x 
         $ cd ~/savapage/repos
         $ chmod +x init.sh 
         $ ./init.sh
