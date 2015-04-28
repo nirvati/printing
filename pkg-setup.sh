@@ -77,7 +77,12 @@ readonly SAVAPAGE_INI_FILE=${_REPO_HOME_PPD}/client/win/win7/savapage_oemui.ini
 
 #
 readonly DIST_SERVER_BIN_HOME=${DIST_HOME_APP}/server/bin/linux-${_ARCH}
-readonly SERVER_BIN_BUILD_HOME=${DIST_PARENT}/linux-${_ARCH}
+
+if [ "${_ARCH}" = "x64" ]; then
+    readonly SERVER_BIN_BUILD_HOME=${DIST_PARENT}/linux-${_ARCH}
+else 
+    readonly SERVER_BIN_BUILD_HOME=${_SAVED_BUILD_TARGETS_HOME}/linux-${_ARCH}
+fi
 
 #
 readonly LINUX_ARMV6=${_SAVED_BUILD_TARGETS_HOME}/linux-armv6
@@ -143,6 +148,7 @@ cp -R ${_REPO_HOME_CLIENT}/target/appassembler/app ${DIST_HOME_APP}/client
 # Copy C binaries
 #----------------------------------------
 echo "Including C binaries ..."
+
 cp ${SERVER_BIN_BUILD_HOME}/savapage-notifier ${DIST_PROVIDER_CUPS}
 cp ${SERVER_BIN_BUILD_HOME}/savapage-nss ${DIST_SERVER_BIN_HOME}
 cp ${SERVER_BIN_BUILD_HOME}/savapage-pam ${DIST_SERVER_BIN_HOME}

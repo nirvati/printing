@@ -70,7 +70,7 @@ readonly _SAVED_BUILD_TARGETS_HOME=${_REPO_HOME}/../saved-build-targets
 #=========================================================================
 # Location of third party packages
 #=========================================================================
-readonly _THIRD_PARTY_HOME=${_REPO_HOME}/../thirdparty-savapage
+readonly _THIRD_PARTY_HOME=${_REPO_HOME}/../../thirdparty-savapage
 
 #=========================================================================
 # CONSTANTS
