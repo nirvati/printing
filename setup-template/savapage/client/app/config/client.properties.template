@@ -1,0 +1,54 @@
+#
+# This file is part of the SavaPage project <http://savapage.org>.
+# Copyright (c) 2011-2015 Datraverse B.V.
+# Author: Rijk Ravestein.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# For more information, please contact Datraverse B.V. at this
+# address: info@datraverse.com
+#
+
+#=======================================================================
+# SavaPage Client Properties
+#
+# IMPORTANT:  Do NOT change the permissions set on this file.
+#=======================================================================
+
+server-host=
+
+#=======================================================================
+# The settings below are optional, and are enabled by removing the '#' 
+# at the start of the option line. Settings can also be specified as
+# command line option: this option will override the corresponding 
+# setting specified in this file.
+#=======================================================================
+
+#-----------------------------------------------------------------------
+# The Server SSL port (Default: 8632) 
+#-----------------------------------------------------------------------
+#server-port=8632
+
+#-----------------------------------------------------------------------
+# Run as another user than the one of the current session.  
+#-----------------------------------------------------------------------
+#user=<username>
+
+#-----------------------------------------------------------------------
+# Hide the "Exit" menu item (optional). Default: false.
+#-----------------------------------------------------------------------
+#hide-exit=true
+
+#=======================================================================
+# end-of-file

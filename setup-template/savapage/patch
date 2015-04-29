@@ -1,0 +1,159 @@
+#!/bin/sh
+#
+# This file is part of the SavaPage project <http://savapage.org>.
+# Copyright (c) 2011-2015 Datraverse B.V.
+# Author: Rijk Ravestein.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# For more information, please contact Datraverse B.V. at this
+# address: info@datraverse.com
+#
+
+#
+# Script to install a savapage-x.x.x-patch.tar.gz file
+#
+
+cd `dirname $0`
+
+# Verify that /dev/null is writable.
+if [ ! -w /dev/null ] ; then
+    echo "Error: /dev/null is not writable. Ensure /dev/null is writable by all users." >&2
+    exit 1
+fi
+
+. ./.install-config.sh
+
+APP_USER=${UNIX_USERNAME}
+if [ -z "${APP_USER}" ]; then
+    echo "Error: Invalid config." >&2
+    exit 1
+fi
+
+#
+# Common functions
+#
+if [ -n"X`echo -n`" = "X-n" ]; then
+    echo_n() { echo ${1+"$@"}"\c"; }
+else
+    echo_n() { echo -n ${1+"$@"}; }
+fi
+
+#
+# Check that we're running as the expected user.
+#
+userid=`id | grep "${APP_USER}"`
+if [ -z "${userid}" ]; then
+    echo
+    echo "Error: Please run this patch installer as user \"${APP_USER}\"." >&2
+    echo "The ${APP_USER}'s home directory sets the install location." >&2
+    echo "See the installation instructions in the manual for details." >&2
+    echo >&2
+    echo "Patch install aborted!" >&2
+    exit 1
+fi
+
+#
+# Get patch file from first command-line parameter
+#
+APP_PATCH="$1"
+
+if [ -z "${APP_PATCH}" ]; then
+    echo "+--------------------------------------------------------------------"
+    echo "| This script installs a patch on the current installation."
+    echo "| Please specify the patch file as command-line parameter."
+    echo "+--------------------------------------------------------------------"
+    exit 1
+fi
+
+echo
+echo "+--------------------------------------------------------------------"
+echo "|"
+echo "| Installing [${APP_PATCH}]"
+echo "|"
+echo "| WARNING:"
+echo "|"
+echo "| * Install this patch as instructed by SavaPage Support only."
+echo "| * Installation is at your own risk."
+echo "| * Make a copy of the installation directory before proceeding."
+echo "|"
+echo "+--------------------------------------------------------------------"
+
+tar tf ${APP_PATCH}
+
+status=$?
+
+if [ ${status} -ne 0 ]; then
+    echo "[${APP_PATCH}] is not a valid patch file."
+    exit 1;
+fi
+
+agreed=
+while [ -z "${agreed}" ]; do
+    echo "+--------------------------------------------------------------------"
+    echo "Do you wish to proceed with this patch install? [yes or no] "
+    read reply leftover
+    case $reply in
+        [yY] | [yY][eE][sS])
+            agreed=1
+            ;;
+        [nN] | [nN][oO])
+            echo "Patch install aborted!"
+            exit 1
+            ;;
+    esac
+done
+
+#
+# Get the install architecture from the JRE architecture 
+# The server/bin/linux-* directory denotes the install architecture
+#
+if [ -x server/bin/linux-x64 ]; then
+    install_arch=x64
+else
+    install_arch=i686
+fi
+
+#
+# Stop the application server
+#
+server/bin/linux-${install_arch}/stop-server
+
+echo "Applying the patch..."
+
+tar zxvf ${APP_PATCH}
+
+#
+# Start the application server
+#
+server/bin/linux-${install_arch}/start-server
+
+#
+# Wait for server startup completed
+#
+echo_n "Please wait..."
+for i in 0 1 2 3 4 5 6 7 8 9; do
+    sleep 2
+    if [ ! -f "server/logs/server.started.txt" ]; then
+        echo_n "."
+    else
+        break
+    fi
+done
+
+echo
+echo "Patch install completed!"
+echo
+
+# end-of-script

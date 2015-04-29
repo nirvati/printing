@@ -1,0 +1,88 @@
+#!/bin/sh
+#
+# This file is part of the SavaPage project <http://savapage.org>.
+# Copyright (c) 2011-2015 Datraverse B.V.
+# Author: Rijk Ravestein.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# For more information, please contact Datraverse B.V. at this
+# address: info@datraverse.com
+#
+
+#-----------------------------------------------------------------------------
+# A script to set permissions on special files
+#-----------------------------------------------------------------------------
+
+. `dirname $0`/.common.inc.sh
+
+#
+# Change to the server home
+#
+cd "${SERVER_HOME}"
+
+#
+# Set default perms on all files
+#
+find ./data/internal -exec chown "${HOST_USER}" {} \; > /dev/null 2>&1
+find . -type d -exec chmod 755 {} 2>/dev/null \; 
+find . -type f -exec chmod 644 {} 2>/dev/null \;
+
+#
+# Ensure private files is readable by self
+#
+chmod 600 admin.properties
+chmod 600 server.properties
+chmod 600 jmxremote.password
+chmod 600 jmxremote.ks
+
+chmod 600 data/encryption.properties
+chmod 600 data/default-ssl-keystore
+chmod 600 data/default-ssl-keystore.pw
+
+if [ -e "gcp.properties" ]; then
+	chmod 600 gcp.properties
+fi
+
+#
+# Ensure database data is only readable by self (contains sensitive data)
+#
+chmod 700 data/internal
+chmod 700 data/conf
+chmod 700 data/backups
+
+#
+# The bin directory contains setuid binaries so for security reasons we'll
+# only allow us to access this.
+#
+chmod 700 bin
+
+#
+# The tmp directory might contain sensitive content so for security reasons 
+# we'll only allow us to access this.
+#
+chmod 700 tmp
+
+#
+# Ensure execute is set on all binaries in bin
+#	Note: we don't do savapage-pam as this is setuid root this would fail
+#
+(
+	find bin/linux-${ARCH} -maxdepth 1 -type f -print \
+		| grep -v "savapage-pam" \
+		| grep -v ".common.inc.sh" 
+) | while read f
+do
+	chmod 755 "${f}"
+done

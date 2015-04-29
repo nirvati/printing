@@ -1,0 +1,94 @@
+#
+# This file is part of the SavaPage project <http://savapage.org>.
+# Copyright (c) 2011-2015 Datraverse B.V.
+# Author: Rijk Ravestein.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# For more information, please contact Datraverse B.V. at this
+# address: info@datraverse.com
+#
+
+#=======================================================================
+# SavaPage Logging Properties Template
+#
+# (c) Copyright 2013-2015 Datraverse B.V.
+#=======================================================================
+
+### log messages to file  ###
+log4j.appender.file=org.apache.log4j.RollingFileAppender
+log4j.appender.file.MaxFileSize=10MB
+log4j.appender.file.MaxBackupIndex=10
+log4j.appender.file.File=${server.home}/logs/server.log
+log4j.appender.file.layout=org.apache.log4j.PatternLayout
+log4j.appender.file.layout.ConversionPattern=%d{ISO8601} %5p %c{1}:%L - %m [%t]%n
+log4j.appender.file.encoding=UTF8
+
+####
+log4j.rootLogger=ERROR, file
+
+#### Application Logging ####
+log4j.logger.org.savapage=WARN
+log4j.logger.org.savapage.core.SpInfo=INFO
+
+#------------------------------------------------------------------------------
+# Suppress WARN and ERROR messages caused by Opera browser
+#------------------------------------------------------------------------------
+log4j.logger.org.apache.wicket.DefaultExceptionMapper=FATAL
+
+#------------------------------------------------------------------------------
+# Performance Logger
+#------------------------------------------------------------------------------
+log4j.appender.performancelogger=org.apache.log4j.RollingFileAppender
+log4j.appender.performancelogger.MaxFileSize=10MB
+log4j.appender.performancelogger.MaxBackupIndex=10
+log4j.appender.performancelogger.File=${server.home}/logs/perf.log
+log4j.appender.performancelogger.layout=org.apache.log4j.PatternLayout
+log4j.appender.performancelogger.layout.ConversionPattern=%m\n
+log4j.appender.performancelogger.encoding=UTF8
+
+# Use TRACE to activate the PerformanceLogger
+log4j.logger.org.savapage.core.PerformanceLogger=ERROR, performancelogger
+log4j.additivity.org.savapage.core.PerformanceLogger=false
+
+#------------------------------------------------------------------------------
+# AdminPublisher Logger 
+#------------------------------------------------------------------------------
+log4j.appender.adminpublisher=org.apache.log4j.RollingFileAppender
+log4j.appender.adminpublisher.MaxFileSize=10MB
+log4j.appender.adminpublisher.MaxBackupIndex=10
+log4j.appender.adminpublisher.File=${server.home}/logs/adminpublisher.log
+log4j.appender.adminpublisher.layout=org.apache.log4j.PatternLayout
+log4j.appender.adminpublisher.layout.ConversionPattern=%m\n
+log4j.appender.adminpublisher.encoding=UTF8
+
+# Use INFO to activate the PerformanceLogger
+log4j.logger.org.savapage.core.cometd.AdminPublisherLogger=INFO, adminpublisher
+log4j.additivity.org.savapage.core.cometd.AdminPublisherLogger=false
+
+#------------------------------------------------------------------------------
+# SmartSchool Logger
+#------------------------------------------------------------------------------
+log4j.appender.smartschool=org.apache.log4j.RollingFileAppender
+log4j.appender.smartschool.MaxFileSize=10MB
+log4j.appender.smartschool.MaxBackupIndex=10
+log4j.appender.smartschool.File=${server.home}/logs/smartschool.log
+log4j.appender.smartschool.layout=org.apache.log4j.PatternLayout
+log4j.appender.smartschool.layout.ConversionPattern=%d{ISO8601} %m\n
+log4j.appender.smartschool.encoding=UTF8
+
+log4j.logger.org.savapage.core.print.smartschool.SmartSchoolLogger=INFO, smartschool
+log4j.additivity.org.savapage.core.print.smartschool.SmartSchoolLogger=false
+
+# end-of-file

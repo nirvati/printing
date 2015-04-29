@@ -1,0 +1,61 @@
+#!/bin/sh
+#
+# (c) Copyright 2013-2014 Datraverse B.V.
+#
+
+NFC_SERVICE=savapage-nfc
+
+#-------------------------
+install_arch=armv6l
+system_arch=`uname -m 2>/dev/null`
+if [ "${system_arch}" != "${install_arch}" ]; then
+    echo "This release is designed for ${install_arch} systems."
+	echo "Install aborted!"
+	exit 1
+fi
+
+
+#
+# Checks if packages are present.
+#
+check_packages() {
+
+	echo "Checking installed packages ..."
+	
+	ldderror=
+	
+    packages="libccid
+		 	libacsccid1
+            pcscd"
+
+    for package in ${packages}; do
+    	
+		dpkg -s ${package} >/dev/null 2>&1
+		pkg_present=$?
+		
+		if [ "${pkg_present}" = 0 ]; then
+			echo "${package}: installed"
+		else
+			echo "${package}: NOT installed" >&2
+			ldderror=y 
+		fi
+				
+    done
+    
+	if [ "${ldderror}" = "y" ]; then    	    	
+		echo "Unable to install. One or more packages need to be installed." >&2
+		echo "Install aborted!" >&2
+    	exit 1
+	fi
+}
+
+check_packages
+
+#-------------------------
+sudo cp /usr/local/bin/savapage/${NFC_SERVICE} /etc/init.d
+sudo update-rc.d ${NFC_SERVICE} defaults
+sudo service ${NFC_SERVICE} start
+
+#-------------------------
+echo "Connect the NFC reader and speakers."   	
+echo "Swipe a card to test. You should hear a sound."   	

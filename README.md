@@ -12,9 +12,99 @@ copyright (c) 2011-2015 Datraverse B.V. and licensed under the
 
 SavaPage Software is produced by Community Partners and consumed by Community Fellows. If you want to modify and/or distribute our source code, please join us as Development Partner. By joining the [SavaPage Community](http://savapage.org/w/) you can help build a truly Libre Print Management Solution. Please contact [info@savapage.org](mailto:info@savapage.org).
 
-
 ### Issue Management
 
 [https://secure.datraverse.nl/issues/](https://secure.datraverse.nl/issues/)
 
+### System Requirements
+
+0. Open JDK 1.7+
+
+        $ sudo apt-get install openjdk-7-jdk
+
+0. Maven 3
+
+        $ sudo apt-get install maven
+        
+0. GNU project C and C++ compiler
+               
+        $ sudo apt-get install g++
+
+
+### Getting started
+
+0. Create a directory for all SavaPage repositories.
+  
+        $ mkdir -p ~/savapage/repos
+   
+   
+0. Clone repositories.
+
+    Create a shell script `~/savapage/repos/init.sh` with the following content:
+            
+        #!/bin/sh
+        _REPOS_GIT_PUBLIC="savapage-client
+            savapage-common
+            savapage-core
+            savapage-cups-notifier
+            savapage-ext
+            savapage-server
+            savapage-make
+            savapage-nfc-reader
+            savapage-nss
+            savapage-pam
+            savapage-ppd
+            savapage-util
+            xmlrpcpp"        
+        for repo in $_REPOS_GIT_PUBLIC
+        do
+            git clone https://gitlab.com/savapage/${repo}.git
+        done
+
+    Execute the script:
+    chmod +x 
+        $ cd ~/savapage/repos
+        $ chmod +x init.sh 
+        $ ./init.sh
+    
+    Remove the script:
+
+        $ rm ~/savapage/repos/init.sh
+
+
+0. Checkout develop branch of all repositories.
+
+        $ cd ~/savapage/repos/savapage-make
+        $ git checkout develop
+        $ ./dev-git-all.sh "checkout develop"
+        
+
+0. Initialize directory structure for drop-in components (optional).
+
+        $ cd ~/savapage
+        $ ./repos/savapage-make/dev-init.sh
+        
+
+### Install prerequisite packages
+
+* savapage-nfc-reader
+    
+        $ sudo apt-get install libpcsclite-dev
+        
+* savapage-cups-notifier
+    
+        $ sudo apt-get install libcups2-dev
+            
+* savapage-pam
+    
+        $ sudo apt-get install libpam0g-dev
+                            
+
+### Build
+
+    $ cd ~/savapage/repos/savapage-make
+    $ ./build.sh all-x64
+
+* Check the `~/savapage/repos/savapage-make/target` directory for the result.
+* Build messages are captured in `~/savapage/repos/savapage-make/build.log` 
 
