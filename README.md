@@ -62,7 +62,7 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
         done
 
     Execute the script:
-    chmod +x 
+    
         $ cd ~/savapage/repos
         $ chmod +x init.sh 
         $ ./init.sh
@@ -72,12 +72,17 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
         $ rm ~/savapage/repos/init.sh
 
 
-0. Checkout develop branch of all repositories.
+0. Checkout master or develop branch of all repositories.
 
         $ cd ~/savapage/repos/savapage-make
+                
+        # check out master branch with latest published release
+        $ git checkout master
+        $ ./dev-git-all.sh "checkout master"
+        
+        # check out develop branch
         $ git checkout develop
         $ ./dev-git-all.sh "checkout develop"
-        
 
 0. Initialize directory structure for drop-in components (optional).
 

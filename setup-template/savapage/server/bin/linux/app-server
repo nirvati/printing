@@ -104,7 +104,7 @@ serviceUser="savapage"                                     # OS user name for th
 serviceGroup="savapage"                                    # OS group name for the service
 applDir="$SERVER_HOME"                                     # server directory 
 serviceLogFile="$LOG_DIR/service.log"                      # log file for StdOut/StdErr
-maxShutdownTime=15                                         # maximum number of seconds to wait for the daemon to terminate normally
+maxShutdownTime=20                                         # maximum number of seconds to wait for the daemon to terminate normally
 pidFile="$SERVER_PID"                                      # name of PID file (PID = process ID number)
 javaCommand="java"                                         # name of the Java launcher without the path
 javaArgs="$DAEMON_ARGS"                                    # arguments for Java launcher
