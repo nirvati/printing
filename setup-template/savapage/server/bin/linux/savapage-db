@@ -28,7 +28,7 @@ if [ -z "${USER}" ]; then
 fi
 if [ -n "${USER}" -a "${USER}" != "${HOST_USER}" ]; then
         echo "You must be the ${HOST_USER} to run this program!"
-        echo "Try:  su - ${HOST_USER}"
+        echo "Try:  sudo su ${HOST_USER}"
         echo
         exit
 fi

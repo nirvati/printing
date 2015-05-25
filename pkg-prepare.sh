@@ -193,7 +193,7 @@ cd ${_CURRENTDIR}
 # savapage-ext.jar
 #=========================================================================
 
-WORK_ZIP_NAME=${_SAVAPAGE_COMMON_JAR}
+WORK_ZIP_NAME=${_SAVAPAGE_EXT_JAR}
 WORK_HOME=${_PREP_HOME}/${WORK_ZIP_NAME}_WORK
 WORK_ZIP_SRC=${_REPO_HOME_PUB}/savapage-ext/target/${WORK_ZIP_NAME}
 
