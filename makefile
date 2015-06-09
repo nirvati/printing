@@ -82,6 +82,8 @@ clean-patch:
 	@make -C $(REPO_HOME_PUB)/savapage-core clean
 	@make -C $(REPO_HOME_PUB)/savapage-client clean
 	@make -C $(REPO_HOME_PUB)/savapage-ext clean
+	@make -C $(REPO_HOME_PUB)/savapage-ext-blockchain-info clean
+	@make -C $(REPO_HOME_PUB)/savapage-ext-mollie clean
 	@make -C $(REPO_HOME_PUB)/savapage-server clean
 
 #----------------------------------------------------------------------
@@ -98,6 +100,8 @@ mvn-package-patch:
 	@make -C $(REPO_HOME_PUB)/savapage-common install
 	@make -C $(REPO_HOME_PUB)/savapage-core install
 	@make -C $(REPO_HOME_PUB)/savapage-ext install
+	@make -C $(REPO_HOME_PUB)/savapage-ext-blockchain-info repackage
+	@make -C $(REPO_HOME_PUB)/savapage-ext-mollie repackage
 	@make -C $(REPO_HOME_PUB)/savapage-client repackage
 	@make -C $(REPO_HOME_PUB)/savapage-server repackage
 
