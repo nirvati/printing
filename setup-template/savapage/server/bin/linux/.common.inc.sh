@@ -61,7 +61,7 @@ PAM_SERVERNAME=savapage
 #
 # Setup Classpath
 #
-CLASSPATH=${SERVER_HOME}/lib/web/*
+CLASSPATH=${SERVER_HOME}/lib/web/*:${SERVER_HOME}/ext/lib/*
 
 # Check the server/bin/linux-* for the architecture
 if [ -d "${SERVER_HOME}/bin/linux-x64" ]; then

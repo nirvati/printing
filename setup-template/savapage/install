@@ -206,7 +206,7 @@ fi
 hascups=`which lpr 2> /dev/null`
 if [ -z "${hascups}" ]; then
     echo
-    echo "ERROR: SavaPage needs CUPS but this package is not installed."
+    echo "ERROR: SavaPage needs CUPS but 'lpr' command is not found."
     echo "Please install CUPS first. Consult the User Manual for details."
     echo
     exit 1
@@ -442,13 +442,18 @@ if [ -d "${SP_INSTALL_DIR}/providers/nfc" ]; then
 fi
 
 #
-# Remove old Java runtime
+# Remove old Java runtime (from pre-0.9.8 installation)
 #
 rm -rf "${SP_INSTALL_DIR}/runtime" >/dev/null 2>&1
 
 #
-# Copy all files excluding user defined or data files
+# Remove old savapage-ext-*.jar files 
 #
+rm -rf "${SP_INSTALL_DIR}"/server/ext/lib/savapage-ext-*.jar >/dev/null 2>&1
+
+# ----------------------------------------------------------
+# Copy all files excluding user defined or data files
+# ----------------------------------------------------------
 echo "Installing into ${SP_INSTALL_DIR}..."
 (
 	find . -print  \
