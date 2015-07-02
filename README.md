@@ -113,3 +113,19 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
 * Check the `~/savapage/repos/savapage-make/target` directory for the result.
 * Build messages are captured in `~/savapage/repos/savapage-make/build.log` 
 
+
+### Setup template
+
+The `setup-template` directory contains the fixed files of the build target binary.
+
+#### savapage/providers/nfc/linux-armv6 
+
+This directory contains the install and sample files for the Raspberry Pi NFC Reader. See the `savapage-nfc-reader` project.
+
+Source links of the sample wav files:
+
+* wav-card-swipe : [button-47.wav](http://www.soundjay.com/button/button-47.wav)
+* wav-server-accept : [chime.wav](http://www.wavsource.com/)
+* wav-server-deny : [beep-3.wav](http://www.soundjay.com/button/beep-3.wav)
+* wav-server-disconnect : [disconnect_11.wav](http://www.wavsource.com/)
+* wav-server-exception : [buzzer_x.wav](http://www.wavsource.com/)

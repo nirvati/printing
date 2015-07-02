@@ -167,6 +167,8 @@ if [ -d "${LINUX_ARMV6}" ]; then
     fi	
 fi
 
+# copy settings .ini file template
+cp ${_REPO_HOME_NFC_READER}/*.template ${DIST_NFC_ARMV6_BIN_HOME}
 
 #------------------------------------------------------------------------
 # Create version file. This file is sourced into the app-server script.

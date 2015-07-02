@@ -57,6 +57,7 @@ readonly _REPO_HOME_CLIENT=${_REPO_HOME_PUB}/savapage-client
 readonly _REPO_HOME_CORE=${_REPO_HOME_PUB}/savapage-core
 readonly _REPO_HOME_PPD=${_REPO_HOME_PUB}/savapage-ppd
 readonly _REPO_HOME_UTIL=${_REPO_HOME_PUB}/savapage-util
+readonly _REPO_HOME_NFC_READER=${_REPO_HOME_PUB}/savapage-nfc-reader
 
 readonly _REPO_HOME_EXT_MOLLIE=${_REPO_HOME_PUB}/savapage-ext-mollie
 readonly _REPO_HOME_EXT_BLOCKCHAIN_INFO=${_REPO_HOME_PUB}/savapage-ext-blockchain-info

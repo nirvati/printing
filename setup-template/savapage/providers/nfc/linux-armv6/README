@@ -107,6 +107,9 @@ _______________________________________________________________________________
     Change the IP address and check the port of the SavaPage Server. You can 
     change the default port of the network reader service as well.
 
+    Sample sound files are present. You can use the sample script files for your
+    own customization: for example to communicate with the PiFace Control & Display.         
+
     NOTE: Check that your firewall is open for the IP address and ports set 
           in the .ini file.
           
