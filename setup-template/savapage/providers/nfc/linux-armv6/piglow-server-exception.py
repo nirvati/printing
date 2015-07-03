@@ -23,24 +23,20 @@ address: info@datraverse.com
 import os
 import time
 
-hasPiFaceCad = False
+os.system('aplay --quiet beep-3.wav')
+
+hasPiGlow = False
 
 try:
-    import pifacecad as p
-
-    cad = p.PiFaceCAD()
-    cad.lcd.write("Printing started\nplease wait...")
-    cad.lcd.backlight_on()
-
-    hasPiFaceCad = True
+    import piglow
+    
+    piglow.green(64)
+    piglow.red(128)
+    piglow.show()
+    time.sleep(3.0)
+        
+    hasPiGlow = True
     
 except:
     pass
 
-os.system('aplay --quiet chime.wav')
-
-if hasPiFaceCad:    
-    time.sleep(5)
-    cad.lcd.clear()
-    cad.lcd.write("Swipe your card\nto release print")
-    

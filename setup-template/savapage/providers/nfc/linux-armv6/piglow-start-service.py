@@ -20,27 +20,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 For more information, please contact Datraverse B.V. at this
 address: info@datraverse.com
 '''
-import os
 import time
 
-hasPiFaceCad = False
+hasPiGlow = False
 
 try:
-    import pifacecad as p
 
-    cad = p.PiFaceCAD()
-    cad.lcd.write("Printing started\nplease wait...")
-    cad.lcd.backlight_on()
+    import piglow
 
-    hasPiFaceCad = True
+    i = 0
+
+    while i < 20:
+        piglow.all(0)
+        piglow.set(i%18, [15,31,63,127,255,127,63,31,15])
+        piglow.show()
+        i = i + 1
+        time.sleep(0.1)
     
+    hasPiGlow = True
+
 except:
     pass
-
-os.system('aplay --quiet chime.wav')
-
-if hasPiFaceCad:    
-    time.sleep(5)
-    cad.lcd.clear()
-    cad.lcd.write("Swipe your card\nto release print")
-    

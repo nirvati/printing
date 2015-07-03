@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 '''
 This file is part of the SavaPage project <http://savapage.org>.
 Copyright (c) 2011-2015 Datraverse B.V.

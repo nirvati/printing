@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 '''
 This file is part of the SavaPage project <http://savapage.org>.
 Copyright (c) 2011-2015 Datraverse B.V.
@@ -42,4 +43,3 @@ if hasPiFaceCad:
     time.sleep(4)
     cad.lcd.clear()
     cad.lcd.write("Swipe your card\nto release print")
-
