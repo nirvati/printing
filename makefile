@@ -73,7 +73,7 @@ checksums:
 db: clean mvn-package pkg-internal pkg-database
 
 .PHONY: clean
-clean: cleanc mvn-clean
+clean: cleanc mvn-clean ppd-clean
 	rm -rf $(TRG_HOME)
 
 .PHONY: clean-patch
@@ -148,6 +148,10 @@ package-patch:
 .PHONY: ppd
 ppd:
 	@make -C $(REPO_HOME_PUB)/savapage-ppd PRODUCT_VERSION=$(PRODUCT_VERSION)
+
+.PHONY: ppd-clean
+ppd-clean:
+	@make -C $(REPO_HOME_PUB)/savapage-ppd clean
 
 #----------------------------------------
 # c binaries
