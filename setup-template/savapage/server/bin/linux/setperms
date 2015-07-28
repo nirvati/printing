@@ -56,11 +56,12 @@ if [ -e "gcp.properties" ]; then
 fi
 
 #
-# Ensure database data is only readable by self (contains sensitive data)
+# Ensure data is only readable by self (contains sensitive data)
 #
-chmod 700 data/internal
-chmod 700 data/conf
 chmod 700 data/backups
+chmod 700 data/conf
+chmod 700 data/email-outbox
+chmod 700 data/internal
 
 #
 # The bin directory contains setuid binaries so for security reasons we'll
