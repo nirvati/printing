@@ -143,6 +143,15 @@ do_install_sysvinit() {
     	exit 1
     fi
 
+	#
+	# Install the scripts when not already installed.
+    #
+    installScripts=
+    if [ ! -e "/etc/init.d/${APP_NAME_SHORT}" ]; then
+        echo "Installing SysV style boot scripts..."
+        installScripts=1
+    fi
+
     #
     # Make sure we always overwrite our symlink just in case the user switches
     # architecture.
@@ -151,13 +160,6 @@ do_install_sysvinit() {
     ln -sf "${SERVER_BIN_HOME}/app-server" "${APP_NAME_SHORT}"
 
 	#
-	# Install the scripts when not already installed.
-    installScripts=
-    if [ ! -e "/etc/init.d/${APP_NAME_SHORT}" ]; then
-        echo "Installing SysV style boot scripts..."
-        installScripts=1
-    fi
-
     if [ -z "${installScripts}" ]; then
     	return
     fi
