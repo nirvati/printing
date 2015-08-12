@@ -25,7 +25,9 @@
 # Script to install a savapage-x.x.x-patch.tar.gz file
 #
 
-cd `dirname $0`
+_SCRIPT_DIR=`dirname $0`
+
+cd ${_SCRIPT_DIR}
 
 # Verify that /dev/null is writable.
 if [ ! -w /dev/null ] ; then
@@ -38,6 +40,15 @@ fi
 APP_USER=${UNIX_USERNAME}
 if [ -z "${APP_USER}" ]; then
     echo "Error: Invalid config." >&2
+    exit 1
+fi
+
+#---------------------------------------
+# Check to see if the server is stopped
+#---------------------------------------
+readonly SERVER_PID=${_SCRIPT_DIR}/server/logs/service.pid
+if [ -f "${SERVER_PID}" ]; then 
+    echo "Error: SavaPage service must be stopped first." >&2
     exit 1
 fi
 
@@ -125,35 +136,14 @@ else
     install_arch=i686
 fi
 
-#
-# Stop the application server
-#
-server/bin/linux-${install_arch}/stop-server
-
 echo "Applying the patch..."
 
 tar zxvf ${APP_PATCH}
 
-#
-# Start the application server
-#
-server/bin/linux-${install_arch}/start-server
-
-#
-# Wait for server startup completed
-#
-echo_n "Please wait..."
-for i in 0 1 2 3 4 5 6 7 8 9; do
-    sleep 2
-    if [ ! -f "server/logs/server.started.txt" ]; then
-        echo_n "."
-    else
-        break
-    fi
-done
-
 echo
 echo "Patch install completed!"
+echo
+echo "You can now start the SavaPage service again."
 echo
 
 # end-of-script

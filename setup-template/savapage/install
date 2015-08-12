@@ -349,15 +349,15 @@ installovertop=
 # Stop the server if already running.  Just in case someone is
 # upgrading an i686 to x64 we need to test and stop both here.
 #
-if [ -f "${SP_INSTALL_DIR}/server/bin/linux-i686/stop-server" ]; then
+if [ -f "${SP_INSTALL_DIR}/server/bin/linux-i686/app-server" ]; then
 	echo "Stopping existing installed server..."
-	${SP_INSTALL_DIR}/server/bin/linux-i686/stop-server >/dev/null 2>&1 
+	${SP_INSTALL_DIR}/server/bin/linux-i686/app-server stop >/dev/null 2>&1 
 	echo 
 	installovertop=1
 fi
-if [ -f "${SP_INSTALL_DIR}/server/bin/linux-x64/stop-server" ]; then
+if [ -f "${SP_INSTALL_DIR}/server/bin/linux-x64/app-server" ]; then
 	echo "Stopping existing installed server..."
-	${SP_INSTALL_DIR}/server/bin/linux-x64/stop-server >/dev/null 2>&1
+	${SP_INSTALL_DIR}/server/bin/linux-x64/app-server stop >/dev/null 2>&1
 	echo 
 	installovertop=1
 fi
@@ -560,12 +560,13 @@ chmod +x "${SP_INSTALL_DIR}/client/app/savapage-client.bat" 2>/dev/null
 #
 chmod 755 -R "${SP_INSTALL_DIR}/providers/nfc" 2>/dev/null
 
-# Do root tasks
-#
+#----------------------------------------------------------------------
+# Last but not least: do root tasks
+#----------------------------------------------------------------------
 echo 
 echo "The install needs to perform some tasks as root.  Tasks include:"
 echo "	* Setting setuid-root on the authentication provider"
-echo "	* Installing CUPS notifier"
+echo "	* Installing the CUPS notifier"
 echo "	* Configure the server's boot scripts"
 
 agreed=
@@ -588,6 +589,7 @@ while [ -z "${answered}" ]; do
 			;;
 	esac
 done
+
 if [ ! -z "${agreed}" ]; then
 	continue=
 	while [ -z "${continue}" ]; do
@@ -613,10 +615,10 @@ if [ ! -z "${agreed}" ]; then
             echo "Enter the root password when requested:"
         fi
         
-		${sudo_cmd} su -c "${SP_INSTALL_DIR}/server/bin/linux-${install_arch}/roottasks; 
-                            ${SP_INSTALL_DIR}/providers/cups/linux-${install_arch}/roottasks
+		${sudo_cmd} su -c "${SP_INSTALL_DIR}/providers/cups/linux-${install_arch}/roottasks; 
+                            ${SP_INSTALL_DIR}/server/bin/linux-${install_arch}/roottasks
                             "
-		
+						
 		if [ $? -ne 0 ]; then
 			echo
 			echo "Root tasks failed!  Was the password correct?"
@@ -637,7 +639,7 @@ if [ ! -z "${agreed}" ]; then
 				esac
 			done
 		else
-			continue=1
+			continue=1 						
 		fi
 	done
 fi
@@ -648,52 +650,18 @@ if [ ! -z "${manual}" ]; then
     #
     cat > "${SP_INSTALL_DIR}/MUST-RUN-AS-ROOT" << EOF
 #!/bin/sh
-${SP_INSTALL_DIR}/server/bin/linux-${install_arch}/roottasks
 ${SP_INSTALL_DIR}/providers/cups/linux-${install_arch}/roottasks
+${SP_INSTALL_DIR}/server/bin/linux-${install_arch}/roottasks
 EOF
     chmod 755 "${SP_INSTALL_DIR}/MUST-RUN-AS-ROOT"
-    echo
-    echo "Root tasks can be applied with the script:"
+    
+	echo 
+    echo "Root tasks must be applied with the script:"
     echo "  ${SP_INSTALL_DIR}/MUST-RUN-AS-ROOT"
-    echo "Please run this script as root after install."
-    echo "Press Enter to confirm..."
-    read reply leftover
+	echo 
+	echo "Please run this script as root to complete the installation."
+	echo
+
 fi
 
-#
-# Start the application server
-#
-echo "Starting the application server..."
-${SP_INSTALL_DIR}/server/bin/linux-${install_arch}/start-server
-
-#
-# Wait for app server to complete it's initial configuration
-#
-echo_n "Configuring..."
-for i in 0 1 2 3 4 5 6 7 8 9; do
-	sleep 2
-	if [ ! -f "${SP_INSTALL_DIR}/server/logs/server.started.txt" ]; then
-		echo_n "."
-	else
-		break
-	fi
-done
-echo "...complete."
-
-#
-# Install complete
-#
-servername=`hostname`
-if [ -z "${servername}" ]; then
-	servername="<server_name>"
-fi
-echo "
-	
-	Installation complete!
-
-You can now open a web browser at http://${servername}:${SAVAPAGE_PORT}/admin to complete
-the configuration.
-
-Please consult the user manual for more information.
-
-"
+# end-of -file

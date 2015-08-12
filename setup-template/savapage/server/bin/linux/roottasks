@@ -35,62 +35,139 @@ then
 	exit 1
 fi
 
-cd "${SERVER_HOME}"
+#---------------------------------------------------------------------------
+# Constants
+#---------------------------------------------------------------------------
+readonly SERVER_BIN_HOME=${SCRIPT_HOME}
 
-############################################################################
-# Root-level installation tasks for App Server install
-############################################################################
-do_install() {
-    #
-    # Set permissions on binaries as required
-    #
-    echo "Setting savapage-pam as setuid root..."
+#---------------------------------------------------------------------------
+# Write the savapage.service file
+#---------------------------------------------------------------------------
+do_systemd_write_service_file() {
 
-    chown root:root bin/linux-${ARCH}/savapage-pam
-    chmod 4511 bin/linux-${ARCH}/savapage-pam
 
-    echo "Configuring PAM..."
-    if [ -n "${PAM_SERVERNAME}" -a -f /etc/pam.d/passwd ]; then
-        # 
-        # PAM seems to be quite distribution specific so we'll
-        # take the approach of using passwd as a template. This
-        # should contain the basic stuff we need for password
-        # authentication.
-        #
-        cp /etc/pam.d/passwd "/etc/pam.d/${PAM_SERVERNAME}" 2>/dev/null
+	cat > "${_SYSTEMD_SERVICE_FILEPATH}" << EOF
+#
+# This file is part of the SavaPage project <http://savapage.org>.
+# Copyright (c) 2011-2015 Datraverse B.V.
+# Author: Rijk Ravestein.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# For more information, please contact Datraverse B.V. at this
+# address: info@datraverse.com
+#
+[Unit]
+Description=SavaPage Libre Print Management
+
+[Service]
+Type=forking
+PIDFile=${SERVER_PID}
+ExecStart=${SERVER_BIN_HOME}/app-server start
+ExecStop=${SERVER_BIN_HOME}/app-server stop
+
+[Install]
+WantedBy=multi-user.target
+
+# end-of file
+EOF
+}
+
+#---------------------------------------------------------------------------
+# Install systemd service
+#---------------------------------------------------------------------------
+do_install_systemd() {
+	
+    if [ -z "${_OS_HAS_SYSTEMD}" ]; then
+        echo "Error: systemd is not installed."  >&2
+    	exit 1
     fi
     
-    #
-    # Link in the rc style start scripts
-    #
-    hasinitd=
-    isdebian=
-    if [ -d "/etc/init.d" -a ! -e "/etc/init.d/${APP_NAME_SHORT}" ]; then
-        echo "Installing SysV style boot scripts..."
-        hasinitd=1
-        #
-        # Is this os a Debian offspring?
-        #
-        if [ ! -z `which dpkg` ]; then
-            isdebian=y
-        fi        
+    # stop the savapage service
+    if [ -e "${SERVER_PID}" ]; then
+		systemctl stop ${_SYSTEMD_SERVICE_FILENAME}
+	fi
+
+    #    
+    do_systemd_write_service_file
+    
+	# Since savapage.service changed on disk, reload systemd units.	
+	systemctl daemon-reload
+        
+    # start the savapage service
+	systemctl start ${_SYSTEMD_SERVICE_FILENAME}
+	
+    # enable the savapage service, this creates the symbolic link 
+	# in /etc/systemd/system/
+	systemctl enable ${_SYSTEMD_SERVICE_FILENAME}		
+}
+
+#---------------------------------------------------------------------------
+# Uninstall systemd service
+#---------------------------------------------------------------------------
+do_uninstall_systemd() {
+	
+    if [ -z "${_OS_HAS_SYSTEMD}" ]; then
+        echo "Error: systemd is not installed."  >&2
+    	exit 1
+    fi
+
+    # Disable the savapage service, this removes the symbolic link 
+	# in /etc/systemd/system/
+	systemctl disable ${_SYSTEMD_SERVICE_FILENAME}
+
+	# remove service file
+	rm -f "${_SYSTEMD_SERVICE_FILEPATH}"
+	
+	systemctl reset-failed	
+}
+
+#---------------------------------------------------------------------------
+# Install our SysV init scripts
+#---------------------------------------------------------------------------
+do_install_sysvinit() {
+
+    if [ -z "${_OS_HAS_SYSVINIT}" ]; then
+        echo "Error: SysV init is not installed."  >&2
+    	exit 1
     fi
 
     #
     # Make sure we always overwrite our symlink just in case the user switches
     # architecture.
     #
-    if [ -d "/etc/init.d" ]; then
-        cd /etc/init.d
-        ln -sf "${SERVER_HOME}/bin/linux-${ARCH}/app-server" "${APP_NAME_SHORT}"
+    cd /etc/init.d
+    ln -sf "${SERVER_BIN_HOME}/app-server" "${APP_NAME_SHORT}"
+
+	#
+	# Install the scripts when not already installed.
+    installScripts=
+    if [ ! -e "/etc/init.d/${APP_NAME_SHORT}" ]; then
+        echo "Installing SysV style boot scripts..."
+        installScripts=1
+    fi
+
+    if [ -z "${installScripts}" ]; then
+    	return
     fi
 
     #
     # Activate init scripts at runlevels in /etc/rc*.d location if found
     #
-    if [ ! -z "${hasinitd}" -a -d "/etc/rc5.d" ]; then
+    if [ -d "/etc/rc5.d" ]; then
     
-        if [ ! -z "${isdebian}" ]; then
+        if [ ! -z "${_OS_IS_DEBIAN_BASED}" ]; then
             update-rc.d "${APP_NAME_SHORT}" defaults
         else
             # The part below does NOT work in Debian like systems.
@@ -140,7 +217,7 @@ do_install() {
     # SuSE's rc*.d dir's are located under /etc/init.d. Activate here
     # if found.
     #
-    if [ ! -z "${hasinitd}" -a -d "/etc/init.d/rc5.d" ]; then
+    if [ -d "/etc/init.d/rc5.d" ]; then
         # Start in runlevel 3
         if [ -d "/etc/init.d/rc3.d" ]; then
             cd /etc/init.d/rc3.d
@@ -176,41 +253,124 @@ do_install() {
             cd /etc/init.d/rc6.d
             ln -s "../${APP_NAME_SHORT}" "K89${APP_NAME_SHORT}"
         fi
-    fi
+    fi    
+
+	cd "${SCRIPT_HOME}"
 }
 
-############################################################################
-# Uninstall our init scripts
-############################################################################
-do_uninstall() {
+#---------------------------------------------------------------------------
+# Uninstall our SysV init scripts
+#---------------------------------------------------------------------------
+do_uninstall_sysvinit() {
+
+    if [ -z "${_OS_HAS_SYSVINIT}" ]; then
+        echo "Error: SysV init is not installed."  >&2
+    	exit 1
+    fi
+
+    if [ ! -e "/etc/init.d/${APP_NAME_SHORT}" ]; then
+    	return
+    fi
 
 	echo "Removing SysV style boot scripts..."
                 
     # Remove init/rc scripts from all possible locations
-    RC_PREFIX="${APP_NAME_SHORT}"
 
-    # Stop if running
-    if [ -e "/etc/init.d/${RC_PREFIX}" ]; then
-        /etc/init.d/${RC_PREFIX} stop
-    fi
-
-    #
-    # Is this os a Debian offspring?
-    #
-    isdebian=
-    if [ ! -z `which dpkg` ]; then
-        isdebian=y
-    fi        
-
-    if [ ! -z "${isdebian}" ]; then
+    if [ ! -z "${_OS_IS_DEBIAN_BASED}" ]; then
         update-rc.d -f "${APP_NAME_SHORT}" remove
         rm -f /etc/init.d/"${APP_NAME_SHORT}"
     else
-        rm -f /etc/init.d/${RC_PREFIX} > /dev/null 2>&1
-        rm -f /etc/rc*.d/*${RC_PREFIX} > /dev/null 2>&1
-        rm -f /etc/init.d/rc*.d/*${RC_PREFIX} > /dev/null 2>&1
+        rm -f /etc/init.d/${APP_NAME_SHORT} > /dev/null 2>&1
+        rm -f /etc/rc*.d/*${APP_NAME_SHORT} > /dev/null 2>&1
+        rm -f /etc/init.d/rc*.d/*${APP_NAME_SHORT} > /dev/null 2>&1
+    fi	    
+}
+
+#---------------------------------------------------------------------------
+# Root-level tasks for App Server install
+#---------------------------------------------------------------------------
+do_install() {
+    #
+    # Set permissions on binaries as required
+    #
+    echo "Setting savapage-pam as setuid root..."
+
+    chown root:root ${SERVER_BIN_HOME}/savapage-pam
+    chmod 4511 ${SERVER_BIN_HOME}/savapage-pam
+
+    echo "Configuring PAM..."
+    if [ -n "${PAM_SERVERNAME}" -a -f /etc/pam.d/passwd ]; then
+        # 
+        # PAM seems to be quite distribution specific so we'll
+        # take the approach of using passwd as a template. This
+        # should contain the basic stuff we need for password
+        # authentication.
+        #
+        cp /etc/pam.d/passwd "/etc/pam.d/${PAM_SERVERNAME}" 2>/dev/null
     fi
 
+    #
+    # Link in the SysV rc style start scripts or systemd service?
+    #
+    if [ ! -z "${_OS_HAS_SYSTEMD}" ]; then
+    	
+	    if [ ! -z "${_OS_HAS_SYSVINIT}" ]; then
+    		do_uninstall_sysvinit
+	    fi
+    	    	
+    	do_install_systemd
+    	
+    else
+    	do_install_sysvinit
+    fi
+                                                   
+	echo "Start the server..."
+    service savapage start >/dev/null 2>&1 
+
+	# Wait 20 seconds for app server to startup.
+	for i in 0 1 2 3 4 5 6 7 8 9; do
+		sleep 2
+		if [ ! -f "${SP_INSTALL_DIR}/server/logs/server.started.txt" ]; then
+			echo_n "."
+		else
+			break
+		fi
+	done
+	echo "...started."
+
+	#
+	# Install complete
+	#
+	servername=`hostname`
+	if [ -z "${servername}" ]; then
+			servername="<server_name>"
+	fi
+	
+	echo 
+	echo "Installation completed."
+	echo 
+	echo "Open http://${servername}:${SAVAPAGE_PORT}/admin to configure the application."
+	echo 
+	echo "Please consult the User Manual for more information."
+	echo 
+}
+
+#---------------------------------------------------------------------------
+# Root-level tasks for App Server un-install
+#---------------------------------------------------------------------------
+do_uninstall() {
+
+    if [ -e "${SERVER_PID}" ]; then
+        echo "Stopping the server..."
+        service savapage stop >/dev/null 2>&1 
+    fi
+		
+    if [ ! -z "${_OS_HAS_SYSVINIT}" ]; then
+		do_uninstall_sysvinit
+    fi
+    if [ ! -z "${_OS_HAS_SYSTEMD}" ]; then
+		do_uninstall_systemd
+	fi
 }
 
 ############################################################################
@@ -230,3 +390,4 @@ case "${1}" in
         ;;
 esac
 
+# end-of-script

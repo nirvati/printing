@@ -100,6 +100,7 @@ DAEMON_ARGS="-server $CUSTOM_JVM_ARGS $JVM_X_ARGS -Djava.awt.headless=true -Djav
 
 serviceNameLo="savapage"                                   # service name with the first letter in lowercase
 serviceName="SavaPage"                                     # service name
+serviceNameFull="SavaPage Libre Print Management"          # full service name
 serviceUser="savapage"                                     # OS user name for the service
 serviceGroup="savapage"                                    # OS group name for the service
 applDir="$SERVER_HOME"                                     # server directory 
@@ -157,7 +158,7 @@ function startServiceProcess {
    sleep 0.1
    pid="$(<$pidFile)"
    if checkProcessIsRunning $pid; then :; else
-      echo -ne "\n$serviceName start failed, see logfile."
+      echo -ne "\n$serviceNameFull start failed, see logfile."
       return 1
    fi
    return 0; }
@@ -172,7 +173,7 @@ function stopServiceProcess {
          fi
       sleep 0.1
       done
-   echo -e "\n$serviceName did not terminate within $maxShutdownTime seconds, sending SIGKILL..."
+   echo -e "\n$serviceNameFull did not terminate within $maxShutdownTime seconds, sending SIGKILL..."
    kill -s KILL $pid || return 1
    local killWaitTime=15
    for ((i=0; i<killWaitTime*10; i++)); do
@@ -183,13 +184,13 @@ function stopServiceProcess {
          fi
       sleep 0.1
       done
-   echo "Error: $serviceName could not be stopped within $maxShutdownTime+$killWaitTime seconds!"
+   echo "Error: $serviceNameFull could not be stopped within $maxShutdownTime+$killWaitTime seconds!"
    return 1; }
  
 function startService {
    getServicePID
-   if [ $? -eq 0 ]; then echo -n "$serviceName is already running"; RETVAL=0; return 0; fi
-   echo -n "Starting $serviceName   "
+   if [ $? -eq 0 ]; then echo -n "$serviceNameFull is already running"; RETVAL=0; return 0; fi
+   echo -n "Starting $serviceNameFull   "
    startServiceProcess
    if [ $? -ne 0 ]; then RETVAL=1; echo "failed"; return 1; fi
    echo "started PID=$pid"
@@ -198,8 +199,8 @@ function startService {
  
 function stopService {
    getServicePID
-   if [ $? -ne 0 ]; then echo -n "$serviceName is not running"; RETVAL=0; echo ""; return 0; fi
-   echo -n "Stopping $serviceName   "
+   if [ $? -ne 0 ]; then echo -n "$serviceNameFull is not running"; RETVAL=0; echo ""; return 0; fi
+   echo -n "Stopping $serviceNameFull   "
    stopServiceProcess
    if [ $? -ne 0 ]; then RETVAL=1; echo "failed"; return 1; fi
    echo "stopped PID=$pid"
@@ -207,7 +208,7 @@ function stopService {
    return 0; }
  
 function checkServiceStatus {
-   echo -n "Checking for $serviceName:   "
+   echo -n "Checking for $serviceNameFull:   "
    if getServicePID; then
     echo "running PID=$pid"
     RETVAL=0
@@ -241,3 +242,5 @@ function main {
 }
  
 main $1
+
+# end-of-script

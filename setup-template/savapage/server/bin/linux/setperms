@@ -47,7 +47,12 @@ chmod 600 server.properties
 chmod 600 jmxremote.password
 chmod 600 jmxremote.ks
 
-chmod 600 data/encryption.properties
+# data/encryption.properties are lazy created by the server with the correct
+# permissions. Just in case we set permisisons when file exists.
+if [ -e "data/encryption.properties" ]; then
+	chmod 600 data/encryption.properties
+fi
+
 chmod 600 data/default-ssl-keystore
 chmod 600 data/default-ssl-keystore.pw
 
@@ -87,3 +92,5 @@ chmod 700 tmp
 do
 	chmod 755 "${f}"
 done
+
+# end-of-script

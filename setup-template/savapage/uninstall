@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2014 Datraverse B.V.
+# Copyright (c) 2011-2015 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -34,8 +34,10 @@ agreed=
 answered=
 while [ -z "${answered}" ]; do
         echo
-        echo
-        echo "Would you like to uninstall ?  [yes or no] "
+		echo "+------------------------------------------------------------------+"
+		echo "| SavaPage Libre Print Management.                                 |"
+		echo "+------------------------------------------------------------------+"
+        echo "Would you like to uninstall?  [yes or no] "
         read reply leftover
         case $reply in
             [yY] | [yY][eE][sS])
@@ -68,15 +70,6 @@ if [ ! -z "${agreed}" ]; then
         install_arch=x64
     else
         install_arch=i686
-    fi
-
-    #
-    # Stop the server if running.
-    #
-    if [ -f "server/bin/linux-${install_arch}/stop-server" ]; then
-        echo "Stopping the server..."
-        server/bin/linux-${install_arch}/stop-server >/dev/null 2>&1 
-        echo 
     fi
 
     #
@@ -116,3 +109,5 @@ if [ ! -z "${agreed}" ]; then
     echo
 
 fi
+
+# end-of-script
