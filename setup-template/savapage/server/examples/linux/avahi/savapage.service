@@ -86,7 +86,7 @@
         <!-- Printer Setup Utility will use this key when selecting the    -->
         <!-- PPD.                                                          -->
         <!-- ............................................................. -->
-        <txt-record>product=(SavaPage)</txt-record>
+        <txt-record>product=(savapage.org)</txt-record>
 
         <!-- ............................................................. -->
         <!-- Future values to consider:                                    -->
