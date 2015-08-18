@@ -99,15 +99,16 @@ do_install_systemd() {
 		systemctl stop ${_SYSTEMD_SERVICE_FILENAME}
 	fi
 
+    if [ -e "${_SYSTEMD_SERVICE_FILEPATH}" ]; then
+		systemctl disable ${_SYSTEMD_SERVICE_FILENAME}		
+    fi
+
     #    
     do_systemd_write_service_file
     
 	# Since savapage.service changed on disk, reload systemd units.	
 	systemctl daemon-reload
         
-    # start the savapage service
-	systemctl start ${_SYSTEMD_SERVICE_FILENAME}
-	
     # enable the savapage service, this creates the symbolic link 
 	# in /etc/systemd/system/
 	systemctl enable ${_SYSTEMD_SERVICE_FILENAME}		
