@@ -55,6 +55,7 @@ readonly _PREP_PATCH_HOME=${DIST_PARENT}/~patch-files
 
 readonly _PREP_PATCH_LIB_CLIENT_HOME=${_PREP_PATCH_HOME}/client/app/lib
 readonly _PREP_PATCH_LIB_SERVER_HOME=${_PREP_PATCH_HOME}/server/lib
+readonly _PREP_PATCH_LIB_SERVER_EXT_HOME=${_PREP_PATCH_HOME}/server/ext/lib
 readonly _PREP_PATCH_LIB_WEB_HOME=${_PREP_PATCH_LIB_SERVER_HOME}/web
 
 rm -rf ${_PREP_PATCH_HOME}
@@ -62,6 +63,7 @@ rm -rf ${_PREP_PATCH_HOME}
 #make room
 mkdir --parent ${_PREP_PATCH_LIB_CLIENT_HOME}
 mkdir --parent ${_PREP_PATCH_LIB_WEB_HOME}
+mkdir --parent ${_PREP_PATCH_LIB_SERVER_EXT_HOME}
 
 # savapage-server-*.war
 cp -p ${_PREP_HOME}/${_SAVAPAGE_SERVER_WAR} ${_PREP_PATCH_LIB_SERVER_HOME}
@@ -79,6 +81,9 @@ cp -p ${_PREP_WEB_LIB_HOME}/${_SAVAPAGE_CORE_JAR} ${_PREP_PATCH_LIB_WEB_HOME}
 # savapage-ext-*.jar
 cp -p ${_PREP_WEB_LIB_HOME}/${_SAVAPAGE_EXT_JAR} ${_PREP_PATCH_LIB_WEB_HOME}
 
+# savapage-ext-*-*.jar
+cp -p ${_PREP_HOME}/${_SAVAPAGE_EXT_MOLLIE_JAR} ${_PREP_PATCH_LIB_SERVER_EXT_HOME}
+cp -p ${_PREP_HOME}/${_SAVAPAGE_EXT_BLOCKCHAIN_INFO_JAR} ${_PREP_PATCH_LIB_SERVER_EXT_HOME}
 
 # savapage-server-*.jar
 cp -p ${_PREP_WEB_LIB_HOME}/${_SAVAPAGE_AD_HOC_SERVER_JAR} ${_PREP_PATCH_LIB_WEB_HOME}

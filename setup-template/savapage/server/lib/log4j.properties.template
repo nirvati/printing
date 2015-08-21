@@ -73,9 +73,24 @@ log4j.appender.adminpublisher.layout=org.apache.log4j.PatternLayout
 log4j.appender.adminpublisher.layout.ConversionPattern=%m\n
 log4j.appender.adminpublisher.encoding=UTF8
 
-# Use INFO to activate the PerformanceLogger
+# Use INFO to activate the AdminPublisher
 log4j.logger.org.savapage.core.cometd.AdminPublisherLogger=INFO, adminpublisher
 log4j.additivity.org.savapage.core.cometd.AdminPublisherLogger=false
+
+#------------------------------------------------------------------------------
+# Payment Gateway Audit Trail
+#------------------------------------------------------------------------------
+log4j.appender.paymentgateway=org.apache.log4j.RollingFileAppender
+log4j.appender.paymentgateway.MaxFileSize=10MB
+log4j.appender.paymentgateway.MaxBackupIndex=10
+log4j.appender.paymentgateway.File=${server.home}/logs/paymentgateway.log
+log4j.appender.paymentgateway.layout=org.apache.log4j.PatternLayout
+log4j.appender.paymentgateway.layout.ConversionPattern=%m\n
+log4j.appender.paymentgateway.encoding=UTF8
+
+# Use INFO to activate the PaymentGatewayLogger
+log4j.logger.org.savapage.server.ext.PaymentGatewayLogger=INFO, paymentgateway
+log4j.additivity.org.savapage.server.ext.PaymentGatewayLogger=false
 
 #------------------------------------------------------------------------------
 # SmartSchool Logger
@@ -88,6 +103,7 @@ log4j.appender.smartschool.layout=org.apache.log4j.PatternLayout
 log4j.appender.smartschool.layout.ConversionPattern=%d{ISO8601} %m\n
 log4j.appender.smartschool.encoding=UTF8
 
+# Use INFO to activate the SmartSchoolLogger
 log4j.logger.org.savapage.core.print.smartschool.SmartSchoolLogger=INFO, smartschool
 log4j.additivity.org.savapage.core.print.smartschool.SmartSchoolLogger=false
 

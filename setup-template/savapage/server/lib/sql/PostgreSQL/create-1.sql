@@ -40,6 +40,18 @@
         amount numeric(16, 6) not null,
         balance numeric(16, 6) not null,
         trx_comment varchar(255),
+        currency_code varchar(3),
+        ext_amount numeric(16, 8),
+        ext_confirmations int4,
+        ext_currency_code varchar(3),
+        ext_details varchar(2000),
+        ext_exchange_rate numeric(16, 8),
+        ext_fee numeric(16, 8),
+        ext_id varchar(128),
+        ext_method varchar(20),
+        ext_method_address varchar(128),
+        ext_method_other varchar(32),
+        ext_source varchar(32),
         is_credit boolean not null,
         trx_by varchar(50) not null,
         trx_date timestamp not null,
@@ -57,6 +69,7 @@
         card_number varchar(128) not null,
         card_number_batch varchar(64),
         created_date timestamp not null,
+        currency_code varchar(3),
         expiry_date timestamp,
         issued_date timestamp,
         redeemed_date timestamp,
@@ -476,6 +489,8 @@
     create index ix_account_trx_3 on tbl_account_trx (trx_date);
 
     create index ix_account_trx_4 on tbl_account_trx (account_voucher_id);
+
+    create index ix_account_trx_5 on tbl_account_trx (ext_id);
 
     alter table tbl_account_voucher 
         add constraint uc_account_voucher_1  unique (uuid);

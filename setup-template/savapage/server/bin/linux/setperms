@@ -47,7 +47,12 @@ chmod 600 server.properties
 chmod 600 jmxremote.password
 chmod 600 jmxremote.ks
 
-chmod 600 data/encryption.properties
+# data/encryption.properties are lazy created by the server with the correct
+# permissions. Just in case we set permisisons when file exists.
+if [ -e "data/encryption.properties" ]; then
+	chmod 600 data/encryption.properties
+fi
+
 chmod 600 data/default-ssl-keystore
 chmod 600 data/default-ssl-keystore.pw
 
@@ -56,11 +61,12 @@ if [ -e "gcp.properties" ]; then
 fi
 
 #
-# Ensure database data is only readable by self (contains sensitive data)
+# Ensure data is only readable by self (contains sensitive data)
 #
-chmod 700 data/internal
-chmod 700 data/conf
 chmod 700 data/backups
+chmod 700 data/conf
+chmod 700 data/email-outbox
+chmod 700 data/internal
 
 #
 # The bin directory contains setuid binaries so for security reasons we'll
@@ -86,3 +92,5 @@ chmod 700 tmp
 do
 	chmod 755 "${f}"
 done
+
+# end-of-script

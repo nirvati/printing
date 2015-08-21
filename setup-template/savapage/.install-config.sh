@@ -1,6 +1,6 @@
 #
 # This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2014 Datraverse B.V.
+# Copyright (c) 2011-2015 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -23,8 +23,10 @@
 #
 # Installation configuration constants
 #
-UNIX_USERNAME=savapage
-SETUP_FILE_PREFIX=savapage
-SAVAPAGE_PORT=8631
-SAVAPAGE_PORT_SSL=8632
-SAVAPAGE_PORT_JMX=8639
+readonly UNIX_USERNAME=savapage
+readonly SETUP_FILE_PREFIX=savapage
+readonly SAVAPAGE_PORT=8631
+readonly SAVAPAGE_PORT_SSL=8632
+readonly SAVAPAGE_PORT_JMX=8639
+
+# end-of-script

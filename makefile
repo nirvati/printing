@@ -73,7 +73,7 @@ checksums:
 db: clean mvn-package pkg-internal pkg-database
 
 .PHONY: clean
-clean: cleanc mvn-clean
+clean: cleanc mvn-clean ppd-clean
 	rm -rf $(TRG_HOME)
 
 .PHONY: clean-patch
@@ -82,6 +82,8 @@ clean-patch:
 	@make -C $(REPO_HOME_PUB)/savapage-core clean
 	@make -C $(REPO_HOME_PUB)/savapage-client clean
 	@make -C $(REPO_HOME_PUB)/savapage-ext clean
+	@make -C $(REPO_HOME_PUB)/savapage-ext-blockchain-info clean
+	@make -C $(REPO_HOME_PUB)/savapage-ext-mollie clean
 	@make -C $(REPO_HOME_PUB)/savapage-server clean
 
 #----------------------------------------------------------------------
@@ -98,6 +100,8 @@ mvn-package-patch:
 	@make -C $(REPO_HOME_PUB)/savapage-common install
 	@make -C $(REPO_HOME_PUB)/savapage-core install
 	@make -C $(REPO_HOME_PUB)/savapage-ext install
+	@make -C $(REPO_HOME_PUB)/savapage-ext-blockchain-info repackage
+	@make -C $(REPO_HOME_PUB)/savapage-ext-mollie repackage
 	@make -C $(REPO_HOME_PUB)/savapage-client repackage
 	@make -C $(REPO_HOME_PUB)/savapage-server repackage
 
@@ -144,6 +148,10 @@ package-patch:
 .PHONY: ppd
 ppd:
 	@make -C $(REPO_HOME_PUB)/savapage-ppd PRODUCT_VERSION=$(PRODUCT_VERSION)
+
+.PHONY: ppd-clean
+ppd-clean:
+	@make -C $(REPO_HOME_PUB)/savapage-ppd clean
 
 #----------------------------------------
 # c binaries

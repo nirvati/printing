@@ -40,6 +40,8 @@ readonly _REPOS_GIT_PUBLIC="savapage-make
     savapage-common
     savapage-core
     savapage-ext
+    savapage-ext-blockchain-info    
+    savapage-ext-mollie
     savapage-server
 	savapage-cups-notifier
     savapage-nfc-reader

@@ -135,14 +135,21 @@ if [ -d "${_WIN_PPD_DRIVER_DLL_HOME}" ]; then
 	echo "Including Windows OEM printer driver..."
 	cp -R ${_WIN_PPD_DRIVER_DLL_HOME}/* ${DIST_HOME_APP}/client/win/
 fi
- 
 
+#------------------------------------------------------------------------
+# Copy the savapage-ext-*.jar files and their properties files as template  
+#------------------------------------------------------------------------
+cp -R ${_PREP_HOME}/${_SAVAPAGE_EXT_MOLLIE_JAR} ${DIST_HOME_APP}/server/ext/lib
+cp -R ${_PREP_HOME}/${_SAVAPAGE_EXT_BLOCKCHAIN_INFO_JAR} ${DIST_HOME_APP}/server/ext/lib
+
+cp ${_REPO_HOME_EXT_MOLLIE}/*.properties.template ${DIST_HOME_APP}/server/ext
+cp ${_REPO_HOME_EXT_BLOCKCHAIN_INFO}/*.properties.template ${DIST_HOME_APP}/server/ext
+ 
 #----------------------------------------
 # Copy the SavaPage Client 
 #----------------------------------------
 echo "Including SavaPage Client..."
 cp -R ${_REPO_HOME_CLIENT}/target/appassembler/app ${DIST_HOME_APP}/client
-
 
 #----------------------------------------
 # Copy C binaries
@@ -160,6 +167,8 @@ if [ -d "${LINUX_ARMV6}" ]; then
     fi	
 fi
 
+# copy settings .ini file template
+cp ${_REPO_HOME_NFC_READER}/*.template ${DIST_NFC_ARMV6_BIN_HOME}
 
 #------------------------------------------------------------------------
 # Create version file. This file is sourced into the app-server script.

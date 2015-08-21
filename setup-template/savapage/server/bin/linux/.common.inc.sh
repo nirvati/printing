@@ -47,21 +47,21 @@ done
 #--------------------------------------------------------------------
 currentdir=`dirname ${SELF_PATH}`
 
-SCRIPT_HOME=`cd "${currentdir}"; pwd`
-SERVER_HOME=`cd "${SCRIPT_HOME}/../../"; pwd`
-CLIENT_HOME=`cd "${SERVER_HOME}/../client/"; pwd`
+readonly SCRIPT_HOME=`cd "${currentdir}"; pwd`
+readonly SERVER_HOME=`cd "${SCRIPT_HOME}/../../"; pwd`
+readonly CLIENT_HOME=`cd "${SERVER_HOME}/../client/"; pwd`
   
-TMP_DIR=${SERVER_HOME}/tmp
-LOG_DIR=${SERVER_HOME}/logs
+readonly TMP_DIR=${SERVER_HOME}/tmp
+readonly LOG_DIR=${SERVER_HOME}/logs
 
-SERVER_PID=${LOG_DIR}/service.pid
+readonly SERVER_PID=${LOG_DIR}/service.pid
 
-PAM_SERVERNAME=savapage
+readonly PAM_SERVERNAME=savapage
 
 #
 # Setup Classpath
 #
-CLASSPATH=${SERVER_HOME}/lib/web/*
+CLASSPATH=${SERVER_HOME}/lib/web/*:${SERVER_HOME}/ext/lib/*
 
 # Check the server/bin/linux-* for the architecture
 if [ -d "${SERVER_HOME}/bin/linux-x64" ]; then
@@ -84,4 +84,72 @@ server_running () {
 	fi
 }
 
-# end-of-file
+#---------------------------------------------------
+# Check to see systemd and sysvinit are present
+#---------------------------------------------------
+_do_has_os_systemd() {
+    local is_present=`which systemctl 2> /dev/null`
+    if [ ! -z "${is_present}" ]; then     
+        echo "1"
+    fi 
+}
+
+_do_has_os_sysvinit() {
+    if [ -d "/etc/init.d" ]; then    
+        echo "1"
+    fi 
+}
+
+#---------------------------------------------------
+# Is this OS a Debian offspring?
+#---------------------------------------------------
+_do_is_os_debian_based() {
+    if [ ! -z `which dpkg 2> /dev/null` ]; then
+        echo "1"
+    fi 
+}
+
+#---------------------------------------------------
+# Find the systemd home location 
+#---------------------------------------------------
+_do_find_lib_systemd_system() {
+
+    locs="/lib/systemd/system
+            /usr/lib/systemd/system"
+
+    for d in ${locs}; do
+        if [ -d "${d}" ]; then
+            echo "${d}"
+            exit 0
+        fi
+    done
+    exit 1
+}
+
+#---------------------------------------------------
+# echo without linefeed.
+#---------------------------------------------------
+if [ -n"X`echo -n`" = "X-n" ]; then
+    echo_n() { echo ${1+"$@"}"\c"; }
+else
+    echo_n() { echo -n ${1+"$@"}; }
+fi
+
+#---------------------------------------------------------------------------
+# Constants 
+#---------------------------------------------------------------------------
+readonly _OS_IS_DEBIAN_BASED=$(_do_is_os_debian_based)
+readonly _OS_HAS_SYSVINIT=$(_do_has_os_sysvinit)
+readonly _OS_HAS_SYSTEMD=$(_do_has_os_systemd)
+
+readonly _SYSTEMD_SERVICE_FILENAME=savapage.service
+readonly _SYSTEMD_LIB_SYSTEM_HOME=$(_do_find_lib_systemd_system)
+
+if [ ! -z "${_OS_HAS_SYSTEMD}" ] && [ -z "${_SYSTEMD_LIB_SYSTEM_HOME}" ]; then
+    echo "Systemd is installed but lib location is not found." 1>&2
+    exit 1
+fi
+
+readonly _SYSTEMD_SERVICE_FILEPATH="${_SYSTEMD_LIB_SYSTEM_HOME}/${_SYSTEMD_SERVICE_FILENAME}"
+
+# end-of-script

@@ -1,4 +1,3 @@
-#!/bin/sh
 #
 # This file is part of the SavaPage project <http://savapage.org>.
 # Copyright (c) 2011-2015 Datraverse B.V.
@@ -21,11 +20,22 @@
 # address: info@datraverse.com
 #
 
-#-----------------------------------------------------------------------------
-# Convenience script to start the application server.
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------
+# jQuery Mobile Themes. 
+#
+# For each webapp set the *.css file as present in web/themes/ folder.
+#-----------------------------------------------------------------------
+#webapp.theme.admin=admin.min.css
+#webapp.theme.pos=pos.min.css
+#webapp.theme.user=user.min.css
 
-. `dirname $0`/.common.inc.sh
+#-----------------------------------------------------------------------
+# Custom CSS files. 
+#
+# For each webapp set the *.css file as present in web/ folder.
+#-----------------------------------------------------------------------
+#webapp.custom.admin=admin.css
+#webapp.custom.pos=pos.css
+#webapp.custom.user=user.css
 
-"${SCRIPT_HOME}/app-server" start
-
+# end-of-file

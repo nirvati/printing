@@ -1,4 +1,26 @@
 #!/bin/bash
+#
+# This file is part of the SavaPage project <http://savapage.org>.
+# Copyright (c) 2011-2015 Datraverse B.V.
+# Author: Rijk Ravestein.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# For more information, please contact Datraverse B.V. at this
+# address: info@datraverse.com
+#
+
 ### BEGIN INIT INFO
 # Provides:          savapage-app-server
 # Required-Start:    $cups $remote_fs $syslog
@@ -13,50 +35,9 @@
 # chkconfig: 345 99 05
 # description: Java deamon script
 #
-# A non-SUSE Linux start/stop script for Java daemons.
-#
-# Derived from -
-# Home page: http://www.source-code.biz
-# License:   GNU/LGPL (http://www.gnu.org/licenses/lgpl.html)
-# Copyright 2006 Christian d'Heureuse, Inventec Informatik AG, Switzerland.
-#
-# History:
-# 2010-09-21 Josh Davis: Changed 'sudo' to 'su', fix some typos, removed unused variables
-# 2009-03-04 Josh Davis: Ubuntu/Redhat version.
-# 2006-06-27 Christian d'Heureuse: Script created.
-# 2006-07-02 chdh: Minor improvements.
-# 2006-07-10 chdh: Changes for SUSE 10.0.
-
-#==============================================================================
-# Custom changes for SavaPage
-#
-# History:
-#
-# 2014-01-22: Added umask 077 protection
-#  
-# 2013-12-28: Added JMX DAEMON_ARGS
-#  
-# 2013-05-03: Introducing $APP_VERSION  
-#
-# 2012-07-30: makeFileWritable()
-#			  Changed chgrp ${serviceGroup} to 
-#             chown ${serviceUser}:${serviceGroup} 
-#
-# 2012-07-29: Set CLASSPATH environment variable before nohup command  
-#
-# 2012-07-25: added $cups to BEGIN INIT INFO Required-Start:
-#
-# 2011-12-16: BEGIN INIT INFO at the top of this file is applied for
-#             Debian offspring distros: we use the update-rc.d command in the
-#             install process to create symbolic links in the /etc/rc?.d
-#
-# 2011-12-14: removed su construct in startServiceProcess()
-#
-# 2011-12-12: created 
-#==============================================================================
 
 #------------------------------------------------------------------------------
-# @RRA Get the absolute path of this (symlinked) file
+# Get the absolute path of this (symlinked) file
 # This needed since a simpe `dirname $0`/.common.inc.sh is NOT symlink proof 
 #------------------------------------------------------------------------------
 SELF_PATH=$(cd -P -- "$(dirname -- "$0")" && pwd -P) && SELF_PATH=$SELF_PATH/$(basename -- "$0")
@@ -100,16 +81,17 @@ DAEMON_ARGS="-server $CUSTOM_JVM_ARGS $JVM_X_ARGS -Djava.awt.headless=true -Djav
 
 serviceNameLo="savapage"                                   # service name with the first letter in lowercase
 serviceName="SavaPage"                                     # service name
+serviceNameFull="SavaPage Libre Print Management"          # full service name
 serviceUser="savapage"                                     # OS user name for the service
-serviceGroup="savapage"                                    # OS group name for the service
+serviceGroup=`id -g -n ${serviceUser}`                     # OS group name for the service (primary group of serviceUser)
 applDir="$SERVER_HOME"                                     # server directory 
 serviceLogFile="$LOG_DIR/service.log"                      # log file for StdOut/StdErr
-maxShutdownTime=15                                         # maximum number of seconds to wait for the daemon to terminate normally
-pidFile="$SERVER_PID"                                      # name of PID file (PID = process ID number)
+maxShutdownTime=20                                         # maximum number of seconds to wait for the daemon to terminate normally
+pidFile="$SERVER_PID"                                      # name of PID file
 javaCommand="java"                                         # name of the Java launcher without the path
 javaArgs="$DAEMON_ARGS"                                    # arguments for Java launcher
 
-javaCommandLine="$javaCommand $javaArgs"                       # command line to start the Java service application
+javaCommandLine="$javaCommand $javaArgs"                   # command line to start the Java service application
 javaCommandLineKeyword="org.savapage.server.WebServer"     # a keyword that occurs on the commandline, used to detect an already running service process and to distinguish it from others
  
 # Makes the file $1 writable by the group $serviceGroup.
@@ -157,7 +139,7 @@ function startServiceProcess {
    sleep 0.1
    pid="$(<$pidFile)"
    if checkProcessIsRunning $pid; then :; else
-      echo -ne "\n$serviceName start failed, see logfile."
+      echo -ne "\n$serviceNameFull start failed, see logfile."
       return 1
    fi
    return 0; }
@@ -172,7 +154,7 @@ function stopServiceProcess {
          fi
       sleep 0.1
       done
-   echo -e "\n$serviceName did not terminate within $maxShutdownTime seconds, sending SIGKILL..."
+   echo -e "\n$serviceNameFull did not terminate within $maxShutdownTime seconds, sending SIGKILL..."
    kill -s KILL $pid || return 1
    local killWaitTime=15
    for ((i=0; i<killWaitTime*10; i++)); do
@@ -183,13 +165,13 @@ function stopServiceProcess {
          fi
       sleep 0.1
       done
-   echo "Error: $serviceName could not be stopped within $maxShutdownTime+$killWaitTime seconds!"
+   echo "Error: $serviceNameFull could not be stopped within $maxShutdownTime+$killWaitTime seconds!"
    return 1; }
  
 function startService {
    getServicePID
-   if [ $? -eq 0 ]; then echo -n "$serviceName is already running"; RETVAL=0; return 0; fi
-   echo -n "Starting $serviceName   "
+   if [ $? -eq 0 ]; then echo -n "$serviceNameFull is already running"; RETVAL=0; return 0; fi
+   echo -n "Starting $serviceNameFull   "
    startServiceProcess
    if [ $? -ne 0 ]; then RETVAL=1; echo "failed"; return 1; fi
    echo "started PID=$pid"
@@ -198,8 +180,8 @@ function startService {
  
 function stopService {
    getServicePID
-   if [ $? -ne 0 ]; then echo -n "$serviceName is not running"; RETVAL=0; echo ""; return 0; fi
-   echo -n "Stopping $serviceName   "
+   if [ $? -ne 0 ]; then echo -n "$serviceNameFull is not running"; RETVAL=0; echo ""; return 0; fi
+   echo -n "Stopping $serviceNameFull   "
    stopServiceProcess
    if [ $? -ne 0 ]; then RETVAL=1; echo "failed"; return 1; fi
    echo "stopped PID=$pid"
@@ -207,7 +189,7 @@ function stopService {
    return 0; }
  
 function checkServiceStatus {
-   echo -n "Checking for $serviceName:   "
+   echo -n "Checking for $serviceNameFull:   "
    if getServicePID; then
     echo "running PID=$pid"
     RETVAL=0
@@ -241,3 +223,5 @@ function main {
 }
  
 main $1
+
+# end-of-script
