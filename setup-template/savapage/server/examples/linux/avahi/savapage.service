@@ -33,13 +33,11 @@
         <!-- ============================================================= -->
 
         <!-- ............................................................. -->
-        <!-- The SavaPage Queue name formatted as: rp=printers/<queue>     -->
+        <!-- The SavaPage queue name formatted as: rp=printers/<queue>     -->
         <!--                                                               -->
-        <!-- For example: rp=printers/airprint                             -->
+        <!-- The reserved SavaPage queue name is 'airprint'                -->
         <!--                                                               -->
         <!-- NOTE: this is NOT the name displayed to the user.             -->
-        <!--                                                               -->
-        <!--                      $Customize$                              -->
         <!-- ............................................................. -->
         <txt-record>rp=printers/airprint</txt-record>
 
