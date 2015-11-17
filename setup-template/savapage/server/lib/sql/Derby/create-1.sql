@@ -180,7 +180,9 @@
     create table tbl_doc_out (
         doc_out_id bigint not null,
         destination varchar(255),
+        ecoprint boolean not null,
         letterhead boolean,
+        remove_graphics boolean not null,
         signature varchar(50) not null,
         pdf_out_id bigint,
         print_out_id bigint,
@@ -268,6 +270,7 @@
 
     create table tbl_print_out (
         print_out_id bigint not null,
+        collate_copies boolean,
         color_pages_estimated boolean not null,
         color_pages_total integer not null,
         cups_completed_time integer,
@@ -279,6 +282,7 @@
         cups_page_set varchar(8) not null,
         duplex boolean not null,
         grayscale boolean not null,
+        ipp_options varchar(2000),
         copies integer not null,
         total_esu bigint not null,
         total_sheets integer not null,
@@ -286,6 +290,7 @@
         paper_size varchar(20),
         paper_width_mm integer,
         print_mode varchar(8) not null,
+        reverse_pages boolean not null,
         printer_id bigint not null,
         primary key (print_out_id)
     );
