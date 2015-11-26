@@ -180,7 +180,9 @@
     create table tbl_doc_out (
         doc_out_id int8 not null,
         destination varchar(255),
+        ecoprint boolean not null,
         letterhead boolean,
+        remove_graphics boolean not null,
         signature varchar(50) not null,
         pdf_out_id int8,
         print_out_id int8,
@@ -268,6 +270,7 @@
 
     create table tbl_print_out (
         print_out_id int8 not null,
+        collate_copies boolean,
         color_pages_estimated boolean not null,
         color_pages_total int4 not null,
         cups_completed_time int4,
@@ -279,6 +282,7 @@
         cups_page_set varchar(8) not null,
         duplex boolean not null,
         grayscale boolean not null,
+        ipp_options varchar(2000),
         copies int4 not null,
         total_esu int8 not null,
         total_sheets int4 not null,
@@ -286,6 +290,7 @@
         paper_size varchar(20),
         paper_width_mm int4,
         print_mode varchar(8) not null,
+        reverse_pages boolean not null,
         printer_id int8 not null,
         primary key (print_out_id)
     );
@@ -480,7 +485,7 @@
     create index ix_account_3 on tbl_account (account_type, account_name_lower, sub_name_lower);
 
     alter table tbl_account_attr 
-        add constraint uc_account_attr_1  unique (account_id, attrib_name);
+        add constraint uc_account_attr_1 unique (account_id, attrib_name);
 
     create index ix_account_trx_1 on tbl_account_trx (account_id);
 
@@ -493,10 +498,10 @@
     create index ix_account_trx_5 on tbl_account_trx (ext_id);
 
     alter table tbl_account_voucher 
-        add constraint uc_account_voucher_1  unique (uuid);
+        add constraint uc_account_voucher_1 unique (uuid);
 
     alter table tbl_account_voucher 
-        add constraint uc_account_voucher_2  unique (card_number);
+        add constraint uc_account_voucher_2 unique (card_number);
 
     create index ix_account_voucher_1 on tbl_account_voucher (card_number_batch);
 
@@ -507,48 +512,48 @@
     create index ix_application_log_1 on tbl_application_log (log_date);
 
     alter table tbl_config 
-        add constraint uc_config_1  unique (property_name);
+        add constraint uc_config_1 unique (property_name);
 
     create index ix_config_1 on tbl_config (modified_by, modified_date);
 
     alter table tbl_device 
-        add constraint uc_device_1  unique (device_name);
+        add constraint uc_device_1 unique (device_name);
 
     alter table tbl_device 
-        add constraint uc_device_2  unique (hostname, device_type);
+        add constraint uc_device_2 unique (hostname, device_type);
 
     alter table tbl_device_attr 
-        add constraint uc_device_attr_1  unique (device_id, attrib_name);
+        add constraint uc_device_attr_1 unique (device_id, attrib_name);
 
     create index ix_doc_log_1 on tbl_doc_log (user_id, uuid);
 
     create index ix_doc_log_2 on tbl_doc_log (ext_supplier, ext_status);
 
     alter table tbl_ipp_queue 
-        add constraint uc_ipp_queue_1  unique (url_path);
+        add constraint uc_ipp_queue_1 unique (url_path);
 
     alter table tbl_ipp_queue_attr 
-        add constraint uc_queue_attr_1  unique (queue_id, attrib_name);
+        add constraint uc_queue_attr_1 unique (queue_id, attrib_name);
 
     alter table tbl_pos_item 
-        add constraint uc_pos_item_1  unique (item_name);
+        add constraint uc_pos_item_1 unique (item_name);
 
     alter table tbl_pos_purchase 
-        add constraint uc_pos_purchase_1  unique (receipt_num);
+        add constraint uc_pos_purchase_1 unique (receipt_num);
 
     create index ix_print_out_1 on tbl_print_out (cups_job_id);
 
     alter table tbl_printer 
-        add constraint uc_printer_1  unique (printer_name);
+        add constraint uc_printer_1 unique (printer_name);
 
     alter table tbl_printer_attr 
-        add constraint uc_printer_attr_1  unique (printer_id, attrib_name);
+        add constraint uc_printer_attr_1 unique (printer_id, attrib_name);
 
     alter table tbl_printer_group 
-        add constraint uc_printer_group_1  unique (group_name);
+        add constraint uc_printer_group_1 unique (group_name);
 
     alter table tbl_printer_group 
-        add constraint uc_printer_group_2  unique (display_name);
+        add constraint uc_printer_group_2 unique (display_name);
 
     create index ix_printer_group_member_1 on tbl_printer_group_member (printer_id);
 
@@ -561,39 +566,39 @@
     create index ix_user_account_2 on tbl_user_account (account_id);
 
     alter table tbl_user_attr 
-        add constraint uc_user_attr_1  unique (user_id, attrib_name);
+        add constraint uc_user_attr_1 unique (user_id, attrib_name);
 
     alter table tbl_user_card 
-        add constraint uc_user_card_1  unique (card_number);
+        add constraint uc_user_card_1 unique (card_number);
 
     alter table tbl_user_card 
-        add constraint uc_user_card_2  unique (user_id, index_number);
+        add constraint uc_user_card_2 unique (user_id, index_number);
 
     create index ix_user_card_1 on tbl_user_card (user_id, card_number);
 
     alter table tbl_user_email 
-        add constraint uc_user_email_1  unique (address);
+        add constraint uc_user_email_1 unique (address);
 
     alter table tbl_user_email 
-        add constraint uc_user_email_2  unique (user_id, index_number);
+        add constraint uc_user_email_2 unique (user_id, index_number);
 
     create index ix_user_email_1 on tbl_user_email (user_id, address);
 
     alter table tbl_user_group 
-        add constraint uc_user_group_1  unique (group_name);
+        add constraint uc_user_group_1 unique (group_name);
 
     alter table tbl_user_group_attr 
-        add constraint uc_user_group_attr_1  unique (user_group_id, attrib_name);
+        add constraint uc_user_group_attr_1 unique (user_group_id, attrib_name);
 
     create index ix_user_group_member_1 on tbl_user_group_member (user_id);
 
     create index ix_user_group_member_2 on tbl_user_group_member (user_group_id);
 
     alter table tbl_user_number 
-        add constraint uc_user_number_1  unique (id_number);
+        add constraint uc_user_number_1 unique (id_number);
 
     alter table tbl_user_number 
-        add constraint uc_user_number_2  unique (user_id, index_number);
+        add constraint uc_user_number_2 unique (user_id, index_number);
 
     create index ix_user_number_1 on tbl_user_number (user_id, id_number);
 
