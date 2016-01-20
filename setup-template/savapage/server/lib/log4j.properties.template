@@ -1,6 +1,6 @@
 #
 # This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2015 Datraverse B.V.
+# Copyright (c) 2011-2016 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@
 #=======================================================================
 # SavaPage Logging Properties Template
 #
-# (c) Copyright 2013-2015 Datraverse B.V.
+# (c) Copyright 2013-2016 Datraverse B.V.
 #=======================================================================
 
 ### log messages to file  ###
@@ -106,5 +106,10 @@ log4j.appender.smartschool.encoding=UTF8
 # Use INFO to activate the SmartSchoolLogger
 log4j.logger.org.savapage.core.print.smartschool.SmartSchoolLogger=INFO, smartschool
 log4j.additivity.org.savapage.core.print.smartschool.SmartSchoolLogger=false
+
+#------------------------------------------------------------------------------
+# Add custom logging below as instructed by SavaPage Support
+#------------------------------------------------------------------------------
+
 
 # end-of-file
