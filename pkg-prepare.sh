@@ -96,10 +96,13 @@ if [ -f "${YUICOMPRESSOR_JAR}" ]; then
 	    jquery.savapage-exceeded
 	    jquery.savapage-user
 	    jquery.savapage-admin
-	    jquery.savapage-admin-pos
 		jquery.savapage-admin-panels
 	    jquery.savapage-admin-pages
-		jquery.savapage-admin-page-pos"
+		jquery.savapage-jobtickets	    
+	    jquery.savapage-pos
+		jquery.savapage-page-jobtickets
+		jquery.savapage-page-pos
+		jquery.savapage-page-print-delegation"
 	        
 	for _src in ${_COMPRESS_SOURCES}
 	do
@@ -111,11 +114,12 @@ if [ -f "${YUICOMPRESSOR_JAR}" ]; then
 	done
 		
 	echo "+----------------------------------------"
-		
+				
 	_COMPRESS_SOURCES="jquery.savapage
 		jquery.savapage-user
 		jquery.savapage-admin
-		jquery.savapage-admin-pos"
+		jquery.savapage-jobtickets
+		jquery.savapage-pos"
 				
 	for _src in ${_COMPRESS_SOURCES}
 	do

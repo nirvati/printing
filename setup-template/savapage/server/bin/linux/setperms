@@ -66,6 +66,7 @@ fi
 chmod 700 data/backups
 chmod 700 data/conf
 chmod 700 data/email-outbox
+chmod 700 data/print-jobtickets
 chmod 700 data/internal
 
 #
