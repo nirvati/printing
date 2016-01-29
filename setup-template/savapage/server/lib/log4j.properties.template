@@ -93,7 +93,7 @@ log4j.logger.org.savapage.server.ext.PaymentGatewayLogger=INFO, paymentgateway
 log4j.additivity.org.savapage.server.ext.PaymentGatewayLogger=false
 
 #------------------------------------------------------------------------------
-# SmartSchool Logger
+# Smartschool Logger
 #------------------------------------------------------------------------------
 log4j.appender.smartschool=org.apache.log4j.RollingFileAppender
 log4j.appender.smartschool.MaxFileSize=10MB
@@ -103,9 +103,9 @@ log4j.appender.smartschool.layout=org.apache.log4j.PatternLayout
 log4j.appender.smartschool.layout.ConversionPattern=%d{ISO8601} %m\n
 log4j.appender.smartschool.encoding=UTF8
 
-# Use INFO to activate the SmartSchoolLogger
-log4j.logger.org.savapage.core.print.smartschool.SmartSchoolLogger=INFO, smartschool
-log4j.additivity.org.savapage.core.print.smartschool.SmartSchoolLogger=false
+# Use INFO to activate the SmartschoolLogger
+log4j.logger.org.savapage.ext.smartschool.SmartschoolLogger=INFO, smartschool
+log4j.additivity.org.savapage.ext.smartschool.SmartschoolLogger=false
 
 #------------------------------------------------------------------------------
 # Add custom logging below as instructed by SavaPage Support
