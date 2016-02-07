@@ -1,6 +1,6 @@
 #
 # This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2015 Datraverse B.V.
+# Copyright (c) 2011-2016 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -84,6 +84,7 @@ clean-patch:
 	@make -C $(REPO_HOME_PUB)/savapage-ext clean
 	@make -C $(REPO_HOME_PUB)/savapage-ext-blockchain-info clean
 	@make -C $(REPO_HOME_PUB)/savapage-ext-mollie clean
+	@make -C $(REPO_HOME_PUB)/savapage-i18n-de clean
 	@make -C $(REPO_HOME_PUB)/savapage-server clean
 
 #----------------------------------------------------------------------
@@ -102,6 +103,7 @@ mvn-package-patch:
 	@make -C $(REPO_HOME_PUB)/savapage-ext install
 	@make -C $(REPO_HOME_PUB)/savapage-ext-blockchain-info repackage
 	@make -C $(REPO_HOME_PUB)/savapage-ext-mollie repackage
+	@make -C $(REPO_HOME_PUB)/savapage-i18n-de install
 	@make -C $(REPO_HOME_PUB)/savapage-client repackage
 	@make -C $(REPO_HOME_PUB)/savapage-server repackage
 
