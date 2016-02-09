@@ -5,7 +5,7 @@ Environment used by [Development Partners](http://savapage.org/w/index.php/Roles
 ### License
 
 This module is part of the SavaPage project <http://savapage.org>,
-copyright (c) 2011-2015 Datraverse B.V. and licensed under the
+copyright (c) 2011-2016 Datraverse B.V. and licensed under the
 [GNU Affero General Public License (AGPL)](https://www.gnu.org/licenses/agpl.html).
 
 ### Join Efforts, Join our Community
@@ -48,6 +48,9 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
             savapage-core
             savapage-cups-notifier
             savapage-ext
+            savapage-ext-mollie
+            savapage-ext-blockchain-info
+            savapage-i18n-de
             savapage-server
             savapage-make
             savapage-nfc-reader
@@ -59,13 +62,14 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
         for repo in $_REPOS_GIT_PUBLIC
         do
             git clone https://gitlab.com/savapage/${repo}.git
+            # ... or when you have ssh access
+            # git clone git@gitlab.com:/savapage/${repo}.git
         done
 
     Execute the script:
     
         $ cd ~/savapage/repos
-        $ chmod +x init.sh 
-        $ ./init.sh
+        $ sh ./init.sh
     
     Remove the script:
 
