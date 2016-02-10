@@ -43,6 +43,9 @@ readonly _REPOS_GIT_PUBLIC="savapage-make
     savapage-ext-blockchain-info    
     savapage-ext-mollie
     savapage-i18n-de
+    savapage-i18n-en
+    savapage-i18n-fr
+    savapage-i18n-nl
     savapage-server
 	savapage-cups-notifier
     savapage-nfc-reader

@@ -51,6 +51,9 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
             savapage-ext-mollie
             savapage-ext-blockchain-info
             savapage-i18n-de
+            savapage-i18n-en
+            savapage-i18n-fr
+            savapage-i18n-nl
             savapage-server
             savapage-make
             savapage-nfc-reader

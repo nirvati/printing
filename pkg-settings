@@ -1,6 +1,6 @@
 #
 # This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2015 Datraverse B.V.
+# Copyright (c) 2011-2016 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -108,6 +108,9 @@ readonly _SAVAPAGE_CORE_JAR=savapage-core-${APP_VERSION}.jar
 readonly _SAVAPAGE_EXT_JAR=savapage-ext-${APP_VERSION}.jar
 
 readonly _SAVAPAGE_I18N_DE_JAR=savapage-i18n-de-${APP_VERSION}.jar
+readonly _SAVAPAGE_I18N_EN_JAR=savapage-i18n-en-${APP_VERSION}.jar
+readonly _SAVAPAGE_I18N_FR_JAR=savapage-i18n-fr-${APP_VERSION}.jar
+readonly _SAVAPAGE_I18N_NL_JAR=savapage-i18n-nl-${APP_VERSION}.jar
 
 readonly _SAVAPAGE_SERVER_WAR=savapage-server-${APP_VERSION}.war
 
