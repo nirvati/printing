@@ -2,7 +2,7 @@
 #
 # Desktop Entry template for SavaPage Admin Web App. 
 # 
-# (c) Copyright 2015 Datraverse B.V.
+# (c) Copyright 2016 Datraverse B.V.
 #
 #==============================================================================
 [Desktop Entry]
@@ -11,7 +11,7 @@ Type=Application
 GenericName=SavaPage
 Name=Admin
 Name[nl_NL]=Admin
-Exec=xdg-open http://savapage:8631/admin
+Exec=xdg-open https://savapage:8632/admin
 Terminal=false
 X-MultipleArgs=false
 Icon=/path/to/savapage-desktop-admin-48x48.png
