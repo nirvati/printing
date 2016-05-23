@@ -198,15 +198,6 @@ do_systemd_uninstall() {
 #--------------------------------------------------------------------------
 install_cups() {
 
-    #
-    # Create/replace the /etc/systemd cups.service?
-    #
-    if [ ! -z "${_OS_HAS_SYSTEMD}" ]; then
-        echo "Replacing the cups.service ..."
-    	do_systemd_install
-        echo "--------------------------------------------"
-    fi
-
     echo "Installing CUPS notifier..."
 
     #
@@ -218,51 +209,72 @@ install_cups() {
             /usr/local/cups/lib/cups/notifier 
             /opt/cups/lib/cups/notifier
             /usr/lib64/cups/notifier"
-            
+
+    notifier_dir=
+           
     for d in ${notifier_locs}; do    
 	    if test -d "${d}"; then
-	
-		    echo "Found CUPS notifier directory at ${d}"
-		    echo "Installing ${APP_NAME} into CUPS notifier directory"
-		
-		    # Copy in notifier
-		    cd "${d}"
-		    cp -f "${SCRIPT_HOME}/${SP_NOTIFIER_NAME}" "${CUPS_NOTIFIER_NAME}"
-		
-		    # Set some default permissions
-		    echo "Setting notifier permissions"
-		    chmod 755 "${CUPS_NOTIFIER_NAME}"
-		    chown root "${CUPS_NOTIFIER_NAME}"
-		
-		    # Set logical defaults depending on CUPS version
-		    if is_cups_v12_plus; then
-		        echo "Found CUPS version 1.2 or higher"
-		        # Explicitly set notifier to run as root
-		        chmod 700 "${CUPS_NOTIFIER_NAME}" 
-		    fi
-		
-		    # Set permissions on the notifier.  We use 'mailto', 'rss' or 'dbus' 
-			# as our reference.  This ensures that our permissions are setup
-		    # in line with the target distribution (e.g. using setuid?)
-		    refnotifier=
-		    if [ -x "mailto" ]; then
-		        refnotifier=mailto
-		    fi
-		    if [ -z "${refnotifier}" -a -x "rss" ]; then
-		        refnotifier=rss
-		    fi
-		    if [ -z "${refnotifier}" -a -x "dbus" ]; then
-		        refnotifier=dbus
-		    fi
-		    if [ ! -z "{refnotifier}" ]; then
-		        chown --reference=${refnotifier} "${CUPS_NOTIFIER_NAME}" 2>/dev/null
-		        chmod --reference=${refnotifier} "${CUPS_NOTIFIER_NAME}" 2>/dev/null
-		    fi
-		    
-			echo "Starting the ${APP_NAME}..."
-			"${SP_HOME}/server/bin/linux-${ARCH}/savapage-client" --cups-subscription-start > /dev/null 2>&1
+            notifier_dir=${d}
 	    fi
 	done
+
+    if [ -z "${notifier_dir}" ]; then
+	    echo "Error: Unable to install. CUPS notifier directory not found." >&2
+	    exit 1
+    fi
+
+    echo "Found CUPS notifier directory at ${notifier_dir}"
+    echo "Installing ${APP_NAME} into CUPS notifier directory"
+    
+    #
+    cd "${notifier_dir}"
+
+    # Copy in notifier
+    cp -f "${SCRIPT_HOME}/${SP_NOTIFIER_NAME}" "${CUPS_NOTIFIER_NAME}"
+
+    # Set some default permissions
+    echo "Setting notifier permissions"
+    chmod 755 "${CUPS_NOTIFIER_NAME}"
+    chown root "${CUPS_NOTIFIER_NAME}"
+
+    # Set logical defaults depending on CUPS version
+    if is_cups_v12_plus; then
+        echo "Found CUPS version 1.2 or higher"
+        # Explicitly set notifier to run as root
+        chmod 700 "${CUPS_NOTIFIER_NAME}" 
+    fi
+
+    # Set permissions on the notifier.  We use 'mailto', 'rss' or 'dbus' 
+    # as our reference.  This ensures that our permissions are setup
+    # in line with the target distribution (e.g. using setuid?)
+    refnotifier=
+    if [ -x "mailto" ]; then
+        refnotifier=mailto
+    fi
+    if [ -z "${refnotifier}" -a -x "rss" ]; then
+        refnotifier=rss
+    fi
+    if [ -z "${refnotifier}" -a -x "dbus" ]; then
+        refnotifier=dbus
+    fi
+    if [ ! -z "{refnotifier}" ]; then
+        chown --reference=${refnotifier} "${CUPS_NOTIFIER_NAME}" 2>/dev/null
+        chmod --reference=${refnotifier} "${CUPS_NOTIFIER_NAME}" 2>/dev/null
+    fi
+    
+    #
+    # Create/replace the /etc/systemd cups.service?
+    #
+    if [ ! -z "${_OS_HAS_SYSTEMD}" ]; then
+        echo "--------------------------------------------"
+        echo "Replacing the cups.service ..."
+    	do_systemd_install
+    fi
+    
+    echo "--------------------------------------------"
+    echo "Starting the ${APP_NAME}..."
+    sleep 2
+    "${SP_HOME}/server/bin/linux-${ARCH}/savapage-client" --cups-subscription-start > /dev/null 2>&1    
 }
 
 #--------------------------------------------------------------------------
