@@ -168,7 +168,7 @@ do_systemd_stop() {
 #---------------------------------------------------------------------------
 do_systemd_start() {
 	# Since cups.service changed on disk, reload systemd units.	
-	systemctl daemon-reload        
+	systemctl daemon-reload
     # enable the cups service
 	systemctl enable ${_SYSTEMD_CUPS_SERVICE_FILENAME}    
     # start the cups service
@@ -188,9 +188,9 @@ do_systemd_install() {
 # Uninstall systemd service
 #---------------------------------------------------------------------------
 do_systemd_uninstall() {	
-    do_systemd_stop
-	rm -f "${_SYSTEMD_CUPS_SERVICE_FILENAME}"
-    do_systemd_start
+	rm -f "${_SYSTEMD_CUPS_SERVICE_FILEPATH}"
+	# Since cups.service changed on disk, reload systemd units.	
+	systemctl daemon-reload
 }
 
 #--------------------------------------------------------------------------
