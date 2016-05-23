@@ -21,8 +21,8 @@
 # address: info@datraverse.com
 #
 
-. `dirname $0`/.common.inc.sh
-
+. `dirname $0`/.server-common.inc.sh
+. `dirname $0`/../../../.common.inc.sh
 . `dirname $0`/../../../.install-config.sh
 
 if [ -z "${APP_NAME}" ]; then
@@ -41,6 +41,16 @@ fi
 # Constants
 #---------------------------------------------------------------------------
 readonly SERVER_BIN_HOME=${SCRIPT_HOME}
+
+readonly _SYSTEMD_LIB_SYSTEM_HOME=$(_do_find_lib_systemd_system)
+
+if [ ! -z "${_OS_HAS_SYSTEMD}" ] && [ -z "${_SYSTEMD_LIB_SYSTEM_HOME}" ]; then
+    echo "Systemd is installed but lib location is not found." 1>&2
+    exit 1
+fi
+
+readonly _SYSTEMD_SERVICE_FILENAME=savapage.service
+readonly _SYSTEMD_SERVICE_FILEPATH="${_SYSTEMD_LIB_SYSTEM_HOME}/${_SYSTEMD_SERVICE_FILENAME}"
 
 #---------------------------------------------------------------------------
 # Write the savapage.service file
@@ -111,8 +121,7 @@ do_install_systemd() {
 	# Since savapage.service changed on disk, reload systemd units.	
 	systemctl daemon-reload
         
-    # enable the savapage service, this creates the symbolic link 
-	# in /etc/systemd/system/
+    # enable the savapage service
 	systemctl enable ${_SYSTEMD_SERVICE_FILENAME}		
 }
 

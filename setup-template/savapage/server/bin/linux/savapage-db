@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2015 Datraverse B.V.
+# Copyright (c) 2011-2016 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 # address: info@datraverse.com
 #
 
-. `dirname $0`/.common.inc.sh
+. `dirname $0`/.server-common.inc.sh
 
 if [ -z "${USER}" ]; then
         USER=`whoami`

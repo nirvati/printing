@@ -1,6 +1,6 @@
 #
 # This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2015 Datraverse B.V.
+# Copyright (c) 2011-2016 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -23,66 +23,6 @@
 #-----------------------------------------------------------------------------
 # Common shell functions, constants and defaults
 #-----------------------------------------------------------------------------
-
-APP_NAME="SavaPage Application Server"
-
-HOST_USER=savapage
-
-APP_NAME_SHORT=savapage
-
-#--------------------------------------------------------------------
-# Get the absolute path of this (symlinked) file
-#--------------------------------------------------------------------
-SELF_PATH=$(cd -P -- "$(dirname -- "$0")" && pwd -P) && SELF_PATH=$SELF_PATH/$(basename -- "$0")
-# resolve symlinks
-while [ -h $SELF_PATH ]; do
-    # 1) cd to directory of the symlink
-    # 2) cd to the directory of where the symlink points
-    # 3) get the pwd
-    # 4) append the basename
-    DIR=$(dirname -- "$SELF_PATH")
-    SYM=$(readlink $SELF_PATH)
-    SELF_PATH=$(cd $DIR && cd $(dirname -- "$SYM") && pwd)/$(basename -- "$SYM")
-done
-#--------------------------------------------------------------------
-currentdir=`dirname ${SELF_PATH}`
-
-readonly SCRIPT_HOME=`cd "${currentdir}"; pwd`
-readonly SERVER_HOME=`cd "${SCRIPT_HOME}/../../"; pwd`
-readonly CLIENT_HOME=`cd "${SERVER_HOME}/../client/"; pwd`
-  
-readonly TMP_DIR=${SERVER_HOME}/tmp
-readonly LOG_DIR=${SERVER_HOME}/logs
-
-readonly SERVER_PID=${LOG_DIR}/service.pid
-
-readonly PAM_SERVERNAME=savapage
-
-#
-# Setup Classpath
-#
-CLASSPATH=${SERVER_HOME}/lib/web/*:${SERVER_HOME}/ext/lib/*
-
-# Check the server/bin/linux-* for the architecture
-if [ -d "${SERVER_HOME}/bin/linux-x64" ]; then
-    ARCH=x64
-else
-    ARCH=i686
-fi
-
-#---------------------------------------
-# Check to see if the server is running
-#---------------------------------------
-server_running () {
-	ps_alive=0
-	if [ -f "${SERVER_PID}" ] && ps `cat ${SERVER_PID}` >/dev/null 2>&1
-	then 
-		ps_alive=1;
-		return 0
-	else
-		return 1
-	fi
-}
 
 #---------------------------------------------------
 # Check to see systemd and sysvinit are present
@@ -110,12 +50,28 @@ _do_is_os_debian_based() {
 }
 
 #---------------------------------------------------
-# Find the systemd home location 
+# Find the lib/systemd home location 
 #---------------------------------------------------
 _do_find_lib_systemd_system() {
 
     locs="/lib/systemd/system
             /usr/lib/systemd/system"
+
+    for d in ${locs}; do
+        if [ -d "${d}" ]; then
+            echo "${d}"
+            exit 0
+        fi
+    done
+    exit 1
+}
+
+#---------------------------------------------------
+# Find the etc/systemd home location 
+#---------------------------------------------------
+_do_find_etc_systemd_system() {
+
+    locs="/etc/systemd/system"
 
     for d in ${locs}; do
         if [ -d "${d}" ]; then
@@ -142,14 +98,4 @@ readonly _OS_IS_DEBIAN_BASED=$(_do_is_os_debian_based)
 readonly _OS_HAS_SYSVINIT=$(_do_has_os_sysvinit)
 readonly _OS_HAS_SYSTEMD=$(_do_has_os_systemd)
 
-readonly _SYSTEMD_SERVICE_FILENAME=savapage.service
-readonly _SYSTEMD_LIB_SYSTEM_HOME=$(_do_find_lib_systemd_system)
-
-if [ ! -z "${_OS_HAS_SYSTEMD}" ] && [ -z "${_SYSTEMD_LIB_SYSTEM_HOME}" ]; then
-    echo "Systemd is installed but lib location is not found." 1>&2
-    exit 1
-fi
-
-readonly _SYSTEMD_SERVICE_FILEPATH="${_SYSTEMD_LIB_SYSTEM_HOME}/${_SYSTEMD_SERVICE_FILENAME}"
-
-# end-of-script
+# end-of-file
