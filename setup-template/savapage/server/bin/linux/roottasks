@@ -363,6 +363,9 @@ do_install() {
 	echo 
 	echo "Installation completed."
 	echo 
+	echo "IMPORTANT: If you have not made a backup of the server/data/encryption.properties" 
+    echo "           file yet, do it now, and store it at a secure place."
+	echo 
 	echo "Open https://${servername}:${SAVAPAGE_PORT_SSL}/admin to configure the application."
 	echo 
 	echo "Please consult the User Manual for more information."
