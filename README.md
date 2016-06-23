@@ -22,6 +22,9 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
 0. Open JDK 1.7+
 
         $ sudo apt-get install openjdk-7-jdk
+        
+        # or alternatively
+        $ sudo apt-get install openjdk-8-jdk
 
 0. Maven 3
 
@@ -31,6 +34,9 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
                
         $ sudo apt-get install g++
 
+0. pkg-config: a system for managing library compile and link flags
+
+        $ sudo apt-get install pkg-config
 
 ### Getting started
 
