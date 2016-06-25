@@ -40,4 +40,23 @@
 #webapp.custom.pos=pos.css
 #webapp.custom.user=user.css
 
+
+#-----------------------------------------------------------------------
+# Custom HTML inject files.
+#
+# For each webapp set the *.html files as present in html/ folder.
+#-----------------------------------------------------------------------
+#webapp.html.admin.about=admin-about.html
+#webapp.html.admin.login=admin-login.html
+
+#webapp.html.jobtickets.about=jobtickets-about.html
+#webapp.html.jobtickets.login=jobtickets-login.html
+
+#webapp.html.pos.about=pos-about.html
+#webapp.html.pos.login=pos-login.html
+
+#webapp.html.user.about=user-about.html
+#webapp.html.user.login=user-login.html
+
+
 # end-of-file
