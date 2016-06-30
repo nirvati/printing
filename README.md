@@ -38,6 +38,11 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
 
         $ sudo apt-get install pkg-config
 
+0. zip: archiver for .zip files
+
+        $ sudo apt-get install zip
+
+
 ### Getting started
 
 0. Create a directory for all SavaPage repositories.
