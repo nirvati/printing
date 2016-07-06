@@ -119,7 +119,8 @@ if [ -f "${YUICOMPRESSOR_JAR}" ]; then
 		jquery.savapage-user
 		jquery.savapage-admin
 		jquery.savapage-jobtickets
-		jquery.savapage-pos"
+		jquery.savapage-pos
+        wicket.savapage"
 				
 	for _src in ${_COMPRESS_SOURCES}
 	do
