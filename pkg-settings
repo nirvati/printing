@@ -125,7 +125,7 @@ readonly _SAVAPAGE_AD_HOC_SERVER_JAR=savapage-server-${APP_VERSION}.jar
 readonly YUICOMPRESSOR_JAR=${_THIRD_PARTY_HOME}/java/yuicompressor/2.4.7/build/yuicompressor-2.4.7.jar
 
 # packaged fonts
-readonly _FONTS_PACKAGE_VERSION=0.9.6
+readonly _FONTS_PACKAGE_VERSION=0.9.7
 readonly _FONTS_PACKAGE_HOME=${_THIRD_PARTY_HOME}/fonts/savapage/${_FONTS_PACKAGE_VERSION}
 
 #
