@@ -26,8 +26,68 @@
 # original vendor "type-model-version.ppd" file as explained below.
 # -----------------------------------------------------------------------------
 #
-# 
-# END-OF-COMMENT: Add extensions to the vendor PPD below this line.
+# Each line in this file holds a mapping of the original PPD file option to
+# the IPP attribute. There are two formats:
+#
+# (1) *VENOption IppAttribute
+# (2) *VENOption VENOptionValue IppValue
+#
+# The 'VEN' prefix stands for 'vendor'. VENOption and VENOptionValue must be
+# replaced by their PPD equivalent.
+#
+# IPP Attributes and their Keyword and Enum Attribute Values are from 
+# https://www.iana.org/assignments/ipp-registrations
+#
+# There are Custom SavaPage IPP Attributes and Values defined though, 
+# for internal-use-only, all having 'org.savapage-' prefix.
+#
+# Attributes:
+#
+#    org.savapage-finishings-staple
+#    org.savapage-finishings-punch
+#    org.savapage-finishings-fold
+#    org.savapage-finishings-booklet
+#
+# Keyword Attribute Values:
+#
+#    org.savapage-tray-auto
+#
+# Example mappings are given below. Adapt or delete them as needed.
+#
+# NOTE: Creating PPD extensions is a job for specialists. If you need help,
+# please contact your SavaPage Community representative. 
+# -----------------------------------------------------------------------------
 
+#-----------------------------------------------------------------------
+#  Finishing: Stapling
+#-----------------------------------------------------------------------
+*VENStapleOption org.savapage-finishings-staple
+*VENStapleOption *VENNone 3
+*VENStapleOption VENSinglePortrait 20
+*VENStapleOption VENDualPortrait 28
+ 
+#-----------------------------------------------------------------------
+#  Finishing: Hole Punch
+#-----------------------------------------------------------------------
+*VENPunchOption org.savapage-finishings-punch 
+*VENPunchOption *VENNone 3
+*VENPunchOption VEN2Punch 74
+*VENPunchOption VEN3Punch 78
+*VENPunchOption VEN4Punch 82 
+     
+#-----------------------------------------------------------------------
+#  Finishing: Fold
+#-----------------------------------------------------------------------
+*VENFoldOption org.savapage-finishings-fold
+*VENFoldOption *VENNone 3
+*VENFoldOption VENBiFold 93
+*VENFoldOption VENZFoldHalf 94
+
+#-----------------------------------------------------------------------
+# Collate (see https://tools.ietf.org/html/rfc3381)
+#-----------------------------------------------------------------------
+*VENCollate sheet-collate
+*VENCollate VENFalse uncollated
+*VENCollate *VENTrue collated
 
 # end-of-file
