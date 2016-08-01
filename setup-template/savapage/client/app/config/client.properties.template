@@ -1,6 +1,6 @@
 #
 # This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2015 Datraverse B.V.
+# Copyright (c) 2011-2016 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -49,6 +49,12 @@ server-host=
 # Hide the "Exit" menu item (optional). Default: false.
 #-----------------------------------------------------------------------
 #hide-exit=true
+
+#-----------------------------------------------------------------------
+# Show dialog with action buttons at print-in event (optional). 
+# Default: false.
+#-----------------------------------------------------------------------
+#print-dialog=true
 
 #=======================================================================
 # end-of-file

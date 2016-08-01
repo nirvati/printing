@@ -5,8 +5,9 @@ Environment used by [Development Partners](http://savapage.org/w/index.php/Roles
 ### License
 
 This module is part of the SavaPage project <http://savapage.org>,
-copyright (c) 2011-2015 Datraverse B.V. and licensed under the
-[GNU Affero General Public License (AGPL)](https://www.gnu.org/licenses/agpl.html).
+copyright (c) 2011-2016 Datraverse B.V. and licensed under the
+[GNU Affero General Public License (AGPL)](https://www.gnu.org/licenses/agpl.html)
+version 3, or (at your option) any later version.
 
 ### Join Efforts, Join our Community
 
@@ -21,6 +22,9 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
 0. Open JDK 1.7+
 
         $ sudo apt-get install openjdk-7-jdk
+        
+        # or alternatively
+        $ sudo apt-get install openjdk-8-jdk
 
 0. Maven 3
 
@@ -29,6 +33,14 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
 0. GNU project C and C++ compiler
                
         $ sudo apt-get install g++
+
+0. pkg-config: a system for managing library compile and link flags
+
+        $ sudo apt-get install pkg-config
+
+0. zip: archiver for .zip files
+
+        $ sudo apt-get install zip
 
 
 ### Getting started
@@ -48,6 +60,12 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
             savapage-core
             savapage-cups-notifier
             savapage-ext
+            savapage-ext-mollie
+            savapage-ext-blockchain-info
+            savapage-i18n-de
+            savapage-i18n-en
+            savapage-i18n-fr
+            savapage-i18n-nl
             savapage-server
             savapage-make
             savapage-nfc-reader
@@ -59,13 +77,14 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
         for repo in $_REPOS_GIT_PUBLIC
         do
             git clone https://gitlab.com/savapage/${repo}.git
+            # ... or when you have ssh access
+            # git clone git@gitlab.com:/savapage/${repo}.git
         done
 
     Execute the script:
     
         $ cd ~/savapage/repos
-        $ chmod +x init.sh 
-        $ ./init.sh
+        $ sh ./init.sh
     
     Remove the script:
 

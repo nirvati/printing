@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2015 Datraverse B.V.
+# Copyright (c) 2011-2016 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,9 @@
 # address: info@datraverse.com
 #
 
-. `dirname $0`/.common.inc.sh
+. `dirname $0`/.server-common.inc.sh
+. `dirname $0`/../../../.common.inc.sh
+. `dirname $0`/../../../.install-config.sh
 
 if [ -z "${APP_NAME}" ]; then
 	echo "Error importing common file." 1>&2
@@ -40,6 +42,16 @@ fi
 #---------------------------------------------------------------------------
 readonly SERVER_BIN_HOME=${SCRIPT_HOME}
 
+readonly _SYSTEMD_LIB_SYSTEM_HOME=$(_do_find_lib_systemd_system)
+
+if [ ! -z "${_OS_HAS_SYSTEMD}" ] && [ -z "${_SYSTEMD_LIB_SYSTEM_HOME}" ]; then
+    echo "Systemd is installed but lib location is not found." 1>&2
+    exit 1
+fi
+
+readonly _SYSTEMD_SERVICE_FILENAME=savapage.service
+readonly _SYSTEMD_SERVICE_FILEPATH="${_SYSTEMD_LIB_SYSTEM_HOME}/${_SYSTEMD_SERVICE_FILENAME}"
+
 #---------------------------------------------------------------------------
 # Write the savapage.service file
 #---------------------------------------------------------------------------
@@ -49,7 +61,7 @@ do_systemd_write_service_file() {
 	cat > "${_SYSTEMD_SERVICE_FILEPATH}" << EOF
 #
 # This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2015 Datraverse B.V.
+# Copyright (c) 2011-2016 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -109,8 +121,7 @@ do_install_systemd() {
 	# Since savapage.service changed on disk, reload systemd units.	
 	systemctl daemon-reload
         
-    # enable the savapage service, this creates the symbolic link 
-	# in /etc/systemd/system/
+    # enable the savapage service
 	systemctl enable ${_SYSTEMD_SERVICE_FILENAME}		
 }
 
@@ -352,7 +363,10 @@ do_install() {
 	echo 
 	echo "Installation completed."
 	echo 
-	echo "Open http://${servername}:${SAVAPAGE_PORT}/admin to configure the application."
+	echo "IMPORTANT: If you have not made a backup of the server/data/encryption.properties" 
+    echo "           file yet, do it now, and store it at a secure place."
+	echo 
+	echo "Open https://${servername}:${SAVAPAGE_PORT_SSL}/admin to configure the application."
 	echo 
 	echo "Please consult the User Manual for more information."
 	echo 

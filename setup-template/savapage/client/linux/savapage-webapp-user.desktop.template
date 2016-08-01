@@ -2,7 +2,7 @@
 #
 # Desktop Entry template for SavaPage User Web App. 
 # 
-# (c) Copyright 2015 Datraverse B.V.
+# (c) Copyright 2016 Datraverse B.V.
 #
 #==============================================================================
 [Desktop Entry]
@@ -11,7 +11,7 @@ Type=Application
 GenericName=SavaPage
 Name=User
 Name[nl_NL]=Gebruiker
-Exec=xdg-open http://savapage:8631/user
+Exec=xdg-open https://savapage:8632/user
 Terminal=false
 X-MultipleArgs=false
 Icon=/path/to/savapage-desktop-user-48x48.png

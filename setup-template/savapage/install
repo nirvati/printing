@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2015 Datraverse B.V.
+# Copyright (c) 2011-2016 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -322,7 +322,8 @@ fi
 # Request agreement with AGPL
 echo "+------------------------------------------------------------------+"
 echo "| SavaPage is copyright (c) 2011-"`date +%Y`" Datraverse B.V. and licensed |"
-echo "| under the GNU Affero General Public License (AGPL).              |"
+echo "| under the terms of the GNU Affero General Public License (AGPL)  |"
+echo "| version 3, or (at your option) any later version..               |"
 echo "|                                                                  |" 
 echo "| See <http://www.gnu.org/licenses/>                               |"
 echo "|                                                                  |" 

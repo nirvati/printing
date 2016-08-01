@@ -1,6 +1,6 @@
 #
 # This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2015 Datraverse B.V.
+# Copyright (c) 2011-2016 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -26,6 +26,7 @@
 # For each webapp set the *.css file as present in web/themes/ folder.
 #-----------------------------------------------------------------------
 #webapp.theme.admin=admin.min.css
+#webapp.theme.jobtickets=jobtickets.min.css
 #webapp.theme.pos=pos.min.css
 #webapp.theme.user=user.min.css
 
@@ -35,7 +36,27 @@
 # For each webapp set the *.css file as present in web/ folder.
 #-----------------------------------------------------------------------
 #webapp.custom.admin=admin.css
+#webapp.custom.jobtickets=jobtickets.css
 #webapp.custom.pos=pos.css
 #webapp.custom.user=user.css
+
+
+#-----------------------------------------------------------------------
+# Custom HTML inject files.
+#
+# For each webapp set the *.html files as present in html/ folder.
+#-----------------------------------------------------------------------
+#webapp.html.admin.about=admin-about.html
+#webapp.html.admin.login=admin-login.html
+
+#webapp.html.jobtickets.about=jobtickets-about.html
+#webapp.html.jobtickets.login=jobtickets-login.html
+
+#webapp.html.pos.about=pos-about.html
+#webapp.html.pos.login=pos-login.html
+
+#webapp.html.user.about=user-about.html
+#webapp.html.user.login=user-login.html
+
 
 # end-of-file

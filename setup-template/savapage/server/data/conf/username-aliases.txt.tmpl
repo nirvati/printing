@@ -1,23 +1,38 @@
 #
-# IMPORTANT: Copy this file to the name "username-aliases.txt" to use this
-#            feature. This is a template file only. 
+# This file is part of the SavaPage project <http://savapage.org>.
+# Copyright (c) 2011-2016 Datraverse B.V.
+# Author: Rijk Ravestein.
 #
-# This file may be used to define a list of username aliases.  An alias is a
-# way of mapping a username in one format to a name in another.  It is useful
-# in the following situations:
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
 #
-#   * Providing a way for users to log into the system with a username
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# For more information, please contact Datraverse B.V. at this
+# address: info@datraverse.com
+#
+# -----------------------------------------------------------------------------
+#                       THIS IS A TEMPLATE FILE 
+#
+# Copy this file to "username-aliases.txt" and add aliases as explained below.
+# -----------------------------------------------------------------------------
+#
+# This file defines a list of username aliases. An alias maps a username 
+# from one format to another. This is useful when:
+#
+#   * You want to provide a way for users to log into the system with a username
 #     formatted in a different way.
 #
-#   * Used as a temporary tool to manage domain or username format changes. For
-#     example, you may have changed names from j.smith to john.smith.  An
-#     alias can help by allowing forgetful users to log in with their old name.
-#
-# Name aliases are applied at the following levels:
-#   
-#   * User login to the web interface
-#   
-#   * Print jobs arriving under the alias name.
+#   * You want to assign print jobs arriving under the alias name to another 
+#     username. 
 #
 # The format of the alias file is as follows:
 #
@@ -25,12 +40,12 @@
 #   aliasnameA: username2
 #   aliasnameB: username2
 #
-# meaning <aliasname> maps to <username> in the system database.  A user
-# may have multiple aliases.  In this example, username2 is known as both
+# ... meaning <aliasname> maps to <username> in the application database.
+# 
+# A user may have multiple aliases. In this example, username2 is known as both
 # aliasnameA and aliasnameB.
 #
-# The aliasname and the username may be separated by either,  = (equals), 
-# : (semicolon), or TAB (a tab-delimited file).
+# The <aliasname> and <username> may be separated by one of these characters: 
+# : (semicolon), = (equals), or TAB.
 # 
-#
-# END COMMENT: Add aliases to end of this file below.
+# END-OF-COMMENT: Add aliases below this line.
