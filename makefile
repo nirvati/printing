@@ -187,7 +187,7 @@ savapage-nss: $(C_TRG)/savapage-nss
 
 .PHONY: binaries
 binaries:
-	@make -C $(REPO_HOME_PUB)/xmlrpcpp	
+	@make -C $(REPO_HOME_PUB)/xmlrpcpp
 	@make -C $(REPO_HOME_PUB)/savapage-nfc-reader PRODUCT_VERSION=$(PRODUCT_VERSION)
 	@make -C $(REPO_HOME_PUB)/savapage-cups-notifier PRODUCT_VERSION=$(PRODUCT_VERSION)
 	@make -C $(REPO_HOME_PUB)/savapage-nss  PRODUCT_VERSION=$(PRODUCT_VERSION) 
