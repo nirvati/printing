@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# This file is part of the SavaPage project <http://savapage.org>.
+# This file is part of the SavaPage project <https://www.savapage.org>.
 # Copyright (c) 2011-2016 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
@@ -15,7 +15,7 @@
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # For more information, please contact Datraverse B.V. at this
 # address: info@datraverse.com
@@ -60,7 +60,7 @@ do_systemd_write_service_file() {
 
 	cat > "${_SYSTEMD_SERVICE_FILEPATH}" << EOF
 #
-# This file is part of the SavaPage project <http://savapage.org>.
+# This file is part of the SavaPage project <https://www.savapage.org>.
 # Copyright (c) 2011-2016 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
@@ -75,7 +75,7 @@ do_systemd_write_service_file() {
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # For more information, please contact Datraverse B.V. at this
 # address: info@datraverse.com
@@ -313,14 +313,23 @@ do_install() {
     chmod 4511 ${SERVER_BIN_HOME}/savapage-pam
 
     echo "Configuring PAM..."
-    if [ -n "${PAM_SERVERNAME}" -a -f /etc/pam.d/passwd ]; then
-        # 
-        # PAM seems to be quite distribution specific so we'll
-        # take the approach of using passwd as a template. This
-        # should contain the basic stuff we need for password
-        # authentication.
-        #
-        cp /etc/pam.d/passwd "/etc/pam.d/${PAM_SERVERNAME}" 2>/dev/null
+    
+    if [ -f /etc/pam.d/${PAM_SERVERNAME} ]; then
+	    echo "/etc/pam.d/${PAM_SERVERNAME} already exists."
+    else
+        if [ -n "${PAM_SERVERNAME}" -a -f /etc/pam.d/passwd ]; then
+            # 
+            # The content of the PAM file is distribution specific so
+            # we take the approach of using passwd as a template. This
+            # should contain the basic stuff we need for password
+            # authentication.
+            #
+            cp /etc/pam.d/passwd "/etc/pam.d/${PAM_SERVERNAME}" 2>/dev/null
+            echo "/etc/pam.d/${PAM_SERVERNAME} initialized as copy from /etc/pam.d/passwd"
+        else
+            echo "# " > /etc/pam.d/${PAM_SERVERNAME}
+            echo "/etc/pam.d/${PAM_SERVERNAME} created as empty placeholder."
+        fi
     fi
 
     #
