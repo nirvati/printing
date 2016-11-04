@@ -23,8 +23,8 @@
 
 ### BEGIN INIT INFO
 # Provides:          savapage-app-server
-# Required-Start:    $cups $remote_fs $syslog networking
-# Required-Stop:     $remote_fs $syslog networking
+# Required-Start:    cups $remote_fs $syslog $network
+# Required-Stop:     cups $remote_fs $syslog $network
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: SavaPage Application Server
