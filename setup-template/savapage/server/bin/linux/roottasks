@@ -82,6 +82,7 @@ do_systemd_write_service_file() {
 #
 [Unit]
 Description=SavaPage Libre Print Management
+After=network.target cups.service
 
 [Service]
 Type=forking

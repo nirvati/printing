@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# This file is part of the SavaPage project <http://savapage.org>.
+# This file is part of the SavaPage project <https://www.savapage.org>.
 # Copyright (c) 2011-2016 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
@@ -15,7 +15,7 @@
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # For more information, please contact Datraverse B.V. at this
 # address: info@datraverse.com
@@ -23,8 +23,8 @@
 
 ### BEGIN INIT INFO
 # Provides:          savapage-app-server
-# Required-Start:    $cups $remote_fs $syslog
-# Required-Stop:     $remote_fs $syslog
+# Required-Start:    $cups $remote_fs $syslog networking
+# Required-Stop:     $remote_fs $syslog networking
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: SavaPage Application Server
