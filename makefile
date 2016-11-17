@@ -1,5 +1,5 @@
 #
-# This file is part of the SavaPage project <http://savapage.org>.
+# This file is part of the SavaPage project <https://www.savapage.org>.
 # Copyright (c) 2011-2016 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
@@ -14,7 +14,7 @@
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # For more information, please contact Datraverse B.V. at this
 # address: info@datraverse.com
@@ -80,6 +80,7 @@ clean: cleanc mvn-clean ppd-clean
 clean-patch:
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-de clean
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-en clean
+	@make -C $(REPO_HOME_PUB)/savapage-i18n-es clean
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-fr clean
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-nl clean
 	@make -C $(REPO_HOME_PUB)/savapage-common clean
@@ -103,6 +104,7 @@ mvn-package: mvn-package-patch
 mvn-package-patch:
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-de install
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-en install
+	@make -C $(REPO_HOME_PUB)/savapage-i18n-es install
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-fr install
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-nl install
 	@make -C $(REPO_HOME_PUB)/savapage-common install

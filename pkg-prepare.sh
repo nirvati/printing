@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# This file is part of the SavaPage project <http://savapage.org>.
+# This file is part of the SavaPage project <https://www.savapage.org>.
 # Copyright (c) 2011-2016 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
@@ -15,7 +15,7 @@
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # For more information, please contact Datraverse B.V. at this
 # address: info@datraverse.com
@@ -241,6 +241,46 @@ cd ${_CURRENTDIR}
 WORK_ZIP_NAME=${_SAVAPAGE_I18N_EN_JAR}
 WORK_HOME=${_PREP_HOME}/${WORK_ZIP_NAME}_WORK
 WORK_ZIP_SRC=${_REPO_HOME_PUB}/savapage-i18n-en/target/${WORK_ZIP_NAME}
+
+echo "+--------------------------------------------------------------"
+echo "| Prepare ${WORK_ZIP_NAME}"
+echo "+--------------------------------------------------------------"
+
+#----------------------------------------
+# Make room
+#----------------------------------------
+mkdir --parent ${WORK_HOME}
+
+#----------------------------------------
+# Extract 
+#----------------------------------------
+unzip -q ${WORK_ZIP_SRC} -d ${WORK_HOME}
+
+#----------------------------------------
+# Prune
+#----------------------------------------
+rm -rf ${WORK_HOME}/META-INF/maven
+
+#----------------------------------------
+# Change
+#----------------------------------------
+#TODO : adapt META-INF/MANIFEST.MF
+
+#------------------------------------------------------------------------------
+# Zip-up 
+#------------------------------------------------------------------------------
+cd ${WORK_HOME}
+zip -q -r ${_PREP_HOME}/${WORK_ZIP_NAME} ./*
+cd ${_CURRENTDIR}
+
+
+#=========================================================================
+# savapage-i18n-es.jar
+#=========================================================================
+
+WORK_ZIP_NAME=${_SAVAPAGE_I18N_ES_JAR}
+WORK_HOME=${_PREP_HOME}/${WORK_ZIP_NAME}_WORK
+WORK_ZIP_SRC=${_REPO_HOME_PUB}/savapage-i18n-es/target/${WORK_ZIP_NAME}
 
 echo "+--------------------------------------------------------------"
 echo "| Prepare ${WORK_ZIP_NAME}"
@@ -561,6 +601,7 @@ cp ${_PREP_HOME}/${_SAVAPAGE_CORE_JAR} ${_PREP_WEB_LIB_HOME}
 
 cp ${_PREP_HOME}/${_SAVAPAGE_I18N_DE_JAR} ${_PREP_WEB_LIB_HOME}
 cp ${_PREP_HOME}/${_SAVAPAGE_I18N_EN_JAR} ${_PREP_WEB_LIB_HOME}
+cp ${_PREP_HOME}/${_SAVAPAGE_I18N_ES_JAR} ${_PREP_WEB_LIB_HOME}
 cp ${_PREP_HOME}/${_SAVAPAGE_I18N_FR_JAR} ${_PREP_WEB_LIB_HOME}
 cp ${_PREP_HOME}/${_SAVAPAGE_I18N_NL_JAR} ${_PREP_WEB_LIB_HOME}
 
