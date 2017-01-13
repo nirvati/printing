@@ -1,7 +1,7 @@
 #!/bin/sh
 #
-# This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2015 Datraverse B.V.
+# This file is part of the SavaPage project <https://www.savapage.org>.
+# Copyright (c) 2011-2017 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,7 +15,7 @@
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # For more information, please contact Datraverse B.V. at this
 # address: info@datraverse.com
@@ -75,8 +75,10 @@ cp -p ${_PREP_WEB_LIB_HOME}/${_SAVAPAGE_COMMON_JAR} ${_PREP_PATCH_LIB_CLIENT_HOM
 # savapage-i18n-*.jar
 cp -p ${_PREP_WEB_LIB_HOME}/${_SAVAPAGE_I18N_DE_JAR} ${_PREP_PATCH_LIB_WEB_HOME}
 cp -p ${_PREP_WEB_LIB_HOME}/${_SAVAPAGE_I18N_EN_JAR} ${_PREP_PATCH_LIB_WEB_HOME}
+cp -p ${_PREP_WEB_LIB_HOME}/${_SAVAPAGE_I18N_ES_JAR} ${_PREP_PATCH_LIB_WEB_HOME}
 cp -p ${_PREP_WEB_LIB_HOME}/${_SAVAPAGE_I18N_FR_JAR} ${_PREP_PATCH_LIB_WEB_HOME}
 cp -p ${_PREP_WEB_LIB_HOME}/${_SAVAPAGE_I18N_NL_JAR} ${_PREP_PATCH_LIB_WEB_HOME}
+cp -p ${_PREP_WEB_LIB_HOME}/${_SAVAPAGE_I18N_RU_JAR} ${_PREP_PATCH_LIB_WEB_HOME}
 
 # savapage-client-*.jar
 cp -p ${_REPO_HOME_CLIENT}/target/${_SAVAPAGE_CLIENT_JAR} ${_PREP_PATCH_LIB_CLIENT_HOME}

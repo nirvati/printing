@@ -5,7 +5,7 @@ Environment used by [Development Partners](https://wiki.savapage.org/doku.php?id
 ### License
 
 This module is part of the SavaPage project <https://www.savapage.org>,
-copyright (c) 2011-2016 Datraverse B.V. and licensed under the
+copyright (c) 2011-2017 Datraverse B.V. and licensed under the
 [GNU Affero General Public License (AGPL)](https://www.gnu.org/licenses/agpl.html)
 version 3, or (at your option) any later version.
 
@@ -55,31 +55,32 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
     Create a shell script `~/savapage/repos/init.sh` with the following content:
             
         #!/bin/sh
-        _REPOS_GIT_PUBLIC="savapage-client
-            savapage-common
-            savapage-core
-            savapage-cups-notifier
-            savapage-ext
-            savapage-ext-mollie
-            savapage-ext-blockchain-info
-            savapage-i18n-de
-            savapage-i18n-en
-            savapage-i18n-es
-            savapage-i18n-fr
-            savapage-i18n-nl
-            savapage-server
-            savapage-make
-            savapage-nfc-reader
-            savapage-nss
-            savapage-pam
-            savapage-ppd
-            savapage-util
-            xmlrpcpp"        
+        _REPOS_GIT_PUBLIC="savapage/savapage-client
+            savapage/savapage-common
+            savapage/savapage-core
+            savapage/savapage-cups-notifier
+            savapage/savapage-ext
+            savapage/savapage-ext-mollie
+            savapage/savapage-ext-blockchain-info
+            savapage-i18n/savapage-i18n-de
+            savapage-i18n/savapage-i18n-en
+            savapage-i18n/savapage-i18n-es
+            savapage-i18n/savapage-i18n-fr
+            savapage-i18n/savapage-i18n-nl
+            savapage-i18n/savapage-i18n-ru
+            savapage/savapage-server
+            savapage/savapage-make
+            savapage/savapage-nfc-reader
+            savapage/savapage-nss
+            savapage/savapage-pam
+            savapage/savapage-ppd
+            savapage/savapage-util
+            savapage/xmlrpcpp"        
         for repo in $_REPOS_GIT_PUBLIC
         do
-            git clone https://gitlab.com/savapage/${repo}.git
+            git clone https://gitlab.com/${repo}.git
             # ... or when you have ssh access
-            # git clone git@gitlab.com:/savapage/${repo}.git
+            # git clone git@gitlab.com:/${repo}.git
         done
 
     Execute the script:
