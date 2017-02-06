@@ -1,7 +1,7 @@
 #!/bin/sh
 #
-# This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2015 Datraverse B.V.
+# This file is part of the SavaPage project <https://www.savapage.org>.
+# Copyright (c) 2011-2017 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,7 +15,7 @@
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # For more information, please contact Datraverse B.V. at this
 # address: info@datraverse.com
@@ -58,8 +58,7 @@ cd ${_CURRENTDIR}/../..
 
 readonly _SP_SAVED_TRG_HOME=${_SAVED_BUILD_TARGETS_HOME}
 
-readonly _SP_DIR_PATH="${_WIN_PPD_DRIVER_DLL_HOME}
-	${_SP_SAVED_TRG_HOME}/linux-armv6
+readonly _SP_DIR_PATH="${_SP_SAVED_TRG_HOME}/linux-armv6
     ${_SP_SAVED_TRG_HOME}/linux-i686
     ${_SP_SAVED_TRG_HOME}/savapage-manual/html
     ${_SP_SAVED_TRG_HOME}/savapage-licenses/html"
