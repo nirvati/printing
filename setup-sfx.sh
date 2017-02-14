@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # This file is part of the SavaPage project <https://savapage.org>.
-# Copyright (c) 2011-2016 Datraverse B.V.
+# Copyright (c) 2011-2017 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -40,7 +40,7 @@ SP_INSTALL_DIR=`dirname ${SP_SELF_PATH}`
 
 
 usage="_____________________________________________________________________________
-SavaPage Install (c) 2010-2016, Datraverse B.V.
+SavaPage Install (c) 2010-2017, Datraverse B.V.
 		
 License: GNU AGPL version 3 or later <https://www.gnu.org/licenses/agpl.html>.
 This is free software: you are free to change and redistribute it.
