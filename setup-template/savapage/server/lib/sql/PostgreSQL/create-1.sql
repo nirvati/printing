@@ -450,6 +450,17 @@
         primary key (user_group_id)
     );
 
+    create table tbl_user_group_account (
+        user_group_account_id int8 not null,
+        created_by varchar(50) not null,
+        created_date timestamp not null,
+        modified_by varchar(50),
+        modified_date timestamp,
+        account_id int8 not null,
+        user_group_id int8 not null,
+        primary key (user_group_account_id)
+    );
+
     create table tbl_user_group_attr (
         user_group_attr_id int8 not null,
         attrib_name varchar(255) not null,
@@ -586,6 +597,10 @@
 
     alter table tbl_user_group 
         add constraint uc_user_group_1 unique (group_name);
+
+    create index ix_user_group_account_1 on tbl_user_group_account (user_group_id);
+
+    create index ix_user_group_account_2 on tbl_user_group_account (account_id);
 
     alter table tbl_user_group_attr 
         add constraint uc_user_group_attr_1 unique (user_group_id, attrib_name);
@@ -751,6 +766,16 @@
         add constraint FK_USER_EMAIL_TO_USER 
         foreign key (user_id) 
         references tbl_user;
+
+    alter table tbl_user_group_account 
+        add constraint FK_USER_GROUP_ACCOUNT_TO_ACCOUNT 
+        foreign key (account_id) 
+        references tbl_account;
+
+    alter table tbl_user_group_account 
+        add constraint FK_USER_GROUP_ACCOUNT_TO_USER_GROUP 
+        foreign key (user_group_id) 
+        references tbl_user_group;
 
     alter table tbl_user_group_attr 
         add constraint FK_USER_GROUP_ATTR_TO_USER_GROUP 

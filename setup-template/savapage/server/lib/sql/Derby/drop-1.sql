@@ -89,6 +89,12 @@
     alter table tbl_user_email 
         drop constraint FK_USER_EMAIL_TO_USER;
 
+    alter table tbl_user_group_account 
+        drop constraint FK_USER_GROUP_ACCOUNT_TO_ACCOUNT;
+
+    alter table tbl_user_group_account 
+        drop constraint FK_USER_GROUP_ACCOUNT_TO_USER_GROUP;
+
     alter table tbl_user_group_attr 
         drop constraint FK_USER_GROUP_ATTR_TO_USER_GROUP;
 
@@ -160,6 +166,8 @@
     drop table tbl_user_email;
 
     drop table tbl_user_group;
+
+    drop table tbl_user_group_account;
 
     drop table tbl_user_group_attr;
 
