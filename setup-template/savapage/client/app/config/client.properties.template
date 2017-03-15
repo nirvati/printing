@@ -56,5 +56,18 @@ server-host=
 #-----------------------------------------------------------------------
 #print-dialog=true
 
+#-----------------------------------------------------------------------
+# URL query for opening User Web App at print-in event (optional).
+#-----------------------------------------------------------------------
+
+# Opens the Print Dialog
+#print-url-query=sp-show=print
+
+# Open the PDF Dialog
+#print-url-query=sp-show=pdf
+
+# Shows the main page
+#print-url-query=sp-show=main
+
 #=======================================================================
 # end-of-file
