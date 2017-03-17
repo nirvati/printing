@@ -1,6 +1,6 @@
 #
 # This file is part of the SavaPage project <https://www.savapage.org>.
-# Copyright (c) 2011-2016 Datraverse B.V.
+# Copyright (c) 2011-2017 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -38,8 +38,8 @@
 # IPP Attributes and their Keyword and Enum Attribute Values are from 
 # https://www.iana.org/assignments/ipp-registrations
 #
-# There are Custom SavaPage IPP Attributes and Values defined though, 
-# for internal-use-only, all having 'org.savapage-' prefix.
+# There are Internal SavaPage IPP Attributes defined though, for 
+# internal-use-only, all having 'org.savapage-' prefix.
 #
 # Attributes:
 #
@@ -48,54 +48,144 @@
 #    org.savapage-finishings-fold
 #    org.savapage-finishings-booklet
 #
-# Keyword Attribute Values:
+#    As in [RFC3806], all IPP finishing processes are specified with respect 
+#    to portrait media orientation: https://tools.ietf.org/html/rfc3806
 #
-#    org.savapage-tray-auto
-#
-# Example mappings are given below. Adapt or delete them as needed.
+# Example mappings are given below. Adapt or delete as needed.
 #
 # NOTE: Creating PPD extensions is a job for specialists. If you need help,
-# please contact your SavaPage Community representative. 
+# please contact your SavaPage Community representative.
+# 
 # -----------------------------------------------------------------------------
 
 #-----------------------------------------------------------------------
 #  Finishing: Stapling
 #-----------------------------------------------------------------------
-*VENStapleOption org.savapage-finishings-staple
-*VENStapleOption *VENNone 3
-*VENStapleOption VENSinglePortrait 20
-*VENStapleOption VENDualPortrait 28
+#
+#  The 'staple-xxx' values are specified with respect to the
+#  document as if the document were a portrait document.
+#
+#  https://tools.ietf.org/html/rfc2911 | https://tools.ietf.org/html/rfc8011 
+#
+#    3   none
+#   20   staple-top-left
+#   21   staple-bottom-left
+#   22   staple-top-right
+#   23   staple-bottom-right
+#   24   edge-stitch-left
+#   25   edge-stitch-top
+#   26   edge-stitch-right
+#   27   edge-stitch-bottom
+#   28   staple-dual-left
+#   29   staple-dual-top
+#   30   staple-dual-right
+#   31   staple-dual-bottom
+#
+#   PWG 5100.1-2014
+#
+#   32   staple-triple-left
+#   33   staple-triple-top
+#   34   staple-triple-right
+#   35   staple-triple-bottom
+#-----------------------------------------------------------------------
+
+#*VENStapleOption org.savapage-finishings-staple
+#*VENStapleOption *VENNone 3
+#*VENStapleOption VENTopLeft 20
+#*VENStapleOption VENBottomLeft 21
  
 #-----------------------------------------------------------------------
 #  Finishing: Hole Punch
 #-----------------------------------------------------------------------
-*VENPunchOption org.savapage-finishings-punch 
-*VENPunchOption *VENNone 3
-*VENPunchOption VEN2Punch 74
-*VENPunchOption VEN3Punch 78
-*VENPunchOption VEN4Punch 82 
+#
+#  As in [RFC3806], IPP finishing processes are specified with respect 
+#  to portrait media orientation: https://tools.ietf.org/html/rfc3806
+#
+#  https://tools.ietf.org/html/rfc2911 
+#
+#    3   none
+#
+#   PWG 5100.1-2014
+#
+#   70   punch-top-left
+#   71   punch-bottom-left
+#   72   punch-top-right
+#   73   punch-bottom-right
+#   74   punch-dual-left
+#   75   punch-dual-top
+#   76   punch-dual-right
+#   77   punch-dual-bottom
+#   78   punch-triple-left
+#   79   punch-triple-top
+#   80   punch-triple-right
+#   81   punch-triple-bottom
+#   82   punch-quad-left
+#   83   punch-quad-top
+#   84   punch-quad-right
+#   85   punch-quad-bottom
+#-----------------------------------------------------------------------
+
+#*VENPunchOption org.savapage-finishings-punch 
+#*VENPunchOption *VENNone 3
+#*VENPunchOption VEN2Punch 74
+#*VENPunchOption VEN3Punch 78
+#*VENPunchOption VEN4Punch 82 
      
 #-----------------------------------------------------------------------
 #  Finishing: Fold
 #-----------------------------------------------------------------------
-*VENFoldOption org.savapage-finishings-fold
-*VENFoldOption *VENNone 3
-*VENFoldOption VENBiFold 93
-*VENFoldOption VENZFoldHalf 94
+#
+#  As in [RFC3806], IPP finishing processes are specified with respect 
+#  to portrait media orientation: https://tools.ietf.org/html/rfc3806
+#
+#  https://tools.ietf.org/html/rfc2911 
+#
+#    3   none
+#
+#  PWG 5100.1-2014
+#
+#   90   fold-accordion
+#   91   fold-double-gate
+#   92   fold-gate
+#   93   fold-half
+#   94   fold-half-z
+#   95   fold-left-gate
+#   96   fold-letter
+#   97   fold-parallel
+#   98   fold-poster
+#   99   fold-right-gate
+#  100   fold-z
+#-----------------------------------------------------------------------
+
+#*VENFoldOption org.savapage-finishings-fold
+#*VENFoldOption *VENNone 3
+#*VENFoldOption VENBiFold 93
+#*VENFoldOption VENZFoldHalf 94
 
 #-----------------------------------------------------------------------
-# Collate (see https://tools.ietf.org/html/rfc3381)
+#  Collate
 #-----------------------------------------------------------------------
-*VENCollate sheet-collate
-*VENCollate VENFalse uncollated
-*VENCollate *VENTrue collated
+#  https://tools.ietf.org/html/rfc3381
+#-----------------------------------------------------------------------
+
+#*VENCollate sheet-collate
+#*VENCollate *VENTrue collated
+#*VENCollate VENFalse uncollated
 
 #-----------------------------------------------------------------------
 # print-scaling (type2 keyword) [PWG5100.16]
 # keywords supported: fit, none
 #-----------------------------------------------------------------------
-*VENPrintScaling print-scaling
-*VENPrintScaling *VENFit fit
-*VENPrintScaling VENNone none
 
+#*VENPrintScaling print-scaling
+#*VENPrintScaling *VENFit fit
+#*VENPrintScaling VENNone none
+
+#=======================================================================
+# The mappings below were correctly made by CUPS, but are repeated here
+# to make the PPD option explicit, so it can be used for UIConstraints
+# evaluations. 
+#=======================================================================
+
+#-----------------------------------------------------------------------
 # end-of-file
