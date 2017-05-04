@@ -20,13 +20,13 @@
 # address: info@datraverse.com
 #
 
-#------------------------------------------------------------
-# Custom settings for server/bin/linux-<arch>/app-server 
-#------------------------------------------------------------
-
-#
-# Extra Java VM arguments
-#
-CUSTOM_JVM_ARGS=
+#-----------------------------------------------------------------------
+# Email templates as present in templates/ (sub)folder.
+#-----------------------------------------------------------------------
+#template.email.pos.deposit-receipt=email.pos.deposit-receipt.xml
+#template.email.user.pdf-send=email.user.pdf-send.xml
+#template.email.print.gcp.job-owner-unknown.cancel=email.print.gcp.job-owner-unknown.cancel.xml
+#template.email.print.imap.rejected=email.print.imap.rejected.xml
+#template.email.jobticket.notify-email.completed=email.jobticket.notify-email.completed.xml
 
 # end-of-file
