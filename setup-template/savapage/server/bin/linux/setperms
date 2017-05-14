@@ -1,7 +1,7 @@
 #!/bin/sh
 #
-# This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2016 Datraverse B.V.
+# This file is part of the SavaPage project <https://www.savapage.org>.
+# Copyright (c) 2011-2017 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,7 +15,7 @@
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # For more information, please contact Datraverse B.V. at this
 # address: info@datraverse.com
@@ -40,7 +40,7 @@ find . -type d -exec chmod 755 {} 2>/dev/null \;
 find . -type f -exec chmod 644 {} 2>/dev/null \;
 
 #
-# Ensure private files is readable by self
+# Ensure private files are readable by self only
 #
 chmod 600 admin.properties
 chmod 600 server.properties
@@ -48,7 +48,7 @@ chmod 600 jmxremote.password
 chmod 600 jmxremote.ks
 
 # data/encryption.properties are lazy created by the server with the correct
-# permissions. Just in case we set permisisons when file exists.
+# permissions. Just in case we set permissions when file exists.
 if [ -e "data/encryption.properties" ]; then
 	chmod 600 data/encryption.properties
 fi
@@ -59,6 +59,10 @@ chmod 600 data/default-ssl-keystore.pw
 if [ -e "gcp.properties" ]; then
 	chmod 600 gcp.properties
 fi
+
+for filename in `find ext/ -type f -name '*.properties'`; do 
+   chmod 600 ${filename}; 
+done
 
 #
 # Ensure data is only readable by self (contains sensitive data)
