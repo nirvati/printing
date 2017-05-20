@@ -42,6 +42,10 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
 
         $ sudo apt-get install zip
 
+0. pgpgpg: wrapper for using GnuPG in programs designed for PGP
+
+        $ sudo apt-get install pgpgpg
+
 
 ### Getting started
 
