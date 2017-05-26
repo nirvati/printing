@@ -92,17 +92,17 @@ if [ -f "${YUICOMPRESSOR_JAR}" ]; then
 	echo "+----------------------------------------"
 	
 	_COMPRESS_SOURCES="savapage
-		jquery.savapage
-	    jquery.savapage-exceeded
-	    jquery.savapage-user
-	    jquery.savapage-admin
-		jquery.savapage-admin-panels
-	    jquery.savapage-admin-pages
-		jquery.savapage-jobtickets	    
-	    jquery.savapage-pos
-		jquery.savapage-page-jobtickets
-		jquery.savapage-page-pos
-		jquery.savapage-page-print-delegation"
+	   jquery.savapage
+	   jquery.savapage-msg
+	   jquery.savapage-user
+	   jquery.savapage-admin
+	   jquery.savapage-admin-panels
+	   jquery.savapage-admin-pages
+	   jquery.savapage-jobtickets
+	   jquery.savapage-pos
+	   jquery.savapage-page-jobtickets
+	   jquery.savapage-page-pos
+	   jquery.savapage-page-print-delegation"
 	        
 	for _src in ${_COMPRESS_SOURCES}
 	do
