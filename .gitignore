@@ -1,7 +1,9 @@
 /.project
 /.cproject
+/.settings
 /derby.log
-target/
+/target
 /build.log
 /.sonar
 .pydevproject
+.classpath
