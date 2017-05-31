@@ -37,13 +37,12 @@ help:
 	@echo "+------------------------------------------------------+"
 	@echo "| Please specify one of the targets below.             |"
 	@echo "+------------------------------------------------------+"
-	@echo "| all       : init-base package-i686 package-x64       |"
-	@echo "| all-x64   : init-base package-x64                    |"
+	@echo "| all       : init-base package-x64                    |"
 	@echo "| jar-patch : create .tar.gz with *.jar, *.war files   |"
 	@echo "+------------------------------------------------------+"
 
 .PHONY: all
-all: init-base package-i686 package-x64
+all: init-base package-x64
 
 .PHONY: all-x64
 all-x64: init-base package-x64
