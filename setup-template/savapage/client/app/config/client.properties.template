@@ -75,6 +75,23 @@ server-host=
 # Shows the main page
 #print-url-query=sp-show=main
 
+#-----------------------------------------------------------------------
+# GNU/Linux only
+#-----------------------------------------------------------------------
+
+#
+# Use 'notify-send' command to send desktop notifications (boolean)
+# Default: false
+# Install with: apt-get install libnotify-bin
+
+#notify-send=true
+
+#
+# Show icon on desktop at anchor position instead of tray: ne|nw|se|sw
+# 'notify-send' switch is auto activated.
+
+#anchor=nw
+
 
 #=======================================================================
 # end-of-file
