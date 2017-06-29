@@ -81,7 +81,7 @@ do_systemd_write_service_file() {
 # address: info@datraverse.com
 #
 [Unit]
-Description=SavaPage Libre Print Management
+Description=SavaPage Open Print Portal
 After=network.target cups.service
 
 [Service]
