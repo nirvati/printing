@@ -42,6 +42,7 @@ readonly _REPOS_GIT_PUBLIC="savapage/savapage-make
     savapage/savapage-ext
     savapage/savapage-ext-blockchain-info
     savapage/savapage-ext-mollie
+    savapage-ext/savapage-ext-oauth
     savapage-i18n/savapage-i18n-de
     savapage-i18n/savapage-i18n-en
     savapage-i18n/savapage-i18n-es
