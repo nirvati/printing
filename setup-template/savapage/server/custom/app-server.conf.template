@@ -29,4 +29,10 @@
 #
 CUSTOM_JVM_ARGS=
 
+#
+# Overwrite of JVM system property 'java.io.tmpdir' 
+# User 'savapage' must have mode 700 access to this directory. 
+# 
+#JAVA_IO_TMPDIR=
+
 # end-of-file
