@@ -80,10 +80,11 @@ chmod 700 data/internal
 chmod 700 bin
 
 #
-# The tmp directory might contain sensitive content so for security reasons 
-# we'll only allow us to access this.
+# The tmp and logs directory might contain sensitive content so for 
+# security reasons we'll only allow us to access this.
 #
 chmod 700 tmp
+chmod 700 logs
 
 #
 # Ensure execute is set on all binaries in bin
