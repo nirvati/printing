@@ -59,7 +59,6 @@ cd ${_CURRENTDIR}/../..
 readonly _SP_SAVED_TRG_HOME=${_SAVED_BUILD_TARGETS_HOME}
 
 readonly _SP_DIR_PATH="${_SP_SAVED_TRG_HOME}/linux-armv6
-    ${_SP_SAVED_TRG_HOME}/linux-i686
     ${_SP_SAVED_TRG_HOME}/savapage-manual/html
     ${_SP_SAVED_TRG_HOME}/savapage-licenses/html"
         

@@ -240,25 +240,22 @@ tar -czvf ${DIST_TAR} -C ${DIST_HOME} ${APP_NAME}/
 cat setup-sfx.sh ${DIST_TAR} > ${DIST_SFX}
 chmod +x ${DIST_SFX}
 
-
 #-------------------------------------------------------------------
-# Create MD5 and SHA1 checksum is separate file
+# Create SHA512 checksum in separate file
 #-------------------------------------------------------------------
-echo "Create checksums..."
-openssl dgst -md5  -binary ${DIST_SFX} | xxd -p > ${DIST_SFX}.md5
-openssl dgst -sha1 -binary ${DIST_SFX} | xxd -p > ${DIST_SFX}.sha1
-
+echo "Create sha512sum ..."
+sha512sum ${DIST_SFX} | cut -d ' ' -f 1 > ${DIST_PARENT}/sha512sums.txt
 
 #-------------------------------------------------------------------
 # Create a PGP ascii signature in a separate .asc file
 #-------------------------------------------------------------------
 
-haspgp=`which pgp 2> /dev/null`
+haspgp=`which gpg2 2> /dev/null`
 if [ -z "${haspgp}" ]; then
 	echo "Cannot create PGP signature (pgp not installed)." >&2
 else
 	echo "Create PGP signature..."
-	pgp -sab ${DIST_SFX}
+	gpg2 -sab -o ${DIST_PARENT}/savapage.asc ${DIST_SFX}
 fi
 
 # end-of-file
