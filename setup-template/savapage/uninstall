@@ -34,9 +34,9 @@ agreed=
 answered=
 while [ -z "${answered}" ]; do
         echo
-		echo "+------------------------------------------------------------------+"
-		echo "| SavaPage Libre Print Management.                                 |"
-		echo "+------------------------------------------------------------------+"
+        echo "+------------------------------------------------------------------+"
+        echo "| SavaPage Open Print Portal                                       |"
+        echo "+------------------------------------------------------------------+"
         echo "Would you like to uninstall?  [yes or no] "
         read reply leftover
         case $reply in
