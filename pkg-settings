@@ -1,6 +1,6 @@
 #
-# This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2016 Datraverse B.V.
+# This file is part of the SavaPage project <https://www.savapage.org>.
+# Copyright (c) 2011-2017 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # For more information, please contact Datraverse B.V. at this
 # address: info@datraverse.com
@@ -61,6 +61,7 @@ readonly _REPO_HOME_NFC_READER=${_REPO_HOME_PUB}/savapage-nfc-reader
 
 readonly _REPO_HOME_EXT_MOLLIE=${_REPO_HOME_PUB}/savapage-ext-mollie
 readonly _REPO_HOME_EXT_BLOCKCHAIN_INFO=${_REPO_HOME_PUB}/savapage-ext-blockchain-info
+readonly _REPO_HOME_EXT_OAUTH=${_REPO_HOME_PUB}/savapage-ext-oauth
 
 #=========================================================================
 # NAME + VERSION
@@ -109,8 +110,10 @@ readonly _SAVAPAGE_EXT_JAR=savapage-ext-${APP_VERSION}.jar
 
 readonly _SAVAPAGE_I18N_DE_JAR=savapage-i18n-de-${APP_VERSION}.jar
 readonly _SAVAPAGE_I18N_EN_JAR=savapage-i18n-en-${APP_VERSION}.jar
+readonly _SAVAPAGE_I18N_ES_JAR=savapage-i18n-es-${APP_VERSION}.jar
 readonly _SAVAPAGE_I18N_FR_JAR=savapage-i18n-fr-${APP_VERSION}.jar
 readonly _SAVAPAGE_I18N_NL_JAR=savapage-i18n-nl-${APP_VERSION}.jar
+readonly _SAVAPAGE_I18N_RU_JAR=savapage-i18n-ru-${APP_VERSION}.jar
 
 readonly _SAVAPAGE_SERVER_WAR=savapage-server-${APP_VERSION}.war
 
@@ -118,6 +121,7 @@ readonly _SAVAPAGE_CLIENT_JAR=savapage-client-${APP_VERSION}.jar
 
 readonly _SAVAPAGE_EXT_MOLLIE_JAR=savapage-ext-mollie-${APP_VERSION}.jar
 readonly _SAVAPAGE_EXT_BLOCKCHAIN_INFO_JAR=savapage-ext-blockchain-info-${APP_VERSION}.jar
+readonly _SAVAPAGE_EXT_OAUTH_JAR=savapage-ext-oauth-${APP_VERSION}.jar
 
 readonly _SAVAPAGE_AD_HOC_SERVER_JAR=savapage-server-${APP_VERSION}.jar
 
@@ -127,10 +131,5 @@ readonly YUICOMPRESSOR_JAR=${_THIRD_PARTY_HOME}/java/yuicompressor/2.4.7/build/y
 # packaged fonts
 readonly _FONTS_PACKAGE_VERSION=0.9.7
 readonly _FONTS_PACKAGE_HOME=${_THIRD_PARTY_HOME}/fonts/savapage/${_FONTS_PACKAGE_VERSION}
-
-#
-#_WIN_PPD_DRIVER_DLL_VERSION=${APP_VERSION}
-readonly _WIN_PPD_DRIVER_DLL_VERSION=0.9.6
-readonly _WIN_PPD_DRIVER_DLL_HOME=${_SAVED_BUILD_TARGETS_HOME}/savapage-win7-ppd-${_WIN_PPD_DRIVER_DLL_VERSION}
 
 # end-of-file

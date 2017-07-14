@@ -1,6 +1,6 @@
 #
-# This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2016 Datraverse B.V.
+# This file is part of the SavaPage project <https://www.savapage.org>.
+# Copyright (c) 2011-2017 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # For more information, please contact Datraverse B.V. at this
 # address: info@datraverse.com
@@ -37,13 +37,12 @@ help:
 	@echo "+------------------------------------------------------+"
 	@echo "| Please specify one of the targets below.             |"
 	@echo "+------------------------------------------------------+"
-	@echo "| all       : init-base package-i686 package-x64       |"
-	@echo "| all-x64   : init-base package-x64                    |"
+	@echo "| all       : init-base package-x64                    |"
 	@echo "| jar-patch : create .tar.gz with *.jar, *.war files   |"
 	@echo "+------------------------------------------------------+"
 
 .PHONY: all
-all: init-base package-i686 package-x64
+all: init-base package-x64
 
 .PHONY: all-x64
 all-x64: init-base package-x64
@@ -80,14 +79,17 @@ clean: cleanc mvn-clean ppd-clean
 clean-patch:
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-de clean
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-en clean
+	@make -C $(REPO_HOME_PUB)/savapage-i18n-es clean
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-fr clean
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-nl clean
+	@make -C $(REPO_HOME_PUB)/savapage-i18n-ru clean
 	@make -C $(REPO_HOME_PUB)/savapage-common clean
 	@make -C $(REPO_HOME_PUB)/savapage-core clean
 	@make -C $(REPO_HOME_PUB)/savapage-client clean
 	@make -C $(REPO_HOME_PUB)/savapage-ext clean
 	@make -C $(REPO_HOME_PUB)/savapage-ext-blockchain-info clean
 	@make -C $(REPO_HOME_PUB)/savapage-ext-mollie clean
+	@make -C $(REPO_HOME_PUB)/savapage-ext-oauth clean
 	@make -C $(REPO_HOME_PUB)/savapage-server clean
 
 #----------------------------------------------------------------------
@@ -103,13 +105,16 @@ mvn-package: mvn-package-patch
 mvn-package-patch:
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-de install
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-en install
+	@make -C $(REPO_HOME_PUB)/savapage-i18n-es install
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-fr install
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-nl install
+	@make -C $(REPO_HOME_PUB)/savapage-i18n-ru install
 	@make -C $(REPO_HOME_PUB)/savapage-common install
 	@make -C $(REPO_HOME_PUB)/savapage-core install
 	@make -C $(REPO_HOME_PUB)/savapage-ext install
 	@make -C $(REPO_HOME_PUB)/savapage-ext-blockchain-info repackage
 	@make -C $(REPO_HOME_PUB)/savapage-ext-mollie repackage
+	@make -C $(REPO_HOME_PUB)/savapage-ext-oauth repackage
 	@make -C $(REPO_HOME_PUB)/savapage-client repackage
 	@make -C $(REPO_HOME_PUB)/savapage-server repackage
 
@@ -187,7 +192,7 @@ savapage-nss: $(C_TRG)/savapage-nss
 
 .PHONY: binaries
 binaries:
-	@make -C $(REPO_HOME_PUB)/xmlrpcpp	
+	@make -C $(REPO_HOME_PUB)/xmlrpcpp
 	@make -C $(REPO_HOME_PUB)/savapage-nfc-reader PRODUCT_VERSION=$(PRODUCT_VERSION)
 	@make -C $(REPO_HOME_PUB)/savapage-cups-notifier PRODUCT_VERSION=$(PRODUCT_VERSION)
 	@make -C $(REPO_HOME_PUB)/savapage-nss  PRODUCT_VERSION=$(PRODUCT_VERSION) 

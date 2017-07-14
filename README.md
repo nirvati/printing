@@ -1,21 +1,21 @@
 # savapage-make
     
-Environment used by [Development Partners](http://savapage.org/w/index.php/Roles) to produce SavaPage.
+Environment used by [Development Partners](https://wiki.savapage.org/doku.php?id=roles) to produce SavaPage.
  
 ### License
 
-This module is part of the SavaPage project <http://savapage.org>,
-copyright (c) 2011-2016 Datraverse B.V. and licensed under the
+This module is part of the SavaPage project <https://www.savapage.org>,
+copyright (c) 2011-2017 Datraverse B.V. and licensed under the
 [GNU Affero General Public License (AGPL)](https://www.gnu.org/licenses/agpl.html)
 version 3, or (at your option) any later version.
 
 ### Join Efforts, Join our Community
 
-SavaPage Software is produced by Community Partners and consumed by Community Fellows. If you want to modify and/or distribute our source code, please join us as Development Partner. By joining the [SavaPage Community](http://savapage.org/w/) you can help build a truly Libre Print Management Solution. Please contact [info@savapage.org](mailto:info@savapage.org).
+SavaPage Software is produced by Community Partners and consumed by Community Fellows. If you want to modify and/or distribute our source code, please join us as Development Partner. By joining the [SavaPage Community](https://wiki.savapage.org) you can help build a truly Libre Print Management Solution. Please contact [info@savapage.org](mailto:info@savapage.org).
 
 ### Issue Management
 
-[https://secure.datraverse.nl/issues/](https://secure.datraverse.nl/issues/)
+[https://issues.savapage.org](https://issues.savapage.org)
 
 ### System Requirements
 
@@ -42,6 +42,10 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
 
         $ sudo apt-get install zip
 
+0. pgpgpg: wrapper for using GnuPG in programs designed for PGP
+
+        $ sudo apt-get install pgpgpg
+
 
 ### Getting started
 
@@ -55,30 +59,33 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
     Create a shell script `~/savapage/repos/init.sh` with the following content:
             
         #!/bin/sh
-        _REPOS_GIT_PUBLIC="savapage-client
-            savapage-common
-            savapage-core
-            savapage-cups-notifier
-            savapage-ext
-            savapage-ext-mollie
-            savapage-ext-blockchain-info
-            savapage-i18n-de
-            savapage-i18n-en
-            savapage-i18n-fr
-            savapage-i18n-nl
-            savapage-server
-            savapage-make
-            savapage-nfc-reader
-            savapage-nss
-            savapage-pam
-            savapage-ppd
-            savapage-util
-            xmlrpcpp"        
+        _REPOS_GIT_PUBLIC="savapage/savapage-client
+            savapage/savapage-common
+            savapage/savapage-core
+            savapage/savapage-cups-notifier
+            savapage/savapage-ext
+            savapage-ext/savapage-ext-blockchain-info
+            savapage-ext/savapage-ext-mollie
+            savapage-ext/savapage-ext-oauth
+            savapage-i18n/savapage-i18n-de
+            savapage-i18n/savapage-i18n-en
+            savapage-i18n/savapage-i18n-es
+            savapage-i18n/savapage-i18n-fr
+            savapage-i18n/savapage-i18n-nl
+            savapage-i18n/savapage-i18n-ru
+            savapage/savapage-server
+            savapage/savapage-make
+            savapage/savapage-nfc-reader
+            savapage/savapage-nss
+            savapage/savapage-pam
+            savapage/savapage-ppd
+            savapage/savapage-util
+            savapage/xmlrpcpp"        
         for repo in $_REPOS_GIT_PUBLIC
         do
-            git clone https://gitlab.com/savapage/${repo}.git
+            git clone https://gitlab.com/${repo}.git
             # ... or when you have ssh access
-            # git clone git@gitlab.com:/savapage/${repo}.git
+            # git clone git@gitlab.com:/${repo}.git
         done
 
     Execute the script:

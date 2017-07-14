@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2016 Datraverse B.V.
+# This file is part of the SavaPage project <https://www.savapage.org>.
+# Copyright (c) 2011-2017 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,7 +15,7 @@
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # For more information, please contact Datraverse B.V. at this
 # address: info@datraverse.com
@@ -23,8 +23,8 @@
 
 ### BEGIN INIT INFO
 # Provides:          savapage-app-server
-# Required-Start:    $cups $remote_fs $syslog
-# Required-Stop:     $remote_fs $syslog
+# Required-Start:    cups $remote_fs $syslog $network
+# Required-Stop:     cups $remote_fs $syslog $network
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: SavaPage Application Server
@@ -71,9 +71,16 @@ then
   REPO="$SERVER_HOME"/lib
 fi
 
+if [ -z "$JAVA_IO_TMPDIR" ]
+then
+    APP_JAVA_IO_TMPDIR=$SERVER_HOME/tmp
+else
+    APP_JAVA_IO_TMPDIR=${JAVA_IO_TMPDIR}
+fi
+
 JVM_X_ARGS="-XX:+PrintGCDetails -XX:+PrintGCApplicationConcurrentTime -XX:+PrintGCApplicationStoppedTime -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=1M -Xloggc:"$SERVER_HOME"/logs/gc.log"
 
-DAEMON_ARGS="-server $CUSTOM_JVM_ARGS $JVM_X_ARGS -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Djava.io.tmpdir="$SERVER_HOME/tmp" -Dlog4j.configuration="file://$SERVER_HOME/lib/log4j.properties" -Dserver.home="$SERVER_HOME" -Dcom.sun.management.config.file="$SERVER_HOME/jmxremote.properties" -Djavax.net.ssl.keyStore="$SERVER_HOME/jmxremote.ks" -Djavax.net.ssl.keyStorePassword=savapage -Dwicket.configuration=deployment -Dsavapage.war.file=savapage-server-$APP_VERSION.war org.savapage.server.WebServer"
+DAEMON_ARGS="-server $CUSTOM_JVM_ARGS $JVM_X_ARGS -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Djava.io.tmpdir="$APP_JAVA_IO_TMPDIR" -Dlog4j.configuration="file://$SERVER_HOME/lib/log4j.properties" -Dserver.home="$SERVER_HOME" -Dcom.sun.management.config.file="$SERVER_HOME/jmxremote.properties" -Djavax.net.ssl.keyStore="$SERVER_HOME/jmxremote.ks" -Djavax.net.ssl.keyStorePassword=savapage -Dwicket.configuration=deployment -Dsavapage.war.file=savapage-server-$APP_VERSION.war org.savapage.server.WebServer"
 
 #======================================================================= 
 # Continue with original script : set interface parameters
@@ -81,7 +88,7 @@ DAEMON_ARGS="-server $CUSTOM_JVM_ARGS $JVM_X_ARGS -Djava.awt.headless=true -Djav
 
 serviceNameLo="savapage"                                   # service name with the first letter in lowercase
 serviceName="SavaPage"                                     # service name
-serviceNameFull="SavaPage Libre Print Management"          # full service name
+serviceNameFull="SavaPage Open Print Portal"               # full service name
 serviceUser="savapage"                                     # OS user name for the service
 serviceGroup=`id -g -n ${serviceUser}`                     # OS group name for the service (primary group of serviceUser)
 applDir="$SERVER_HOME"                                     # server directory 

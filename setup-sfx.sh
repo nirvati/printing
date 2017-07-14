@@ -1,7 +1,7 @@
 #!/bin/sh
 #
-# This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2015 Datraverse B.V.
+# This file is part of the SavaPage project <https://savapage.org>.
+# Copyright (c) 2011-2017 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,7 +15,7 @@
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # For more information, please contact Datraverse B.V. at this
 # address: info@datraverse.com
@@ -40,15 +40,16 @@ SP_INSTALL_DIR=`dirname ${SP_SELF_PATH}`
 
 
 usage="_____________________________________________________________________________
-SavaPage Install (c) 2010-2015, Datraverse B.V.
+SavaPage Install (c) 2010-2017, Datraverse B.V.
 		
-License: GNU AGPL version 3 or later <http://www.gnu.org/licenses/agpl.html>.
+License: GNU AGPL version 3 or later <https://www.gnu.org/licenses/agpl.html>.
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 
-Usage: "`basename "$0"`" [-h|-i|-e|-l] [-v] [FILE]...
+Usage: "`basename "$0"`" [-h|-i|-e|-l] [-n] [-v] [FILE]...
         -h      This help text.
         -i      Install after extracting the files (default).
+        -n      Non-interactive install: execute MUST-RUN-AS-ROOT afterwards.
         -e      Extract all files or a FILE list and exit without installing. 
         -l      List the contents of the archive and exit without extracting.
         -v      Verbose. Print the names of the files as they are extracted."
@@ -58,6 +59,7 @@ Usage: "`basename "$0"`" [-h|-i|-e|-l] [-v] [FILE]...
 #
 action="install"
 verbose="no"
+non_interactive_switch=""
 
 #
 # Parse arguments
@@ -80,6 +82,10 @@ do
 
             -l)
                 action="list"
+                ;;
+
+            -n)
+                non_interactive_switch="-n"
                 ;;
 
             -v)
@@ -179,7 +185,7 @@ fi
 if test "${action}" = "install" -a -f "${SP_EXTRACT_DIR}/savapage/install"
 then
         chmod 755 "${SP_EXTRACT_DIR}/savapage/install"
-        "${SP_EXTRACT_DIR}/savapage/install" "${SP_INSTALL_DIR}"
+        "${SP_EXTRACT_DIR}/savapage/install" -d "${SP_INSTALL_DIR}" ${non_interactive_switch}
         #
         # Remove the temp extracted archive after install completed
         #

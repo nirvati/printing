@@ -1,6 +1,6 @@
 #
-# This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2016 Datraverse B.V.
+# This file is part of the SavaPage project <https://www.savapage.org>.
+# Copyright (c) 2011-2017 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # For more information, please contact Datraverse B.V. at this
 # address: info@datraverse.com
@@ -51,10 +51,47 @@ server-host=
 #hide-exit=true
 
 #-----------------------------------------------------------------------
-# Show dialog with action buttons at print-in event (optional). 
+# Show dialog with action button at print-in event (optional). 
 # Default: false.
 #-----------------------------------------------------------------------
 #print-dialog=true
+
+#-----------------------------------------------------------------------
+# Action button text on print-in action dialog for opening User Web App
+# (optional).
+#-----------------------------------------------------------------------
+#print-dialog-btn=Open in browser
+
+#-----------------------------------------------------------------------
+# URL query for opening User Web App at print-in event (optional).
+#-----------------------------------------------------------------------
+
+# Opens the Print Dialog
+#print-url-query=sp-show=print
+
+# Open the PDF Dialog
+#print-url-query=sp-show=pdf
+
+# Shows the main page
+#print-url-query=sp-show=main
+
+#-----------------------------------------------------------------------
+# GNU/Linux only
+#-----------------------------------------------------------------------
+
+#
+# Use 'notify-send' command to send desktop notifications (boolean)
+# Default: false
+# Install with: apt-get install libnotify-bin
+
+#notify-send=true
+
+#
+# Show icon on desktop at anchor position instead of tray: ne|nw|se|sw
+# 'notify-send' switch is auto activated.
+
+#anchor=nw
+
 
 #=======================================================================
 # end-of-file

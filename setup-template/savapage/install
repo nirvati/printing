@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# This file is part of the SavaPage project <http://savapage.org>.
+# This file is part of the SavaPage project <https://www.savapage.org>.
 # Copyright (c) 2011-2016 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
@@ -15,7 +15,7 @@
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # For more information, please contact Datraverse B.V. at this
 # address: info@datraverse.com
@@ -31,20 +31,71 @@ fi
 
 . ./.install-config.sh
 
-# 
-# The first CLI argument is the install directory (usually "/opt/savapage")
-#
-SP_INSTALL_DIR=$1
+usage="_____________________________________________________________________________
+SavaPage Install (c) 2010-2016, Datraverse B.V.
 
+License: GNU AGPL version 3 or later <https://www.gnu.org/licenses/agpl.html>.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Usage: "`basename "$0"`" [OPTION]...
+        -d <dir>  The target location, usually the /opt/savapage directory.
+        -h        This help text.
+        -n        Non-interactive install: execute MUST-RUN-AS-ROOT afterwards."
+
+#----------------------------------------------------------------
+# Parse CLI arguments
+#----------------------------------------------------------------
+SP_INSTALL_DIR=
+SP_INSTALL_SILENTLY=off
+
+while test $# -gt 0
+do
+    case "$1" in
+        -h)
+            echo "${usage}"
+            exit 0;
+            ;;
+            
+        -d)
+            SP_INSTALL_DIR="$2"
+            shift
+            ;;
+
+        -n)
+            SP_INSTALL_SILENTLY="on"
+            ;;
+
+        --)
+            shift
+            break
+            ;;
+
+        -*)
+            echo "${usage}" 1>&2
+            exit 1
+            ;;
+
+        *)
+            break
+            ;;
+    esac
+    shift
+done
+
+#----------------------------------------------------------------
+# Check CLI parameters
+#----------------------------------------------------------------
 if [ -z "${SP_INSTALL_DIR}" ]; then
-	echo "Error: install directory must be provided as first argument." >&2
+	echo "${usage}" >&2
 	exit 1
 fi
 
 if [ ! -d "${SP_INSTALL_DIR}" ]; then
-	echo "Error: install directory \"${SP_INSTALL_DIR}\" does not exist."  >&2
+	echo "Error: target directory \"${SP_INSTALL_DIR}\" does not exist."  >&2
 	exit 1
 fi
+
 
 #
 # Check if system account is provided
@@ -155,8 +206,22 @@ fi
 if [ "${wrong_arch}" = "y" ]; then
 
     echo
-    echo "WARNING: This release is designed for ${install_arch} systems. Did"
-    echo "you mean to download the ${required_arch} version?"
+
+    if test "${SP_INSTALL_SILENTLY}" = "on"
+    then
+        echo -n "ERROR: "
+    else
+        echo -n "WARNING: "
+    fi
+
+    echo "This release is designed for ${install_arch} systems."    
+    
+    if test "${SP_INSTALL_SILENTLY}" = "on"
+    then
+		exit 1
+    fi
+    
+    echo "Did you mean to download the ${required_arch} version?"
 	agreed=
 	while [ -z "${agreed}" ]; do
 		echo
@@ -233,10 +298,26 @@ fi
 # Check for ImageMagick
 #
 hasconvert=`which convert 2> /dev/null`
+
 if [ -z "${hasconvert}" ]; then
+
     echo
-    echo "WARNING: SavaPage needs ImageMagick to function properly, but this"
+
+    if test "${SP_INSTALL_SILENTLY}" = "on"
+    then
+        echo -n "ERROR: "
+    else
+        echo -n "WARNING: "
+    fi
+
+    echo "SavaPage needs ImageMagick to function properly, but this"
     echo "package is not installed. Please see the User Manual for details."
+    
+    if test "${SP_INSTALL_SILENTLY}" = "on"
+    then
+		exit 1
+    fi
+    
 	agreed=
 	while [ -z "${agreed}" ]; do
 		echo
@@ -263,8 +344,22 @@ fi
 haspoppler=`which pdftoppm 2> /dev/null`
 if [ -z "${haspoppler}" ]; then
     echo
-    echo "WARNING: SavaPage needs poppler-utils to function properly, but this"
+    
+    if test "${SP_INSTALL_SILENTLY}" = "on"
+    then
+        echo -n "ERROR: "
+    else
+        echo -n "WARNING: "
+    fi
+    
+    echo "SavaPage needs poppler-utils to function properly, but this"
     echo "package is not installed. Please see the User Manual for details."
+    
+    if test "${SP_INSTALL_SILENTLY}" = "on"
+    then
+		exit 1
+    fi    
+    
 	agreed=
 	while [ -z "${agreed}" ]; do
 		echo
@@ -310,7 +405,7 @@ for d in ${binaries}; do
 done
     
 if [ "${binerror}" = "y" ]; then    	    	
-	echo "Error: Unable to install. One or more SavaPage utilities cannot run." >&2
+	echo "ERROR: Unable to install. One or more SavaPage utilities cannot run." >&2
 	echo "Please contact the SavaPage Helpdesk." >&2
    	exit 1
 fi
@@ -325,12 +420,18 @@ echo "| SavaPage is copyright (c) 2011-"`date +%Y`" Datraverse B.V. and licensed
 echo "| under the terms of the GNU Affero General Public License (AGPL)  |"
 echo "| version 3, or (at your option) any later version..               |"
 echo "|                                                                  |" 
-echo "| See <http://www.gnu.org/licenses/>                               |"
+echo "| See <https://www.gnu.org/licenses/>                              |"
 echo "|                                                                  |" 
 echo "| A LICENSE copy of the AGPL is supplied along with this program.  |"
 echo "+------------------------------------------------------------------+"
 
 agreed=
+
+if test "${SP_INSTALL_SILENTLY}" = "on"
+then
+    agreed=1
+fi
+
 while [ -z "${agreed}" ]; do
 	echo "Do you agree with the AGPL license terms? [yes or no] "
 	read reply leftover
@@ -573,6 +674,13 @@ echo "	* Configure the server's boot scripts"
 agreed=
 answered=
 manual=
+
+if test "${SP_INSTALL_SILENTLY}" = "on"
+then
+    answered=1
+    manual=1
+fi
+
 while [ -z "${answered}" ]; do
 	echo
 	echo "Would you like to perform these tasks now?  [yes or no] "

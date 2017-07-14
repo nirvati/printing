@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- +====================================================================+ -->
+<!-- | This file is part of the SavaPage project <https://savapage.org> ..| -->
+<!-- | Copyright (c) 2011-2017 Datraverse B.V. | Author: Rijk Ravestein...| -->
+<!-- |....................................................................| -->
+<!-- | SavaPage is free software: you can redistribute it and/or modify ..| -->
+<!-- | it under the terms of the GNU Affero General Public License as ....| -->
+<!-- | published by the Free Software Foundation, either version 3 of ....| -->
+<!-- | the License, or (at your option) any later version. ...............| -->
+<!-- +====================================================================+ -->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+    <!-- Replace KEYWORD and VALUE with lower case IPP keyword and value -->
+    <entry key="ipp-attr-KEYWORD-VALUE">translation</entry>
+
+</properties>

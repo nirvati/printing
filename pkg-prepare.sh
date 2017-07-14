@@ -1,7 +1,7 @@
 #!/bin/sh
 #
-# This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2016 Datraverse B.V.
+# This file is part of the SavaPage project <https://www.savapage.org>.
+# Copyright (c) 2011-2017 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,7 +15,7 @@
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # For more information, please contact Datraverse B.V. at this
 # address: info@datraverse.com
@@ -92,17 +92,17 @@ if [ -f "${YUICOMPRESSOR_JAR}" ]; then
 	echo "+----------------------------------------"
 	
 	_COMPRESS_SOURCES="savapage
-		jquery.savapage
-	    jquery.savapage-exceeded
-	    jquery.savapage-user
-	    jquery.savapage-admin
-		jquery.savapage-admin-panels
-	    jquery.savapage-admin-pages
-		jquery.savapage-jobtickets	    
-	    jquery.savapage-pos
-		jquery.savapage-page-jobtickets
-		jquery.savapage-page-pos
-		jquery.savapage-page-print-delegation"
+	   jquery.savapage
+	   jquery.savapage-msg
+	   jquery.savapage-user
+	   jquery.savapage-admin
+	   jquery.savapage-admin-panels
+	   jquery.savapage-admin-pages
+	   jquery.savapage-jobtickets
+	   jquery.savapage-pos
+	   jquery.savapage-page-jobtickets
+	   jquery.savapage-page-pos
+	   jquery.savapage-page-print-delegation"
 	        
 	for _src in ${_COMPRESS_SOURCES}
 	do
@@ -275,6 +275,46 @@ cd ${_CURRENTDIR}
 
 
 #=========================================================================
+# savapage-i18n-es.jar
+#=========================================================================
+
+WORK_ZIP_NAME=${_SAVAPAGE_I18N_ES_JAR}
+WORK_HOME=${_PREP_HOME}/${WORK_ZIP_NAME}_WORK
+WORK_ZIP_SRC=${_REPO_HOME_PUB}/savapage-i18n-es/target/${WORK_ZIP_NAME}
+
+echo "+--------------------------------------------------------------"
+echo "| Prepare ${WORK_ZIP_NAME}"
+echo "+--------------------------------------------------------------"
+
+#----------------------------------------
+# Make room
+#----------------------------------------
+mkdir --parent ${WORK_HOME}
+
+#----------------------------------------
+# Extract 
+#----------------------------------------
+unzip -q ${WORK_ZIP_SRC} -d ${WORK_HOME}
+
+#----------------------------------------
+# Prune
+#----------------------------------------
+rm -rf ${WORK_HOME}/META-INF/maven
+
+#----------------------------------------
+# Change
+#----------------------------------------
+#TODO : adapt META-INF/MANIFEST.MF
+
+#------------------------------------------------------------------------------
+# Zip-up 
+#------------------------------------------------------------------------------
+cd ${WORK_HOME}
+zip -q -r ${_PREP_HOME}/${WORK_ZIP_NAME} ./*
+cd ${_CURRENTDIR}
+
+
+#=========================================================================
 # savapage-i18n-fr.jar
 #=========================================================================
 
@@ -320,6 +360,46 @@ cd ${_CURRENTDIR}
 WORK_ZIP_NAME=${_SAVAPAGE_I18N_NL_JAR}
 WORK_HOME=${_PREP_HOME}/${WORK_ZIP_NAME}_WORK
 WORK_ZIP_SRC=${_REPO_HOME_PUB}/savapage-i18n-nl/target/${WORK_ZIP_NAME}
+
+echo "+--------------------------------------------------------------"
+echo "| Prepare ${WORK_ZIP_NAME}"
+echo "+--------------------------------------------------------------"
+
+#----------------------------------------
+# Make room
+#----------------------------------------
+mkdir --parent ${WORK_HOME}
+
+#----------------------------------------
+# Extract 
+#----------------------------------------
+unzip -q ${WORK_ZIP_SRC} -d ${WORK_HOME}
+
+#----------------------------------------
+# Prune
+#----------------------------------------
+rm -rf ${WORK_HOME}/META-INF/maven
+
+#----------------------------------------
+# Change
+#----------------------------------------
+#TODO : adapt META-INF/MANIFEST.MF
+
+#------------------------------------------------------------------------------
+# Zip-up 
+#------------------------------------------------------------------------------
+cd ${WORK_HOME}
+zip -q -r ${_PREP_HOME}/${WORK_ZIP_NAME} ./*
+cd ${_CURRENTDIR}
+
+
+#=========================================================================
+# savapage-i18n-ru.jar
+#=========================================================================
+
+WORK_ZIP_NAME=${_SAVAPAGE_I18N_RU_JAR}
+WORK_HOME=${_PREP_HOME}/${WORK_ZIP_NAME}_WORK
+WORK_ZIP_SRC=${_REPO_HOME_PUB}/savapage-i18n-ru/target/${WORK_ZIP_NAME}
 
 echo "+--------------------------------------------------------------"
 echo "| Prepare ${WORK_ZIP_NAME}"
@@ -468,6 +548,45 @@ zip -q -r ${_PREP_HOME}/${WORK_ZIP_NAME} ./*
 cd ${_CURRENTDIR}
 
 #=========================================================================
+# savapage-ext-oauth.jar
+#=========================================================================
+WORK_ZIP_NAME=${_SAVAPAGE_EXT_OAUTH_JAR}
+WORK_HOME=${_PREP_HOME}/${WORK_ZIP_NAME}_WORK
+WORK_ZIP_SRC=${_REPO_HOME_PUB}/savapage-ext-oauth/target/${WORK_ZIP_NAME}
+
+echo "+--------------------------------------------------------------"
+echo "| Prepare ${WORK_ZIP_NAME}"
+echo "+--------------------------------------------------------------"
+
+#----------------------------------------
+# Make room
+#----------------------------------------
+mkdir --parent ${WORK_HOME}
+
+#----------------------------------------
+# Extract 
+#----------------------------------------
+unzip -q ${WORK_ZIP_SRC} -d ${WORK_HOME}
+
+#----------------------------------------
+# Prune
+#----------------------------------------
+rm -rf ${WORK_HOME}/META-INF/maven
+
+#----------------------------------------
+# Change
+#----------------------------------------
+#TODO : adapt META-INF/MANIFEST.MF
+
+#------------------------------------------------------------------------------
+# Zip-up 
+#------------------------------------------------------------------------------
+cd ${WORK_HOME}
+zip -q -r ${_PREP_HOME}/${WORK_ZIP_NAME} ./*
+cd ${_CURRENTDIR}
+
+
+#=========================================================================
 # savapage-core.jar
 #=========================================================================
 WORK_ZIP_NAME=${_SAVAPAGE_CORE_JAR}
@@ -561,7 +680,9 @@ cp ${_PREP_HOME}/${_SAVAPAGE_CORE_JAR} ${_PREP_WEB_LIB_HOME}
 
 cp ${_PREP_HOME}/${_SAVAPAGE_I18N_DE_JAR} ${_PREP_WEB_LIB_HOME}
 cp ${_PREP_HOME}/${_SAVAPAGE_I18N_EN_JAR} ${_PREP_WEB_LIB_HOME}
+cp ${_PREP_HOME}/${_SAVAPAGE_I18N_ES_JAR} ${_PREP_WEB_LIB_HOME}
 cp ${_PREP_HOME}/${_SAVAPAGE_I18N_FR_JAR} ${_PREP_WEB_LIB_HOME}
 cp ${_PREP_HOME}/${_SAVAPAGE_I18N_NL_JAR} ${_PREP_WEB_LIB_HOME}
+cp ${_PREP_HOME}/${_SAVAPAGE_I18N_RU_JAR} ${_PREP_WEB_LIB_HOME}
 
 # end-of-script

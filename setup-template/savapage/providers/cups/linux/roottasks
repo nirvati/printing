@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# This file is part of the SavaPage project <http://savapage.org>.
+# This file is part of the SavaPage project <https://www.savapage.org>.
 # Copyright (c) 2011-2016 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
@@ -15,7 +15,7 @@
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # For more information, please contact Datraverse B.V. at this
 # address: info@datraverse.com
@@ -46,15 +46,6 @@ cd "${SCRIPT_HOME}"
 #---------------------------------------------------------------------------
 # Constants
 #---------------------------------------------------------------------------
-readonly _SYSTEMD_ETC_SYSTEM_HOME=$(_do_find_etc_systemd_system)
-
-if [ ! -z "${_OS_HAS_SYSTEMD}" ] && [ -z "${_SYSTEMD_ETC_SYSTEM_HOME}" ]; then
-    echo "Systemd is installed but /etc location is not found." 1>&2
-    exit 1
-fi
-
-readonly _SYSTEMD_CUPS_SERVICE_FILENAME=cups.service
-readonly _SYSTEMD_CUPS_SERVICE_FILEPATH="${_SYSTEMD_ETC_SYSTEM_HOME}/${_SYSTEMD_CUPS_SERVICE_FILENAME}"
 
 #--------------------------------------------------------------------------
 # Common Functions
@@ -100,101 +91,8 @@ is_cups_v12_plus() {
     test ! -z "${versionstr}"
 }
 
-#---------------------------------------------------------------------------
-# Write the cups.service file
-#---------------------------------------------------------------------------
-do_systemd_write_cups_service_file() {
-
-
-	cat > "${_SYSTEMD_CUPS_SERVICE_FILEPATH}" << EOF
-#
-# This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2016 Datraverse B.V.
-# Author: Rijk Ravestein.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-# For more information, please contact Datraverse B.V. at this
-# address: info@datraverse.com
-#
-[Unit]
-Description=CUPS Scheduler
-Documentation=man:cupsd(8)
-After=network.target
-
-[Service]
-ExecStart=`find_cupsd` -f
-
-[Install]
-WantedBy=multi-user.target
-
-# end-of file
-EOF
-}
-
-#---------------------------------------------------------------------------
-# Stop/diable /etc/systemd cups services
-#
-# cups.path ensures that CUPS is also started (activated) when there
-# is a print job still queued in the printing spool /var/spool/cups
-#
-# cups.socket binds the socket, but won't start CUPS yet.
-#---------------------------------------------------------------------------
-do_systemd_stop() {
-    # stop the cups services
-    systemctl stop ${_SYSTEMD_CUPS_SERVICE_FILENAME}
-    systemctl stop cups.path
-    systemctl stop cups.socket
-
-    # disable the cups services
-    systemctl disable ${_SYSTEMD_CUPS_SERVICE_FILENAME}
-    systemctl disable cups.path
-    systemctl disable cups.socket
-}
-
-#---------------------------------------------------------------------------
-# Start /etc/systemd cups.service
-#---------------------------------------------------------------------------
-do_systemd_start() {
-	# Since cups.service changed on disk, reload systemd units.	
-	systemctl daemon-reload
-    # enable the cups service
-	systemctl enable ${_SYSTEMD_CUPS_SERVICE_FILENAME}    
-    # start the cups service
-	systemctl start ${_SYSTEMD_CUPS_SERVICE_FILENAME}    
-}
-
-#---------------------------------------------------------------------------
-# Istall systemd service
-#---------------------------------------------------------------------------
-do_systemd_install() {	   
-    do_systemd_stop        
-    do_systemd_write_cups_service_file
-    do_systemd_start
-}
-
-#---------------------------------------------------------------------------
-# Uninstall systemd service
-#---------------------------------------------------------------------------
-do_systemd_uninstall() {	
-	rm -f "${_SYSTEMD_CUPS_SERVICE_FILEPATH}"
-	# Since cups.service changed on disk, reload systemd units.	
-	systemctl daemon-reload
-}
-
 #--------------------------------------------------------------------------
-# Install CUPS systemd service and notifier
+# Install CUPS notifier
 #--------------------------------------------------------------------------
 install_cups() {
 
@@ -261,16 +159,7 @@ install_cups() {
         chown --reference=${refnotifier} "${CUPS_NOTIFIER_NAME}" 2>/dev/null
         chmod --reference=${refnotifier} "${CUPS_NOTIFIER_NAME}" 2>/dev/null
     fi
-    
-    #
-    # Create/replace the /etc/systemd cups.service?
-    #
-    if [ ! -z "${_OS_HAS_SYSTEMD}" ]; then
-        echo "--------------------------------------------"
-        echo "Replacing the cups.service ..."
-    	do_systemd_install
-    fi
-    
+        
     echo "--------------------------------------------"
     echo "Starting the ${APP_NAME}..."
     sleep 2
@@ -295,11 +184,6 @@ uninstall_cups() {
             rm -f "${d}/${CUPS_NOTIFIER_NAME}" > /dev/null 2>&1
         fi
     done
-    
-    if [ ! -z "${_OS_HAS_SYSTEMD}" ]; then
-        echo "Removing the /etc cups.service ..."
-		do_systemd_uninstall
-	fi       
 }
 
 #--------------------------------------------------------------------------

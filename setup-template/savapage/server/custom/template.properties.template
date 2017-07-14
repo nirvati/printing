@@ -1,4 +1,3 @@
-#!/bin/sh
 #
 # This file is part of the SavaPage project <https://www.savapage.org>.
 # Copyright (c) 2011-2017 Datraverse B.V.
@@ -21,9 +20,13 @@
 # address: info@datraverse.com
 #
 
-#-------------------------
-NFC_SERVICE=savapage-nfc
+#-----------------------------------------------------------------------
+# Email templates as present in templates/ (sub)folder.
+#-----------------------------------------------------------------------
+#template.email.pos.deposit-receipt=email.pos.deposit-receipt.xml
+#template.email.user.pdf-send=email.user.pdf-send.xml
+#template.email.print.gcp.job-owner-unknown.cancel=email.print.gcp.job-owner-unknown.cancel.xml
+#template.email.print.imap.rejected=email.print.imap.rejected.xml
+#template.email.jobticket.notify-email.completed=email.jobticket.notify-email.completed.xml
 
-sudo service ${NFC_SERVICE} stop
-sudo update-rc.d ${NFC_SERVICE} remove
-sudo rm /etc/init.d/${NFC_SERVICE}
+# end-of-file

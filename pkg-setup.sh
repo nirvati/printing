@@ -1,7 +1,7 @@
 #!/bin/sh
 #
-# This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2015 Datraverse B.V.
+# This file is part of the SavaPage project <https://www.savapage.org>.
+# Copyright (c) 2011-2017 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,7 +15,7 @@
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # For more information, please contact Datraverse B.V. at this
 # address: info@datraverse.com
@@ -72,8 +72,6 @@ readonly DIST_PROVIDER_CUPS=${DIST_HOME_APP}/providers/cups/linux-${_ARCH}
 
 #
 readonly SAVAPAGE_PPD_FILE=${_REPO_HOME_PPD}/ppd/SAVAPAGE.ppd
-readonly SAVAPAGE_INF_FILE=${_REPO_HOME_PPD}/client/win/win7/savapage_oemui.inf
-readonly SAVAPAGE_INI_FILE=${_REPO_HOME_PPD}/client/win/win7/savapage_oemui.ini
 
 #
 readonly DIST_SERVER_BIN_HOME=${DIST_HOME_APP}/server/bin/linux-${_ARCH}
@@ -123,27 +121,21 @@ mv ${DIST_HOME_APP}/server/bin/linux ${DIST_SERVER_BIN_HOME}
 mv ${DIST_HOME_APP}/providers/cups/linux ${DIST_PROVIDER_CUPS}
 
 #----------------------------------------
-# Copy SavaPage printer files
+# Copy SavaPage PPD file
 #----------------------------------------
 echo "Including SavaPage printer driver..."
 cp ${SAVAPAGE_PPD_FILE}  ${DIST_HOME_APP}/client
-cp ${SAVAPAGE_PPD_FILE}  ${DIST_HOME_APP}/client/win
-cp ${SAVAPAGE_INF_FILE}  ${DIST_HOME_APP}/client/win
-cp ${SAVAPAGE_INI_FILE}  ${DIST_HOME_APP}/client/win
-
-if [ -d "${_WIN_PPD_DRIVER_DLL_HOME}" ]; then
-	echo "Including Windows OEM printer driver..."
-	cp -R ${_WIN_PPD_DRIVER_DLL_HOME}/* ${DIST_HOME_APP}/client/win/
-fi
 
 #------------------------------------------------------------------------
 # Copy the savapage-ext-*.jar files and their properties files as template  
 #------------------------------------------------------------------------
 cp -R ${_PREP_HOME}/${_SAVAPAGE_EXT_MOLLIE_JAR} ${DIST_HOME_APP}/server/ext/lib
 cp -R ${_PREP_HOME}/${_SAVAPAGE_EXT_BLOCKCHAIN_INFO_JAR} ${DIST_HOME_APP}/server/ext/lib
+cp -R ${_PREP_HOME}/${_SAVAPAGE_EXT_OAUTH_JAR} ${DIST_HOME_APP}/server/ext/lib
 
 cp ${_REPO_HOME_EXT_MOLLIE}/*.properties.template ${DIST_HOME_APP}/server/ext
 cp ${_REPO_HOME_EXT_BLOCKCHAIN_INFO}/*.properties.template ${DIST_HOME_APP}/server/ext
+cp ${_REPO_HOME_EXT_OAUTH}/*.properties.template ${DIST_HOME_APP}/server/ext
  
 #----------------------------------------
 # Copy the SavaPage Client 
@@ -248,25 +240,22 @@ tar -czvf ${DIST_TAR} -C ${DIST_HOME} ${APP_NAME}/
 cat setup-sfx.sh ${DIST_TAR} > ${DIST_SFX}
 chmod +x ${DIST_SFX}
 
-
 #-------------------------------------------------------------------
-# Create MD5 and SHA1 checksum is separate file
+# Create SHA512 checksum in separate file
 #-------------------------------------------------------------------
-echo "Create checksums..."
-openssl dgst -md5  -binary ${DIST_SFX} | xxd -p > ${DIST_SFX}.md5
-openssl dgst -sha1 -binary ${DIST_SFX} | xxd -p > ${DIST_SFX}.sha1
-
+echo "Create sha512sum ..."
+sha512sum ${DIST_SFX} | cut -d ' ' -f 1 > ${DIST_PARENT}/sha512sums.txt
 
 #-------------------------------------------------------------------
 # Create a PGP ascii signature in a separate .asc file
 #-------------------------------------------------------------------
 
-haspgp=`which pgp 2> /dev/null`
+haspgp=`which gpg2 2> /dev/null`
 if [ -z "${haspgp}" ]; then
 	echo "Cannot create PGP signature (pgp not installed)." >&2
 else
 	echo "Create PGP signature..."
-	pgp -sab ${DIST_SFX}
+	gpg2 -sab -o ${DIST_PARENT}/savapage.asc ${DIST_SFX}
 fi
 
 # end-of-file

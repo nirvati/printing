@@ -1,6 +1,6 @@
 #
-# This file is part of the SavaPage project <http://savapage.org>.
-# Copyright (c) 2011-2016 Datraverse B.V.
+# This file is part of the SavaPage project <https://www.savapage.org>.
+# Copyright (c) 2011-2017 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # For more information, please contact Datraverse B.V. at this
 # address: info@datraverse.com
@@ -30,29 +30,32 @@ readonly _REPOS_PUB_SUBDIR=repos
 #-------------------------------------------------------------------
 # The repositories 
 #-------------------------------------------------------------------
-readonly _REPOS_GIT_PUBLIC_HTTPS=https://gitlab.com/savapage
-readonly _REPOS_GIT_PUBLIC_SSH=git@gitlab.com:/savapage
+readonly _REPOS_GIT_PUBLIC_HTTPS=https://gitlab.com
+readonly _REPOS_GIT_PUBLIC_SSH=git@gitlab.com:
 
 readonly _REPOS_GIT_PUBLIC_URL=${_REPOS_GIT_PUBLIC_HTTPS}
 
-readonly _REPOS_GIT_PUBLIC="savapage-make
-	savapage-client
-    savapage-common
-    savapage-core
-    savapage-ext
-    savapage-ext-blockchain-info    
-    savapage-ext-mollie
-    savapage-i18n-de
-    savapage-i18n-en
-    savapage-i18n-fr
-    savapage-i18n-nl
-    savapage-server
-	savapage-cups-notifier
-    savapage-nfc-reader
-    savapage-nss
-    savapage-pam
-    savapage-ppd
-    savapage-util
-    xmlrpcpp"
+readonly _REPOS_GIT_PUBLIC="savapage/savapage-make
+	savapage/savapage-client
+    savapage/savapage-common
+    savapage/savapage-core
+    savapage/savapage-ext
+    savapage-ext/savapage-ext-blockchain-info
+    savapage-ext/savapage-ext-mollie
+    savapage-ext/savapage-ext-oauth
+    savapage-i18n/savapage-i18n-de
+    savapage-i18n/savapage-i18n-en
+    savapage-i18n/savapage-i18n-es
+    savapage-i18n/savapage-i18n-fr
+    savapage-i18n/savapage-i18n-nl
+    savapage-i18n/savapage-i18n-ru
+    savapage/savapage-server
+	savapage/savapage-cups-notifier
+    savapage/savapage-nfc-reader
+    savapage/savapage-nss
+    savapage/savapage-pam
+    savapage/savapage-ppd
+    savapage/savapage-util
+    savapage/xmlrpcpp"
 
 # end-of-file
