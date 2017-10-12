@@ -56,9 +56,11 @@
         trx_by varchar(50) not null,
         trx_date timestamp not null,
         trx_weight int4 not null,
+        trx_weight_unit int4 not null,
         trx_type varchar(20) not null,
         account_id int8 not null,
         account_voucher_id int8,
+        cost_change_id int8,
         doc_id int8,
         pos_purchase_id int8,
         primary key (account_trx_id)
@@ -104,6 +106,24 @@
         property_name varchar(100) not null,
         property_value varchar(1000),
         primary key (config_id)
+    );
+
+    create table tbl_cost_change (
+       cost_change_id int8 not null,
+        chg_amount numeric(16, 8),
+        chg_by varchar(50),
+        chg_cost numeric(16, 8),
+        chg_date timestamp not null,
+        chg_reason varchar(1000),
+        chg_status varchar(20) not null,
+        chg_type varchar(20) not null,
+        currency_code varchar(3) not null,
+        req_amount numeric(16, 8) not null,
+        req_date timestamp not null,
+        req_reason varchar(1000),
+        doc_id int8 not null,
+        req_user_id int8,
+        primary key (cost_change_id)
     );
 
     create table tbl_device (
@@ -497,6 +517,7 @@
 create index ix_account_1 on tbl_account (pin, sub_pin);
 create index ix_account_2 on tbl_account (parent_id);
 create index ix_account_3 on tbl_account (account_type, account_name_lower, sub_name_lower);
+create index ix_account_attr_1 on tbl_account_attr (account_id);
 
     alter table tbl_account_attr 
        add constraint uc_account_attr_1 unique (account_id, attrib_name);
@@ -505,6 +526,8 @@ create index ix_account_trx_2 on tbl_account_trx (doc_id);
 create index ix_account_trx_3 on tbl_account_trx (trx_date);
 create index ix_account_trx_4 on tbl_account_trx (account_voucher_id);
 create index ix_account_trx_5 on tbl_account_trx (ext_id);
+create index ix_account_trx_6 on tbl_account_trx (pos_purchase_id);
+create index ix_account_trx_7 on tbl_account_trx (cost_change_id);
 create index ix_account_voucher_1 on tbl_account_voucher (card_number_batch);
 create index ix_account_voucher_2 on tbl_account_voucher (trx_merchant_code, trx_ref_merchant);
 create index ix_account_voucher_3 on tbl_account_voucher (trx_acquirer_code, trx_ref_acquirer);
@@ -519,20 +542,41 @@ create index ix_config_1 on tbl_config (modified_by, modified_date);
 
     alter table tbl_config 
        add constraint uc_config_1 unique (property_name);
+create index ix_cost_change_1 on tbl_cost_change (req_date);
+create index ix_cost_change_2 on tbl_cost_change (chg_type);
+create index ix_cost_change_3 on tbl_cost_change (chg_status);
+create index ix_cost_change_4 on tbl_cost_change (chg_date);
+create index ix_cost_change_5 on tbl_cost_change (chg_by);
+create index ix_cost_change_6 on tbl_cost_change (doc_id);
+create index ix_cost_change_7 on tbl_cost_change (req_user_id);
+create index ix_device_1 on tbl_device (card_reader_id);
+create index ix_device_2 on tbl_device (printer_id);
+create index ix_device_3 on tbl_device (printer_group_id);
 
     alter table tbl_device 
        add constraint uc_device_1 unique (device_name);
 
     alter table tbl_device 
        add constraint uc_device_2 unique (hostname, device_type);
+create index ix_device_attr_1 on tbl_device_attr (device_id);
 
     alter table tbl_device_attr 
        add constraint uc_device_attr_1 unique (device_id, attrib_name);
+create index ix_doc_in_1 on tbl_doc_in (print_in_id);
+create index ix_doc_in_out_1 on tbl_doc_in_out (doc_in_id);
+create index ix_doc_in_out_2 on tbl_doc_in_out (doc_out_id);
 create index ix_doc_log_1 on tbl_doc_log (user_id, uuid);
 create index ix_doc_log_2 on tbl_doc_log (ext_supplier, ext_status);
+create index ix_doc_log_3 on tbl_doc_log (created_day);
+create index ix_doc_log_4 on tbl_doc_log (user_id);
+create index ix_doc_log_5 on tbl_doc_log (doc_in_id);
+create index ix_doc_log_6 on tbl_doc_log (doc_out_id);
+create index ix_doc_out_1 on tbl_doc_out (print_out_id);
+create index ix_doc_out_2 on tbl_doc_out (pdf_out_id);
 
     alter table tbl_ipp_queue 
        add constraint uc_ipp_queue_1 unique (url_path);
+create index ix_queue_attr_1 on tbl_ipp_queue_attr (queue_id);
 
     alter table tbl_ipp_queue_attr 
        add constraint uc_queue_attr_1 unique (queue_id, attrib_name);
@@ -542,10 +586,15 @@ create index ix_doc_log_2 on tbl_doc_log (ext_supplier, ext_status);
 
     alter table tbl_pos_purchase 
        add constraint uc_pos_purchase_1 unique (receipt_num);
+create index ix_pos_purchase_item_1 on tbl_pos_purchase_item (pos_purchase_id);
+create index ix_print_in_1 on tbl_print_in (queue_id);
 create index ix_print_out_1 on tbl_print_out (cups_job_id);
+create index ix_print_out_2 on tbl_print_out (cups_job_state);
+create index ix_print_out_3 on tbl_print_out (printer_id);
 
     alter table tbl_printer 
        add constraint uc_printer_1 unique (printer_name);
+create index ix_printer_attr_1 on tbl_printer_attr (printer_id);
 
     alter table tbl_printer_attr 
        add constraint uc_printer_attr_1 unique (printer_id, attrib_name);
@@ -560,10 +609,12 @@ create index ix_printer_group_member_2 on tbl_printer_group_member (printer_grou
 create index ix_user_1 on tbl_user (user_name);
 create index ix_user_account_1 on tbl_user_account (user_id);
 create index ix_user_account_2 on tbl_user_account (account_id);
+create index ix_user_attr_1 on tbl_user_attr (user_id);
 
     alter table tbl_user_attr 
        add constraint uc_user_attr_1 unique (user_id, attrib_name);
 create index ix_user_card_1 on tbl_user_card (user_id, card_number);
+create index ix_user_card_2 on tbl_user_card (user_id);
 
     alter table tbl_user_card 
        add constraint uc_user_card_1 unique (card_number);
@@ -571,6 +622,7 @@ create index ix_user_card_1 on tbl_user_card (user_id, card_number);
     alter table tbl_user_card 
        add constraint uc_user_card_2 unique (user_id, index_number);
 create index ix_user_email_1 on tbl_user_email (user_id, address);
+create index ix_user_email_2 on tbl_user_email (user_id);
 
     alter table tbl_user_email 
        add constraint uc_user_email_1 unique (address);
@@ -582,12 +634,14 @@ create index ix_user_email_1 on tbl_user_email (user_id, address);
        add constraint uc_user_group_1 unique (group_name);
 create index ix_user_group_account_1 on tbl_user_group_account (user_group_id);
 create index ix_user_group_account_2 on tbl_user_group_account (account_id);
+create index ix_user_group_attr_1 on tbl_user_group_attr (user_group_id);
 
     alter table tbl_user_group_attr 
        add constraint uc_user_group_attr_1 unique (user_group_id, attrib_name);
 create index ix_user_group_member_1 on tbl_user_group_member (user_id);
 create index ix_user_group_member_2 on tbl_user_group_member (user_group_id);
 create index ix_user_number_1 on tbl_user_number (user_id, id_number);
+create index ix_user_number_2 on tbl_user_number (user_id);
 
     alter table tbl_user_number 
        add constraint uc_user_number_1 unique (id_number);
@@ -616,6 +670,11 @@ create index ix_user_number_1 on tbl_user_number (user_id, id_number);
        references tbl_account_voucher;
 
     alter table tbl_account_trx 
+       add constraint FK_ACCOUNT_TRX_TO_COST_CHANGE 
+       foreign key (cost_change_id) 
+       references tbl_cost_change;
+
+    alter table tbl_account_trx 
        add constraint FK_ACCOUNT_TRX_TO_DOCLOG 
        foreign key (doc_id) 
        references tbl_doc_log;
@@ -624,6 +683,16 @@ create index ix_user_number_1 on tbl_user_number (user_id, id_number);
        add constraint FK_ACCOUNT_TRX_TO_POS_PURCHASE 
        foreign key (pos_purchase_id) 
        references tbl_pos_purchase;
+
+    alter table tbl_cost_change 
+       add constraint FK_COST_CHANGE_TO_DOCLOG 
+       foreign key (doc_id) 
+       references tbl_doc_log;
+
+    alter table tbl_cost_change 
+       add constraint FK_COST_CHANGE_TO_USER 
+       foreign key (req_user_id) 
+       references tbl_user;
 
     alter table tbl_device 
        add constraint FK_DEVICE_TERMINAL_TO_CARD_READER 
