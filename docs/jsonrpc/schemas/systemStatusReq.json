@@ -1,0 +1,38 @@
+{
+  "$id": "https://savapage.org/systemStatusReq.json", 
+  "$schema": "http://json-schema.org/draft-06/schema#", 
+  "id": "systemStatus",
+  "description": "Gets System Status",  
+  "definitions": {}, 
+  "properties": {
+    "jsonrpc": {
+      "$id": "/properties/jsonrpc", 
+      "description": "JSON-RPC version.", 
+      "enum": [
+        "2.0"
+      ], 
+      "title": "JSON-RPC version.", 
+      "type": "string"
+    }, 
+    "id": {
+      "$id": "/properties/id", 
+      "description": "Reference ID.", 
+      "title": "Reference ID", 
+      "type": "string"
+    }, 
+    "method": {
+      "$id": "/properties/method", 
+      "enum": [
+        "systemStatus"
+      ], 
+      "description": "Method name.", 
+      "title": "Method Name", 
+      "type": "string"
+    } }, 
+    "required": [
+        "jsonrpc",
+        "id", 
+        "method"
+    ],       
+  "type": "object"
+}

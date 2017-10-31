@@ -1,0 +1,70 @@
+{
+  "$id": "https://savapage.org/systemStatusRsp.json", 
+  "$schema": "http://json-schema.org/draft-06/schema#", 
+  "id": "systemStatus",
+  "properties": {
+    "jsonrpc": {
+      "$id": "/properties/jsonrpc", 
+      "description": "JSON-RPC version.", 
+      "enum": [
+        "2.0"
+      ], 
+      "title": "JSON-RPC version.", 
+      "type": "string"
+    }, 
+    "id": {
+      "$id": "/properties/id", 
+      "description": "Reference ID.", 
+      "title": "Reference ID", 
+      "type": "string"
+    }, 
+    "result": {
+      "$id": "/properties/result", 
+      "id": "Result",      
+      "properties": {
+        "data": {
+          "$id": "/properties/result/properties/data",
+          "id" : "Data",
+          "properties": {
+            "@type": {
+              "$id": "/properties/result/properties/data/properties/@type", 
+              "description": "Data type indicator.", 
+              "enum": [
+                "enum"
+              ], 
+              "title": "Result type", 
+              "type": "string"
+            }, 
+            "value": {
+              "$id": "/properties/result/properties/data/properties/value", 
+              "description": "System status.", 
+              "enum": [
+                "READY",
+                "SETUP",
+                "MAINTENANCE",
+                "UNAVAILABLE"
+              ], 
+              "title": "System status", 
+              "type": "string"
+            }
+          }, 
+          "required": [
+            "@type", 
+            "value"
+          ], 
+          "type": "object"
+        }
+      }, 
+      "required": [
+        "data"
+      ], 
+      "type": "object"
+    }
+  }, 
+  "required": [
+    "jsonrpc",
+    "id", 
+    "result"
+  ], 
+  "type": "object"
+}

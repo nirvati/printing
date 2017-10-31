@@ -1,0 +1,62 @@
+{
+  "$id": "https://savapage.org/authUserSourceReq.json", 
+  "$schema": "http://json-schema.org/draft-06/schema#", 
+  "id": "authUserSource",
+  "description": "Authenticate External User",  
+  "definitions": {}, 
+  "properties": {
+    "jsonrpc": {
+      "$id": "/properties/jsonrpc", 
+      "description": "JSON-RPC version.", 
+      "enum": [
+        "2.0"
+      ], 
+      "title": "JSON-RPC version.", 
+      "type": "string"
+    }, 
+    "id": {
+      "$id": "/properties/id", 
+      "description": "Reference ID.", 
+      "title": "Reference ID", 
+      "type": "string"
+    }, 
+    "method": {
+      "$id": "/properties/method", 
+      "enum": [
+        "authUserSource"
+      ], 
+      "description": "Method name.", 
+      "title": "Method Name", 
+      "type": "string"
+    }, 
+   "params": {
+      "$id": "/properties/params", 
+      "id": "Parameters",
+      "properties": {
+        "username": {
+          "$id": "/properties/params/properties/username", 
+          "description": "User Name to authenticate.",
+          "title": "User Name.", 
+          "type": "string"
+        }, 
+        "password": {
+          "$id": "/properties/params/properties/password", 
+          "description": "Password.", 
+          "title": "Password.", 
+          "type": "string"
+        }
+      },
+      "required": [
+        "username", 
+        "password"
+      ],       
+      "type": "object"
+    }  }, 
+    "required": [
+        "jsonrpc",
+        "id", 
+        "method",
+        "params"
+    ],       
+  "type": "object"
+}
