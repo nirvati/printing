@@ -117,6 +117,7 @@ if [ -f "${YUICOMPRESSOR_JAR}" ]; then
 				
 	_COMPRESS_SOURCES="jquery.savapage
 		jquery.savapage-user
+        jquery.savapage-user-icons
 		jquery.savapage-admin
 		jquery.savapage-jobtickets
 		jquery.savapage-pos
