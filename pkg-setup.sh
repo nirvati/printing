@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # This file is part of the SavaPage project <https://www.savapage.org>.
-# Copyright (c) 2011-2017 Datraverse B.V.
+# Copyright (c) 2011-2018 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -57,7 +57,7 @@ _CURRENTDIR=`dirname ${SP_SELF_PATH}`
 # CONSTANTS
 #=========================================================================
 
-readonly DIST_NAME=${APP_NAME}-setup-${APP_VERSION}-linux-${_ARCH}
+readonly DIST_NAME=${APP_NAME}-setup-${APP_VERSION_DIST}-linux-${_ARCH}
 readonly DIST_HOME=${DIST_PARENT}/${DIST_NAME}
 
 # 
