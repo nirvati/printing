@@ -5,7 +5,7 @@ Environment used by [Development Partners](https://wiki.savapage.org/doku.php?id
 ### License
 
 This module is part of the SavaPage project <https://www.savapage.org>,
-copyright (c) 2011-2017 Datraverse B.V. and licensed under the
+copyright (c) 2011-2018 Datraverse B.V. and licensed under the
 [GNU Affero General Public License (AGPL)](https://www.gnu.org/licenses/agpl.html)
 version 3, or (at your option) any later version.
 
@@ -19,11 +19,8 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
 
 ### System Requirements
 
-0. Open JDK 1.7+
+0. Open JDK 1.8+
 
-        $ sudo apt-get install openjdk-7-jdk
-        
-        # or alternatively
         $ sudo apt-get install openjdk-8-jdk
 
 0. Maven 3
@@ -72,6 +69,7 @@ SavaPage Software is produced by Community Partners and consumed by Community Fe
             savapage-i18n/savapage-i18n-es
             savapage-i18n/savapage-i18n-fr
             savapage-i18n/savapage-i18n-nl
+            savapage-i18n/savapage-i18n-pl
             savapage-i18n/savapage-i18n-ru
             savapage/savapage-server
             savapage/savapage-make

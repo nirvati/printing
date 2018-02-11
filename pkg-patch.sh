@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # This file is part of the SavaPage project <https://www.savapage.org>.
-# Copyright (c) 2011-2017 Datraverse B.V.
+# Copyright (c) 2011-2018 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -78,6 +78,7 @@ cp -p ${_PREP_WEB_LIB_HOME}/${_SAVAPAGE_I18N_EN_JAR} ${_PREP_PATCH_LIB_WEB_HOME}
 cp -p ${_PREP_WEB_LIB_HOME}/${_SAVAPAGE_I18N_ES_JAR} ${_PREP_PATCH_LIB_WEB_HOME}
 cp -p ${_PREP_WEB_LIB_HOME}/${_SAVAPAGE_I18N_FR_JAR} ${_PREP_PATCH_LIB_WEB_HOME}
 cp -p ${_PREP_WEB_LIB_HOME}/${_SAVAPAGE_I18N_NL_JAR} ${_PREP_PATCH_LIB_WEB_HOME}
+cp -p ${_PREP_WEB_LIB_HOME}/${_SAVAPAGE_I18N_PL_JAR} ${_PREP_PATCH_LIB_WEB_HOME}
 cp -p ${_PREP_WEB_LIB_HOME}/${_SAVAPAGE_I18N_RU_JAR} ${_PREP_PATCH_LIB_WEB_HOME}
 
 # savapage-client-*.jar
