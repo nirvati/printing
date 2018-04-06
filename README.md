@@ -11,7 +11,7 @@ version 3, or (at your option) any later version.
 
 ### Join Efforts, Join our Community
 
-SavaPage Software is produced by Community Partners and consumed by Community Fellows. If you want to modify and/or distribute our source code, please join us as Development Partner. By joining the [SavaPage Community](https://wiki.savapage.org) you can help build a truly Libre Print Management Solution. Please contact [info@savapage.org](mailto:info@savapage.org).
+SavaPage Software is produced by Community Partners and consumed by Community Members. If you want to modify and/or distribute our source code, please join us as Development Partner. By joining the [SavaPage Community](https://wiki.savapage.org) you can help build a truly Libre Print Management Solution. Please contact [info@savapage.org](mailto:info@savapage.org).
 
 ### Issue Management
 
