@@ -9,9 +9,39 @@
 <!-- | the License, or (at your option) any later version. ...............| -->
 <!-- +====================================================================+ -->
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
 <properties>
 
-    <!-- Replace KEYWORD and VALUE with lower case IPP keyword and value -->
+    <!-- +================================================================+ -->
+    <!-- | Custom translations ...........................................| -->
+    <!-- +----------------------------------------------------------------+ -->
+    <!-- | Replace KEYWORD and VALUE with lower case IPP keyword/value. ..| -->
+    <!-- +================================================================+ -->
+
     <entry key="ipp-attr-KEYWORD-VALUE">translation</entry>
+
+    <!-- +================================================================+ -->
+    <!-- | CSS classes for icons .........................................| -->
+    <!-- +----------------------------------------------------------------+ -->
+    <!-- | Replace KEYWORD and VALUE with lower case IPP keyword/value, ..| -->
+    <!-- | and CSS-ICON-CLASS with CSS class of the icon. Reserved values.| -->
+    <!-- | are: sp-ipp-icon-tree, sp-ipp-icon-warn, sp-ipp-icon-void .....| -->
+    <!-- | But you can define your own in a customized .css file. ........| -->
+    <!-- | Just the KEYWORD acts as default for all choices: exceptions ..| -->
+    <!-- | can be defined with KEYWORD-VALUE combinations. .............. | -->
+    <!-- +================================================================+ -->
+
+    <entry key="ipp-icon-KEYWORD-VALUE">CSS-ICON-CLASS</entry>
+
+    <!-- some examples -->
+
+    <entry key="ipp-icon-sides">sp-ipp-icon-tree</entry>
+    <entry key="ipp-icon-sides-one-sided">sp-ipp-icon-warn</entry>
+
+    <entry key="ipp-icon-print-color-mode">sp-ipp-icon-warn</entry>
+    <entry key="ipp-icon-print-color-mode-monochrome">sp-ipp-icon-tree</entry>
+
+    <entry key="ipp-icon-number-up">sp-ipp-icon-tree</entry>
+    <entry key="ipp-icon-number-up-1">sp-ipp-icon-warn</entry>
 
 </properties>
