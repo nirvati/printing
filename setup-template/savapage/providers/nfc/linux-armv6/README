@@ -1,8 +1,29 @@
+#
+# This file is part of the SavaPage project <https://www.savapage.org>.
+# Copyright (c) 2011-2018 Datraverse B.V.
+# Author: Rijk Ravestein.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+# For more information, please contact Datraverse B.V. at this
+# address: info@datraverse.com
+#
 _______________________________________________________________________________
 
                      SavaPage NFC Service on Raspberry Pi
-                    
-                    
+
+
                                _______________      
 
                                 Prerequisites
@@ -14,12 +35,12 @@ _______________________________________________________________________________
 (2) Make sure the Pi has a static IP address.
 
     A how-to to for assigning a static address can be found at:
-    
+
     http://www.penguintutor.com/news/raspberrypi/linux-static
-        
+
 
 (3) Install dependent packages.
-    
+
     $ sudo apt-get install libccid libacsccid1 pcscd
 
     - - - - - - - - - - - - - - - -
@@ -54,7 +75,7 @@ _______________________________________________________________________________
     
     ACS ACR122U-A2
     ACS ACR122U-A9
-            
+
 
 (4) Disable pn533 and nfc drivers in Raspbian kernel
 
@@ -66,9 +87,9 @@ _______________________________________________________________________________
     Edit the /etc/modprobe.d/blacklist.conf file like this:
      
     $ sudo vi /etc/modprobe.d/blacklist.conf
-    
-    .. and make sure that the file contains the following 2 lines:
-    
+
+    ... and make sure that the file contains the following 2 lines:
+
     install nfc /bin/false
     install pn533 /bin/false
 
@@ -76,13 +97,41 @@ _______________________________________________________________________________
 (5) Reboot the Raspberry Pi
 
     $ sudo reboot
-    
+
 
 (6) Connect ACS USB NFC Reader and the speakers. 
 
     Reader: ACS ACR122U
-    
-    
+
+
+                               _______________
+
+                                   Build
+
+(1) Install git.
+
+    $ sudo apt-get install git
+
+(2) Create directory to clone in.
+
+    $ cd
+    $ mkdir savapage-git
+
+(3) Clone.
+
+    $ cd savapage-git
+    $ git clone https://gitlab.com/savapage/xmlrpcpp.git
+    $ git clone https://gitlab.com/savapage/savapage-nfc-reader.git
+
+(4) Build.
+
+    $ cd xmlrpcpp
+    $ make
+    $ cd ..
+    $ cd savapage-nfc-reader
+    $ make
+
+
                                _______________
 
                                    Install
@@ -91,14 +140,20 @@ _______________________________________________________________________________
 (1) Create directory for the SavaPage files.
      
     $ sudo mkdir /usr/local/bin/savapage
-        
-        
+
+
 (2) Copy files from SavaPage Server.
 
     $ sudo scp you@server:/home/savapage/providers/nfc/linux-armv6/* /usr/local/bin/savapage/
 
 
-(3) Create savapage-nfc-reader.ini from the template and edit the settings.
+(3) Copy binary from build target.
+
+    $ cd ~/savapage-git/savapage-nfc-reader/target
+    $ sudo cp savapage-nfc-reader /usr/local/bin/savapage/savapage-nfc
+
+
+(4) Create savapage-nfc-reader.ini from the template and edit the settings.
 
     $ cd /usr/local/bin/savapage
     $ sudo cp savapage-nfc-reader.ini.template savapage-nfc-reader.ini
@@ -108,28 +163,31 @@ _______________________________________________________________________________
     change the default port of the network reader service as well.
 
     Sample sound files are present. You can use the sample script files for your
-    own customization: e.g to communicate with PiGlow or PiFace Control & Display.         
+    own customization: e.g to communicate with PiGlow or PiFace Control & Display.
 
     NOTE: Check that your firewall is open for the IP address and ports set 
           in the .ini file.
-          
+
+
+(5) Install the service.
+
+    NOTE: This installs a SysV service. Please call SavaPage Support 
+          if Systemd is needed.
     
-(4) Install the service.
-         
     $ sudo /usr/local/bin/savapage/install
 
 
-(5) Swipe a card.
+(6) Swipe a card.
 
-    A sound must be heard through the speaker(s).             
-    
-    
-(6) Reboot.
+    A sound must be heard through the speaker(s).
+
+
+(7) Reboot.
  
-    $ sudo reboot        
+    $ sudo reboot
 
         
-(7) Check if the service is started by swiping a card.
+(8) Check if the service is started by swiping a card.
 
     A sound must be heard through the speaker(s).
     
@@ -140,17 +198,17 @@ _______________________________________________________________________________
 
 
 (1) Inspect syslog entries.
-                                
+
     $ cat /var/log/syslog | grep savapage-nfc-reader
 
 
 (2) Use telnet from the SavaPage server to check if the Network Card Reader can 
     be reached. Telnet should echo 'savapage-nfc-reader' and close immediately. 
-    
+
     As an example for Raspberry Pi 192.168.1.200:7772 ... 
-    
+
     $ telnet 192.168.1.200 7772
-    
+
     Trying 192.168.1.200...
     Connected to 192.168.1.200.
     Escape character is '^]'.
@@ -170,7 +228,7 @@ _______________________________________________________________________________
 
 
 (1) Uninstall the service.
-         
+
     $ sudo /usr/local/bin/savapage/uninstall
 
 
@@ -178,3 +236,10 @@ _______________________________________________________________________________
 
     $ sudo rm -rf /usr/local/bin/savapage
 
+
+(3) Remove build directory.
+
+    $ sudo rm -rf ~/savapage-git
+
+
+# end-of-file

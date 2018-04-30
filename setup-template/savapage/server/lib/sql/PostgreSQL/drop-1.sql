@@ -12,10 +12,19 @@
        drop constraint FK_ACCOUNT_TRX_TO_ACCOUNT_VOUCHER;
 
     alter table tbl_account_trx 
+       drop constraint FK_ACCOUNT_TRX_TO_COST_CHANGE;
+
+    alter table tbl_account_trx 
        drop constraint FK_ACCOUNT_TRX_TO_DOCLOG;
 
     alter table tbl_account_trx 
        drop constraint FK_ACCOUNT_TRX_TO_POS_PURCHASE;
+
+    alter table tbl_cost_change 
+       drop constraint FK_COST_CHANGE_TO_DOCLOG;
+
+    alter table tbl_cost_change 
+       drop constraint FK_COST_CHANGE_TO_USER;
 
     alter table tbl_device 
        drop constraint FK_DEVICE_TERMINAL_TO_CARD_READER;
@@ -118,6 +127,8 @@
     drop table if exists tbl_application_log cascade;
 
     drop table if exists tbl_config cascade;
+
+    drop table if exists tbl_cost_change cascade;
 
     drop table if exists tbl_device cascade;
 

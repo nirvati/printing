@@ -1,6 +1,6 @@
 #
 # This file is part of the SavaPage project <https://www.savapage.org>.
-# Copyright (c) 2011-2017 Datraverse B.V.
+# Copyright (c) 2011-2018 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -82,6 +82,7 @@ clean-patch:
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-es clean
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-fr clean
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-nl clean
+	@make -C $(REPO_HOME_PUB)/savapage-i18n-pl clean
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-ru clean
 	@make -C $(REPO_HOME_PUB)/savapage-common clean
 	@make -C $(REPO_HOME_PUB)/savapage-core clean
@@ -108,6 +109,7 @@ mvn-package-patch:
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-es install
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-fr install
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-nl install
+	@make -C $(REPO_HOME_PUB)/savapage-i18n-pl install
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-ru install
 	@make -C $(REPO_HOME_PUB)/savapage-common install
 	@make -C $(REPO_HOME_PUB)/savapage-core install

@@ -1,6 +1,6 @@
 #
 # This file is part of the SavaPage project <https://www.savapage.org>.
-# Copyright (c) 2011-2017 Datraverse B.V.
+# Copyright (c) 2011-2018 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,6 @@
 
 #=======================================================================
 # SavaPage Logging Properties Template
-#
-# (c) Copyright 2013-2016 Datraverse B.V.
 #=======================================================================
 
 ### log messages to file  ###
@@ -76,6 +74,21 @@ log4j.appender.adminpublisher.encoding=UTF8
 # Use INFO to activate the AdminPublisher
 log4j.logger.org.savapage.core.cometd.AdminPublisherLogger=INFO, adminpublisher
 log4j.additivity.org.savapage.core.cometd.AdminPublisherLogger=false
+
+#------------------------------------------------------------------------------
+# ProxyPrint Logger 
+#------------------------------------------------------------------------------
+log4j.appender.proxyprint=org.apache.log4j.RollingFileAppender
+log4j.appender.proxyprint.MaxFileSize=10MB
+log4j.appender.proxyprint.MaxBackupIndex=10
+log4j.appender.proxyprint.File=${server.home}/logs/proxy-print.log
+log4j.appender.proxyprint.layout=org.apache.log4j.PatternLayout
+log4j.appender.proxyprint.layout.ConversionPattern=%d{ISO8601} : %m%n%n
+log4j.appender.proxyprint.encoding=UTF8
+
+# Use INFO to activate the ProxyPrint Logger
+log4j.logger.org.savapage.core.print.proxy.ProxyPrintLogger=INFO, proxyprint
+log4j.additivity.org.savapage.core.print.proxy.ProxyPrintLogger=false
 
 #------------------------------------------------------------------------------
 # Payment Gateway Audit Trail

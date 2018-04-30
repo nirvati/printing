@@ -1,9 +1,9 @@
-This file is part of the SavaPage project <http://savapage.org>,
-copyright (c) 2011-2015 Datraverse B.V. and licensed under the
+This file is part of the SavaPage project <https://www.savapage.org>,
+copyright (c) 2011-2018 Datraverse B.V. and licensed under the
 GNU Affero General Public License (AGPL).
 
 Licenses of third-party components are documented in:
 
 `./server/data/docs/licenses` 
 
-You can also browse to: http://localhost:8631/docs/licenses/
+You can also browse to: https://localhost:8632/docs/licenses/

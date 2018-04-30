@@ -1,0 +1,96 @@
+{
+  "$id": "https://savapage.org/error-response.json", 
+  "$schema": "http://json-schema.org/draft-06/schema#", 
+  "id": "Basic Error",
+  "description": "",  
+  "definitions": {}, 
+  "properties": {
+    "jsonrpc": {
+      "$id": "/properties/jsonrpc", 
+      "description": "JSON-RPC version.", 
+      "enum": [
+        "2.0"
+      ], 
+      "title": "JSON-RPC version.", 
+      "type": "string"
+    }, 
+    "id": {
+      "$id": "/properties/id", 
+      "description": "Reference ID.", 
+      "title": "Reference ID", 
+      "type": "string"
+    }, 
+    "result": {
+      "$id": "/properties/result", 
+      "enum": [
+        "false"
+      ],
+      "description": "Error indicator.", 
+      "title": "Error indicator", 
+      "type": "boolean"
+    },
+    "error": {
+      "$id": "/properties/error",
+      "id" : "Error",
+      "properties": {
+        "code": {
+          "$id": "/properties/error/properties/code", 
+          "description": "-32600 (invalid request), -32601 (method not found), -32602 (Invalid params), -32603 (internal error), -32700 (parse error).",
+          "enum": [
+            -32600,
+            -32601,
+            -32602,
+            -32603,
+            -32700
+          ], 
+          "title": "The Code Schema.", 
+          "type": "integer"
+        }, 
+        "message": {
+          "$id": "/properties/error/properties/message", 
+          "description": "Error message.", 
+          "title": "Error Message.", 
+          "type": "string"
+        }, 
+        "data": {
+          "$id": "/properties/error/properties/data",
+          "id" : "Data",
+          "properties": {
+            "@type": {
+              "$id": "/properties/error/properties/data/properties/@type", 
+              "description": "Data type indicator.", 
+              "enum": [
+                "BASIC"
+              ], 
+              "title": "Data Type.", 
+              "type": "string"
+            }, 
+            "reason": {
+              "$id": "/properties/error/properties/data/properties/reason", 
+              "description": "Error reason.", 
+              "title": "Error Reason.", 
+              "type": "string"
+            }
+          }, 
+          "required": [
+            "reason", 
+            "@type"
+          ], 
+          "type": "object"
+        }      }, 
+      "required": [
+        "code", 
+        "message",
+        "data"
+      ], 
+      "type": "object"
+    } 
+  }, 
+  "required": [
+    "jsonrpc",
+    "id", 
+    "result", 
+    "error"
+  ], 
+  "type": "object"
+}

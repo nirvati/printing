@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # This file is part of the SavaPage project <https://www.savapage.org>.
-# Copyright (c) 2011-2016 Datraverse B.V.
+# Copyright (c) 2011-2018 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -32,7 +32,7 @@ fi
 . ./.install-config.sh
 
 usage="_____________________________________________________________________________
-SavaPage Install (c) 2010-2016, Datraverse B.V.
+SavaPage Install (c) 2010-2018, Datraverse B.V.
 
 License: GNU AGPL version 3 or later <https://www.gnu.org/licenses/agpl.html>.
 This is free software: you are free to change and redistribute it.
@@ -239,7 +239,7 @@ if [ "${wrong_arch}" = "y" ]; then
 	done
 fi
 
-echo "Checking SavaPage dependencies ..."
+echo "Checking dependencies ..."
 
 # Java JRE
 hasjre=`which java 2> /dev/null`
@@ -382,7 +382,7 @@ fi
 #
 # Check if savapage utilities can be run
 #
-echo "Checking SavaPage utilities ..."
+echo "Checking utilities ..."
 binerror=
 	
 bin_home=server/bin/linux-${install_arch}	
