@@ -92,6 +92,7 @@ if [ ! -z "${agreed}" ]; then
     rm -fr providers
 	rm -fr server
  
+	rm -f .common.inc.sh
 	rm -f .install-config.sh
     rm -f docs
     rm -f LICENSE.TXT

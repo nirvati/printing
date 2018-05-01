@@ -1,6 +1,6 @@
 #
 # This file is part of the SavaPage project <https://www.savapage.org>.
-# Copyright (c) 2011-2017 Datraverse B.V.
+# Copyright (c) 2011-2018 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -48,6 +48,7 @@ readonly _REPOS_GIT_PUBLIC="savapage/savapage-make
     savapage-i18n/savapage-i18n-es
     savapage-i18n/savapage-i18n-fr
     savapage-i18n/savapage-i18n-nl
+    savapage-i18n/savapage-i18n-pl
     savapage-i18n/savapage-i18n-ru
     savapage/savapage-server
 	savapage/savapage-cups-notifier

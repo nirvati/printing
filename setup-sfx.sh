@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# This file is part of the SavaPage project <https://savapage.org>.
+# This file is part of the SavaPage project <https://www.savapage.org>.
 # Copyright (c) 2011-2018 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
