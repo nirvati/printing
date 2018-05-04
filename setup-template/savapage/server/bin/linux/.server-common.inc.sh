@@ -24,11 +24,9 @@
 # Common shell functions, constants and defaults
 #-----------------------------------------------------------------------------
 
-APP_NAME="SavaPage Application Server"
-
-HOST_USER=savapage
-
-APP_NAME_SHORT=savapage
+readonly APP_NAME="SavaPage Application Server"
+readonly HOST_USER=savapage
+readonly APP_NAME_SHORT=savapage
 
 #--------------------------------------------------------------------
 # Get the absolute path of this (symlinked) file
