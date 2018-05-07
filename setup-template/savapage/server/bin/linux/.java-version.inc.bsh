@@ -1,0 +1,67 @@
+#!/bin/bash
+#
+# This file is part of the SavaPage project <https://www.savapage.org>.
+# Copyright (c) 2011-2018 Datraverse B.V.
+# Author: Rijk Ravestein.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+# For more information, please contact Datraverse B.V. at this
+# address: info@datraverse.com
+#
+
+#----------------------------------------------------------------
+# Echo JDK version: 8 for 1.8.0_nn, 9 for 9-ea etc.
+# and "0" for undetected
+#----------------------------------------------------------------
+_get_java_version() {
+
+    local result
+    local java_cmd
+  
+    if [[ -n $(type -p java) ]]
+    then
+        java_cmd=java
+    elif [[ (-n "$JAVA_HOME") && (-x "$JAVA_HOME/bin/java") ]]
+    then
+	    java_cmd="$JAVA_HOME/bin/java"
+    fi
+  
+    local IFS=$'\n'
+  
+    # Just in case, remove \r (Windows, Cygwin)
+    local lines=$("$java_cmd" -Xms32M -Xmx32M -version 2>&1 | tr '\r' '\n')
+  
+    if [[ -z $java_cmd ]]
+    then
+        result=${_SP_JAVA_VER_NOT_FOUND}
+    else
+        for line in $lines; do
+            if [[ (-z $result) && ($line = *"version \""*) ]]
+            then
+                local ver=$(echo $line | sed -e 's/.*version "\(.*\)"\(.*\)/\1/; 1q')
+                # on macOS, sed doesn't support '?'
+                if [[ $ver = "1."* ]]
+                then
+                    result=$(echo $ver | sed -e 's/1\.\([0-9]*\)\(.*\)/\1/; 1q')
+                else
+                    result=$(echo $ver | sed -e 's/\([0-9]*\)\(.*\)/\1/; 1q')
+                fi
+            fi
+        done
+    fi
+    echo "$result"
+}
+
+# end-of-file
