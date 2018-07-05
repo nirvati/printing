@@ -42,65 +42,57 @@ readonly _PORT=8632
 # -----------------------------------------------------------------------------
 # Do not change code below
 # -----------------------------------------------------------------------------
-readonly _URL="https://${_UID}:${_PW}@${_HOST}:${_PORT}/ext/papercut/user-sync"
+readonly _URL_BASE="https://${_UID}:${_PW}@${_HOST}:${_PORT}/ext/papercut"
+readonly _URL_S="${_URL_BASE}/user-sync"
+readonly _URL_A="${_URL_BASE}/user-auth"
 readonly _CURL="curl --insecure --output /dev/stdout --fail --silent -G"
 
-_retval=0
-
 #------------------------------
-function user_sync {
-    ${_CURL} ${_URL}/${1}
-    _retval=$?
+function _usage {
+    echo "invalid arguments"
+    exit 9
 }
 
 #------------------------------
-function user_sync_1 {
-    ${_CURL} --data-urlencode "${2}=${3}" ${_URL}/${1}
-    _retval=$?
-}
+if (( $# == 0 )); then
+	# called as user auth program
+    read username
+    read password
+    ${_CURL} --data-urlencode "username=${username}" \
+             --data-urlencode "password=${password}" ${_URL_A}
+else 
+    if (( $# > 1 )); then
+    	# called as user sync program
+        case "$2" in
+            is-valid|all-users|all-groups)
+                ${_CURL} ${_URL_S}/${2}
+                ;;
+            get-user-details)
+                read username
+                ${_CURL} --data-urlencode "username=${username}" ${_URL_S}/${2}
+                ;;
+            group-member-names|group-members)
+                if (( $# < 3 )); then
+                    _usage
+                fi
+                ${_CURL} --data-urlencode "groupname=${3}" ${_URL_S}/${2}
+                ;;
+            is-user-in-group)
+                if (( $# < 4 )); then
+                    _usage
+                fi
+                ${_CURL} --data-urlencode "groupname=${3}" \
+                         --data-urlencode "username=${4}" ${_URL_S}/${2}
+                ;;
+            *)
+                _usage
+                ;;
+        esac
+    else
+        _usage
+    fi
+fi
 
-#------------------------------
-function user_sync_2 {
-    ${_CURL} --data-urlencode "${2}=${3}" \
-        --data-urlencode "${4}=${5}" ${_URL}/${1}
-    _retval=$?
-}
-
-#------------------------------
-# Skip first "-" argument
-#------------------------------
-function main {
-   case "$2" in
-      is-valid)
-         user_sync $2
-         ;;
-      all-users)
-         user_sync $2
-         ;;
-      all-groups)
-         user_sync $2
-         ;;
-      get-user-details)
-         read username
-         user_sync_1 $2 "username" "${username}"
-         ;;
-      group-member-names|group-members)
-         user_sync_1 $2 "groupname" "${3}"
-         ;;
-      is-user-in-group)
-         user_sync_2 $2 "groupname" "${3}" "username" "${4}"
-         ;;
-      *)
-         echo "Usage: $0 " \
-            "{is-valid|all-users|all-groups|get-user-details|" \
-            "group-member-names|group-members|is-user-in-group}"
-         _retval=9
-         ;;
-   esac
-}
- 
-#------------------------------
-main $@
-exit $_retval
+exit $?
 
 # end-of-script
