@@ -132,10 +132,12 @@ cp ${SAVAPAGE_PPD_FILE}  ${DIST_HOME_APP}/client
 cp -R ${_PREP_HOME}/${_SAVAPAGE_EXT_MOLLIE_JAR} ${DIST_HOME_APP}/server/ext/lib
 cp -R ${_PREP_HOME}/${_SAVAPAGE_EXT_BLOCKCHAIN_INFO_JAR} ${DIST_HOME_APP}/server/ext/lib
 cp -R ${_PREP_HOME}/${_SAVAPAGE_EXT_OAUTH_JAR} ${DIST_HOME_APP}/server/ext/lib
+cp -R ${_PREP_HOME}/${_SAVAPAGE_EXT_NOTIFICATION_JAR} ${DIST_HOME_APP}/server/ext/lib
 
 cp ${_REPO_HOME_EXT_MOLLIE}/*.properties.template ${DIST_HOME_APP}/server/ext
 cp ${_REPO_HOME_EXT_BLOCKCHAIN_INFO}/*.properties.template ${DIST_HOME_APP}/server/ext
 cp ${_REPO_HOME_EXT_OAUTH}/*.properties.template ${DIST_HOME_APP}/server/ext
+cp ${_REPO_HOME_EXT_NOTIFICATION}/*.properties.template ${DIST_HOME_APP}/server/ext
  
 #----------------------------------------
 # Copy the SavaPage Client 
