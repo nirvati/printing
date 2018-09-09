@@ -63,6 +63,7 @@ SavaPage Software is produced by Community Partners and consumed by Community Me
             savapage/savapage-ext
             savapage-ext/savapage-ext-blockchain-info
             savapage-ext/savapage-ext-mollie
+            savapage-ext/savapage-ext-notification
             savapage-ext/savapage-ext-oauth
             savapage-i18n/savapage-i18n-de
             savapage-i18n/savapage-i18n-en
