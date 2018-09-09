@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # This file is part of the SavaPage project <https://www.savapage.org>.
 # Copyright (c) 2011-2018 Datraverse B.V.
@@ -22,6 +22,7 @@
 #
 
 . `dirname $0`/.server-common.inc.sh
+. `dirname $0`/.java-version.inc.bsh
 
 if [ -z "${USER}" ]; then
         USER=`whoami`
@@ -33,10 +34,17 @@ if [ -n "${USER}" -a "${USER}" != "${HOST_USER}" ]; then
         exit
 fi
 
+readonly _java_version=$(_get_java_version)
+if [ ${_java_version} -gt "8" ]; then
+  JVM_X_ARGS="--add-modules java.xml.bind"
+else
+  JVM_X_ARGS=""
+fi
+
 export CLASSPATH
 java \
         -Djava.io.tmpdir=${TMP_DIR} \
         -Dserver.home=${SERVER_HOME} \
-        -Xmx256M \
+        -Xmx256M ${JVM_X_ARGS} \
     org.savapage.core.cli.AppDb \
     "$@"
