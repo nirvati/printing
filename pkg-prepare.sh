@@ -98,6 +98,9 @@ if [ -f "${YUICOMPRESSOR_JAR}" ]; then
 	   jquery.savapage-admin
 	   jquery.savapage-admin-panels
 	   jquery.savapage-admin-pages
+	   jquery.savapage-printsite
+	   jquery.savapage-printsite-panels
+	   jquery.savapage-printsite-pages
 	   jquery.savapage-jobtickets
 	   jquery.savapage-pos
 	   jquery.savapage-page-jobtickets
@@ -112,9 +115,9 @@ if [ -f "${YUICOMPRESSOR_JAR}" ]; then
 		echo "| Add ${_TRG_MIN_BASE}"
 		java -jar ${YUICOMPRESSOR_JAR} -o ${_TRG_MIN_PATH} ${_SRC_PATH}
 	done
-		
+
 	echo "+----------------------------------------"
-				
+
 	_COMPRESS_SOURCES="jquery.savapage
 		jquery.savapage-user
         jquery.savapage-user-icons
@@ -122,8 +125,9 @@ if [ -f "${YUICOMPRESSOR_JAR}" ]; then
 		jquery.savapage-admin
 		jquery.savapage-jobtickets
 		jquery.savapage-pos
+		jquery.savapage-printsite
         wicket.savapage"
-				
+
 	for _src in ${_COMPRESS_SOURCES}
 	do
 		_TRG_MIN_BASE=${_src}-min.css
@@ -132,7 +136,7 @@ if [ -f "${YUICOMPRESSOR_JAR}" ]; then
 		echo "| Add ${_TRG_MIN_BASE}"
 		java -jar ${YUICOMPRESSOR_JAR} -o ${_TRG_MIN_PATH} ${_SRC_PATH}
 	done	
-								
+
 	echo "+----------------------------------------"
 fi
 
