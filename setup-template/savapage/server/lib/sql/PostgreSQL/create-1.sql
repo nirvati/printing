@@ -461,6 +461,7 @@
         allow_accum boolean not null,
         created_by varchar(50) not null,
         created_date timestamp not null,
+        full_name varchar(255),
         group_name varchar(255) not null,
         initial_credit numeric(8, 2) not null,
         initial_overdraft numeric(16, 6) not null,
@@ -607,6 +608,7 @@ create index ix_printer_attr_1 on tbl_printer_attr (printer_id);
 create index ix_printer_group_member_1 on tbl_printer_group_member (printer_id);
 create index ix_printer_group_member_2 on tbl_printer_group_member (printer_group_id);
 create index ix_user_1 on tbl_user (user_name);
+create index ix_user_2 on tbl_user (full_name);
 create index ix_user_account_1 on tbl_user_account (user_id);
 create index ix_user_account_2 on tbl_user_account (account_id);
 create index ix_user_attr_1 on tbl_user_attr (user_id);
@@ -629,6 +631,7 @@ create index ix_user_email_2 on tbl_user_email (user_id);
 
     alter table tbl_user_email 
        add constraint uc_user_email_2 unique (user_id, index_number);
+create index ix_user_group_1 on tbl_user_group (full_name);
 
     alter table tbl_user_group 
        add constraint uc_user_group_1 unique (group_name);
