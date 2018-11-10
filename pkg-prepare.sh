@@ -103,6 +103,7 @@ if [ -f "${YUICOMPRESSOR_JAR}" ]; then
 	   jquery.savapage-printsite-pages
 	   jquery.savapage-jobtickets
 	   jquery.savapage-pos
+	   jquery.savapage-pdfpgp
 	   jquery.savapage-page-jobtickets
 	   jquery.savapage-page-pos
 	   jquery.savapage-page-print-delegation"
@@ -124,6 +125,7 @@ if [ -f "${YUICOMPRESSOR_JAR}" ]; then
         jquery.savapage-common-icons
 		jquery.savapage-admin
 		jquery.savapage-jobtickets
+		jquery.savapage-pdfpgp
 		jquery.savapage-pos
 		jquery.savapage-printsite
         wicket.savapage"
