@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # This file is part of the SavaPage project <https://www.savapage.org>.
-# Copyright (c) 2011-2018 Datraverse B.V.
+# Copyright (c) 2011-2019 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -89,6 +89,7 @@ Type=forking
 PIDFile=${SERVER_PID}
 User=${HOST_USER}
 Group=${HOST_USER}
+LimitNOFILE=65536
 ExecStart=${SERVER_BIN_HOME}/app-server start
 ExecStop=${SERVER_BIN_HOME}/app-server stop
 
