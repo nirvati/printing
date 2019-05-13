@@ -380,6 +380,76 @@
         primary key (SEQUENCE_NAME)
     );
 
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_pos_purchase',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_account_trx',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_account',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_application_log',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_printer_group',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_group_member',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_printer',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_group_attr',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_email',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_printer_attr',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_doc_in_out',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_doc_out',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_pdf_out',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_number',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_pos_purchase_item',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_device',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_doc_log',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_cost_change',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_account',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_print_in',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_group',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_doc_in',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_ipp_queue_attr',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_print_out',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_account_attr',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_group_account',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_config',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_printer_group_member',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_attr',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_device_attr',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_account_voucher',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_ipp_queue',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_card',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_pos_item',0);
+
     create table tbl_user (
        user_id int8 not null,
         admin boolean not null,

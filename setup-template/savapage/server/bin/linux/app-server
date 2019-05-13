@@ -80,10 +80,9 @@ else
 fi
 
 # GC log parameters for Java 8 and 9+.
-# Hibernate ORM with Java 9+ needs java.xml.bind module
 readonly _java_version=$(_get_java_version)
 if [ ${_java_version} -gt "8" ]; then
-  JVM_X_ARGS="-Xlog:gc*:file="$SERVER_HOME"/logs/gc.log:tags,uptime,time:filecount=5,filesize=1024 --add-modules java.xml.bind"
+  JVM_X_ARGS="-Xlog:gc*:file="$SERVER_HOME"/logs/gc.log:tags,uptime,time:filecount=5,filesize=1024"
 else
   JVM_X_ARGS="-XX:+PrintGCDetails -XX:+PrintGCApplicationConcurrentTime -XX:+PrintGCApplicationStoppedTime -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=1M -Xloggc:"$SERVER_HOME"/logs/gc.log"
 fi
