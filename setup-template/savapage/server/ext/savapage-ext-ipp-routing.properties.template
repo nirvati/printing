@@ -67,15 +67,27 @@ savapage.plugin.live=true
 # 
 #-----------------------------------------------------------------
 routing.pdf.qrcode=https://www.savapage.org
-routing.pdf.qrcode.size=100
 
-routing.pdf.header=Sample Header Text
-routing.pdf.header.font.size=8
-routing.pdf.header.margin.top=20
+# Square QR-code size (pixels).
+routing.pdf.qrcode.size=50
 
-routing.pdf.footer=Sample Footer Text
-routing.pdf.footer.font.size=6
-routing.pdf.foooter.margin.bottom=10
+# Quiet zone (pixels): when not specified, default is applied.
+# routing.pdf.qrcode.qz=0
 
+# TL (top-left, default), TR (top-right), 
+# BL (bottom-left), BR (bottom-right)
+routing.pdf.qrcode.pos=TL
+
+# Margins in PDF points: 1 inch == 72 points.
+routing.pdf.qrcode.pos.margin.x=0
+routing.pdf.qrcode.pos.margin.y=0
+
+#routing.pdf.header=Sample Header Text
+#routing.pdf.header.font.size=8
+#routing.pdf.header.margin.top=20
+
+#routing.pdf.footer=Sample Footer Text
+#routing.pdf.footer.font.size=6
+#routing.pdf.foooter.margin.bottom=10
 
 # end-of-file
