@@ -64,9 +64,11 @@ savapage.plugin.online=true
 savapage.plugin.live=true
 
 #-----------------------------------------------------------------
-# 
+# Placeholders:
+#   $uuid$ : generates UUID
 #-----------------------------------------------------------------
-routing.pdf.qrcode=https://www.savapage.org
+routing.pdf.qrcode=$uuid$
+#routing.pdf.qrcode=https://www.savapage.org
 
 # Square QR-code size (pixels).
 routing.pdf.qrcode.size=50
