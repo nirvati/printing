@@ -642,6 +642,8 @@ create index ix_doc_log_3 on tbl_doc_log (created_day);
 create index ix_doc_log_4 on tbl_doc_log (user_id);
 create index ix_doc_log_5 on tbl_doc_log (doc_in_id);
 create index ix_doc_log_6 on tbl_doc_log (doc_out_id);
+create index ix_doc_log_7 on tbl_doc_log (ext_supplier, ext_id);
+create index ix_doc_log_8 on tbl_doc_log (ext_id);
 create index ix_doc_out_1 on tbl_doc_out (print_out_id);
 create index ix_doc_out_2 on tbl_doc_out (pdf_out_id);
 
