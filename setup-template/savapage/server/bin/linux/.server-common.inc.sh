@@ -1,6 +1,6 @@
 #
 # This file is part of the SavaPage project <https://www.savapage.org>.
-# Copyright (c) 2011-2018 Datraverse B.V.
+# Copyright (c) 2011-2019 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -24,11 +24,9 @@
 # Common shell functions, constants and defaults
 #-----------------------------------------------------------------------------
 
-APP_NAME="SavaPage Application Server"
-
-HOST_USER=savapage
-
-APP_NAME_SHORT=savapage
+readonly APP_NAME="SavaPage Application Server"
+readonly HOST_USER=savapage
+readonly APP_NAME_SHORT=savapage
 
 #--------------------------------------------------------------------
 # Get the absolute path of this (symlinked) file

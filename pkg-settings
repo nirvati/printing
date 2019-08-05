@@ -61,6 +61,7 @@ readonly _REPO_HOME_NFC_READER=${_REPO_HOME_PUB}/savapage-nfc-reader
 
 readonly _REPO_HOME_EXT_MOLLIE=${_REPO_HOME_PUB}/savapage-ext-mollie
 readonly _REPO_HOME_EXT_BLOCKCHAIN_INFO=${_REPO_HOME_PUB}/savapage-ext-blockchain-info
+readonly _REPO_HOME_EXT_NOTIFICATION=${_REPO_HOME_PUB}/savapage-ext-notification
 readonly _REPO_HOME_EXT_OAUTH=${_REPO_HOME_PUB}/savapage-ext-oauth
 
 #=========================================================================
@@ -124,6 +125,7 @@ readonly _SAVAPAGE_CLIENT_JAR=savapage-client-${APP_VERSION}.jar
 readonly _SAVAPAGE_EXT_MOLLIE_JAR=savapage-ext-mollie-${APP_VERSION}.jar
 readonly _SAVAPAGE_EXT_BLOCKCHAIN_INFO_JAR=savapage-ext-blockchain-info-${APP_VERSION}.jar
 readonly _SAVAPAGE_EXT_OAUTH_JAR=savapage-ext-oauth-${APP_VERSION}.jar
+readonly _SAVAPAGE_EXT_NOTIFICATION_JAR=savapage-ext-notification-${APP_VERSION}.jar
 
 readonly _SAVAPAGE_AD_HOC_SERVER_JAR=savapage-server-${APP_VERSION}.jar
 

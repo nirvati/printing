@@ -380,6 +380,76 @@
         primary key (SEQUENCE_NAME)
     );
 
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_pos_purchase',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_account_trx',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_account',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_application_log',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_printer_group',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_group_member',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_printer',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_group_attr',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_email',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_printer_attr',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_doc_in_out',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_doc_out',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_pdf_out',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_number',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_pos_purchase_item',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_device',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_doc_log',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_cost_change',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_account',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_print_in',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_group',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_doc_in',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_ipp_queue_attr',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_print_out',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_account_attr',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_group_account',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_config',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_printer_group_member',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_attr',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_device_attr',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_account_voucher',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_ipp_queue',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_card',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_pos_item',0);
+
     create table tbl_user (
        user_id int8 not null,
         admin boolean not null,
@@ -461,6 +531,7 @@
         allow_accum boolean not null,
         created_by varchar(50) not null,
         created_date timestamp not null,
+        full_name varchar(255),
         group_name varchar(255) not null,
         initial_credit numeric(8, 2) not null,
         initial_overdraft numeric(16, 6) not null,
@@ -571,6 +642,8 @@ create index ix_doc_log_3 on tbl_doc_log (created_day);
 create index ix_doc_log_4 on tbl_doc_log (user_id);
 create index ix_doc_log_5 on tbl_doc_log (doc_in_id);
 create index ix_doc_log_6 on tbl_doc_log (doc_out_id);
+create index ix_doc_log_7 on tbl_doc_log (ext_supplier, ext_id);
+create index ix_doc_log_8 on tbl_doc_log (ext_id);
 create index ix_doc_out_1 on tbl_doc_out (print_out_id);
 create index ix_doc_out_2 on tbl_doc_out (pdf_out_id);
 
@@ -607,6 +680,7 @@ create index ix_printer_attr_1 on tbl_printer_attr (printer_id);
 create index ix_printer_group_member_1 on tbl_printer_group_member (printer_id);
 create index ix_printer_group_member_2 on tbl_printer_group_member (printer_group_id);
 create index ix_user_1 on tbl_user (user_name);
+create index ix_user_2 on tbl_user (full_name);
 create index ix_user_account_1 on tbl_user_account (user_id);
 create index ix_user_account_2 on tbl_user_account (account_id);
 create index ix_user_attr_1 on tbl_user_attr (user_id);
@@ -629,6 +703,7 @@ create index ix_user_email_2 on tbl_user_email (user_id);
 
     alter table tbl_user_email 
        add constraint uc_user_email_2 unique (user_id, index_number);
+create index ix_user_group_1 on tbl_user_group (full_name);
 
     alter table tbl_user_group 
        add constraint uc_user_group_1 unique (group_name);

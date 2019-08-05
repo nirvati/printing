@@ -27,9 +27,9 @@ SavaPage Software is produced by Community Partners and consumed by Community Me
 
         $ sudo apt-get install maven
         
-0. GNU project C and C++ compiler
+0. GNU project C/C++ compiler and make
                
-        $ sudo apt-get install g++
+        $ sudo apt-get install g++ make
 
 0. pkg-config: a system for managing library compile and link flags
 
@@ -63,6 +63,7 @@ SavaPage Software is produced by Community Partners and consumed by Community Me
             savapage/savapage-ext
             savapage-ext/savapage-ext-blockchain-info
             savapage-ext/savapage-ext-mollie
+            savapage-ext/savapage-ext-notification
             savapage-ext/savapage-ext-oauth
             savapage-i18n/savapage-i18n-de
             savapage-i18n/savapage-i18n-en

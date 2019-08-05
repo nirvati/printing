@@ -2,7 +2,7 @@
     create table tbl_account (
        account_id bigint not null,
         account_type varchar(10) not null,
-        balance numeric(16,6) not null,
+        balance decimal(16,6) not null,
         comments varchar(20) not null,
         created_by varchar(50) not null,
         created_date timestamp not null,
@@ -16,7 +16,7 @@
         account_name varchar(255) not null,
         account_name_lower varchar(255) not null,
         notes varchar(2000),
-        overdraft numeric(16,6) not null,
+        overdraft decimal(16,6) not null,
         pin varchar(50),
         restricted boolean not null,
         sub_name varchar(255),
@@ -37,16 +37,16 @@
 
     create table tbl_account_trx (
        account_trx_id bigint not null,
-        amount numeric(16,6) not null,
-        balance numeric(16,6) not null,
+        amount decimal(16,6) not null,
+        balance decimal(16,6) not null,
         trx_comment varchar(255),
         currency_code varchar(3),
-        ext_amount numeric(16,8),
+        ext_amount decimal(16,8),
         ext_confirmations integer,
         ext_currency_code varchar(3),
         ext_details varchar(2000),
-        ext_exchange_rate numeric(16,8),
-        ext_fee numeric(16,8),
+        ext_exchange_rate decimal(16,8),
+        ext_fee decimal(16,8),
         ext_id varchar(128),
         ext_method varchar(20),
         ext_method_address varchar(128),
@@ -76,7 +76,7 @@
         issued_date timestamp,
         redeemed_date timestamp,
         trx_acquirer_code varchar(32),
-        trx_amount numeric(6,2),
+        trx_amount decimal(6,2),
         trx_consumer_email varchar(255),
         trx_merchant_code varchar(32),
         trx_ref_acquirer varchar(64),
@@ -84,7 +84,7 @@
         trx_time_merchant bigint,
         trx_time_request bigint,
         uuid varchar(64) not null,
-        value_amount numeric(6,2) not null,
+        value_amount decimal(6,2) not null,
         voucher_type varchar(16) not null,
         primary key (account_voucher_id)
     );
@@ -110,15 +110,15 @@
 
     create table tbl_cost_change (
        cost_change_id bigint not null,
-        chg_amount numeric(16,8),
+        chg_amount decimal(16,8),
         chg_by varchar(50),
-        chg_cost numeric(16,8),
+        chg_cost decimal(16,8),
         chg_date timestamp not null,
         chg_reason varchar(1000),
         chg_status varchar(20) not null,
         chg_type varchar(20) not null,
         currency_code varchar(3) not null,
-        req_amount numeric(16,8) not null,
+        req_amount decimal(16,8) not null,
         req_date timestamp not null,
         req_reason varchar(1000),
         doc_id bigint not null,
@@ -173,8 +173,8 @@
 
     create table tbl_doc_log (
        doc_id bigint not null,
-        cost numeric(10,6) not null,
-        cost_original numeric(10,6) not null,
+        cost decimal(10,6) not null,
+        cost_original decimal(10,6) not null,
         created_date timestamp not null,
         created_day timestamp not null,
         protocol varchar(16) not null,
@@ -253,7 +253,7 @@
 
     create table tbl_pos_item (
        pos_item_id bigint not null,
-        item_cost numeric(6,2) not null,
+        item_cost decimal(6,2) not null,
         item_name varchar(255) not null,
         primary key (pos_item_id)
     );
@@ -263,7 +263,7 @@
         comment varchar(255),
         payment_type varchar(50),
         receipt_num varchar(255) not null,
-        total_cost numeric(8,2) not null,
+        total_cost decimal(8,2) not null,
         primary key (pos_purchase_id)
     );
 
@@ -272,7 +272,7 @@
         item_index integer not null,
         item_name varchar(255) not null,
         item_quantity integer not null,
-        item_unit_cost numeric(6,2) not null,
+        item_unit_cost decimal(6,2) not null,
         pos_purchase_id bigint not null,
         primary key (pos_purchase_item_id)
     );
@@ -321,7 +321,7 @@
         color_detection_mode varchar(20) not null,
         created_by varchar(50) not null,
         created_date timestamp not null,
-        default_cost numeric(10,6) not null,
+        default_cost decimal(10,6) not null,
         deleted boolean not null,
         deleted_date timestamp,
         disabled boolean not null,
@@ -379,6 +379,76 @@
         SEQUENCE_NEXT_VALUE bigint,
         primary key (SEQUENCE_NAME)
     );
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_pos_purchase',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_account_trx',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_account',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_application_log',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_printer_group',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_group_member',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_printer',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_group_attr',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_email',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_printer_attr',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_doc_in_out',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_doc_out',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_pdf_out',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_number',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_pos_purchase_item',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_device',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_doc_log',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_cost_change',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_account',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_print_in',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_group',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_doc_in',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_ipp_queue_attr',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_print_out',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_account_attr',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_group_account',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_config',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_printer_group_member',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_attr',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_device_attr',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_account_voucher',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_ipp_queue',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_user_card',0);
+
+    insert into tbl_sequences(SEQUENCE_NAME, SEQUENCE_NEXT_VALUE) values ('tbl_pos_item',0);
 
     create table tbl_user (
        user_id bigint not null,
@@ -461,17 +531,18 @@
         allow_accum boolean not null,
         created_by varchar(50) not null,
         created_date timestamp not null,
+        full_name varchar(255),
         group_name varchar(255) not null,
-        initial_credit numeric(8,2) not null,
-        initial_overdraft numeric(16,6) not null,
+        initial_credit decimal(8,2) not null,
+        initial_overdraft decimal(16,6) not null,
         initial_settings_enabled boolean not null,
         initial_use_global_overdraft boolean not null,
         initially_restricted boolean not null,
-        max_accum_balance numeric(8,2) not null,
+        max_accum_balance decimal(8,2) not null,
         modified_by varchar(50),
         modified_date timestamp,
         reset_statistics boolean not null,
-        schedule_amount numeric(8,2) not null,
+        schedule_amount decimal(8,2) not null,
         schedule_period varchar(10) not null,
         primary key (user_group_id)
     );
@@ -557,6 +628,8 @@ create index ix_doc_log_3 on tbl_doc_log (created_day);
 create index ix_doc_log_4 on tbl_doc_log (user_id);
 create index ix_doc_log_5 on tbl_doc_log (doc_in_id);
 create index ix_doc_log_6 on tbl_doc_log (doc_out_id);
+create index ix_doc_log_7 on tbl_doc_log (ext_supplier, ext_id);
+create index ix_doc_log_8 on tbl_doc_log (ext_id);
 create index ix_doc_out_1 on tbl_doc_out (print_out_id);
 create index ix_doc_out_2 on tbl_doc_out (pdf_out_id);
 create unique index uc_ipp_queue_1 on tbl_ipp_queue (url_path);
@@ -577,6 +650,7 @@ create unique index uc_printer_group_2 on tbl_printer_group (display_name);
 create index ix_printer_group_member_1 on tbl_printer_group_member (printer_id);
 create index ix_printer_group_member_2 on tbl_printer_group_member (printer_group_id);
 create index ix_user_1 on tbl_user (user_name);
+create index ix_user_2 on tbl_user (full_name);
 create index ix_user_account_1 on tbl_user_account (user_id);
 create index ix_user_account_2 on tbl_user_account (account_id);
 create index ix_user_attr_1 on tbl_user_attr (user_id);
@@ -589,6 +663,7 @@ create index ix_user_email_1 on tbl_user_email (user_id, address);
 create index ix_user_email_2 on tbl_user_email (user_id);
 create unique index uc_user_email_1 on tbl_user_email (address);
 create unique index uc_user_email_2 on tbl_user_email (user_id, index_number);
+create index ix_user_group_1 on tbl_user_group (full_name);
 create unique index uc_user_group_1 on tbl_user_group (group_name);
 create index ix_user_group_account_1 on tbl_user_group_account (user_group_id);
 create index ix_user_group_account_2 on tbl_user_group_account (account_id);

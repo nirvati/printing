@@ -98,8 +98,12 @@ if [ -f "${YUICOMPRESSOR_JAR}" ]; then
 	   jquery.savapage-admin
 	   jquery.savapage-admin-panels
 	   jquery.savapage-admin-pages
+	   jquery.savapage-printsite
+	   jquery.savapage-printsite-panels
+	   jquery.savapage-printsite-pages
 	   jquery.savapage-jobtickets
 	   jquery.savapage-pos
+	   jquery.savapage-pdfpgp
 	   jquery.savapage-page-jobtickets
 	   jquery.savapage-page-pos
 	   jquery.savapage-page-print-delegation"
@@ -112,18 +116,20 @@ if [ -f "${YUICOMPRESSOR_JAR}" ]; then
 		echo "| Add ${_TRG_MIN_BASE}"
 		java -jar ${YUICOMPRESSOR_JAR} -o ${_TRG_MIN_PATH} ${_SRC_PATH}
 	done
-		
+
 	echo "+----------------------------------------"
-				
+
 	_COMPRESS_SOURCES="jquery.savapage
 		jquery.savapage-user
         jquery.savapage-user-icons
         jquery.savapage-common-icons
 		jquery.savapage-admin
 		jquery.savapage-jobtickets
+		jquery.savapage-pdfpgp
 		jquery.savapage-pos
+		jquery.savapage-printsite
         wicket.savapage"
-				
+
 	for _src in ${_COMPRESS_SOURCES}
 	do
 		_TRG_MIN_BASE=${_src}-min.css
@@ -132,7 +138,7 @@ if [ -f "${YUICOMPRESSOR_JAR}" ]; then
 		echo "| Add ${_TRG_MIN_BASE}"
 		java -jar ${YUICOMPRESSOR_JAR} -o ${_TRG_MIN_PATH} ${_SRC_PATH}
 	done	
-								
+
 	echo "+----------------------------------------"
 fi
 
@@ -595,6 +601,45 @@ cd ${_CURRENTDIR}
 WORK_ZIP_NAME=${_SAVAPAGE_EXT_OAUTH_JAR}
 WORK_HOME=${_PREP_HOME}/${WORK_ZIP_NAME}_WORK
 WORK_ZIP_SRC=${_REPO_HOME_PUB}/savapage-ext-oauth/target/${WORK_ZIP_NAME}
+
+echo "+--------------------------------------------------------------"
+echo "| Prepare ${WORK_ZIP_NAME}"
+echo "+--------------------------------------------------------------"
+
+#----------------------------------------
+# Make room
+#----------------------------------------
+mkdir --parent ${WORK_HOME}
+
+#----------------------------------------
+# Extract 
+#----------------------------------------
+unzip -q ${WORK_ZIP_SRC} -d ${WORK_HOME}
+
+#----------------------------------------
+# Prune
+#----------------------------------------
+rm -rf ${WORK_HOME}/META-INF/maven
+
+#----------------------------------------
+# Change
+#----------------------------------------
+#TODO : adapt META-INF/MANIFEST.MF
+
+#------------------------------------------------------------------------------
+# Zip-up 
+#------------------------------------------------------------------------------
+cd ${WORK_HOME}
+zip -q -r ${_PREP_HOME}/${WORK_ZIP_NAME} ./*
+cd ${_CURRENTDIR}
+
+
+#=========================================================================
+# savapage-ext-notification.jar
+#=========================================================================
+WORK_ZIP_NAME=${_SAVAPAGE_EXT_NOTIFICATION_JAR}
+WORK_HOME=${_PREP_HOME}/${WORK_ZIP_NAME}_WORK
+WORK_ZIP_SRC=${_REPO_HOME_PUB}/savapage-ext-notification/target/${WORK_ZIP_NAME}
 
 echo "+--------------------------------------------------------------"
 echo "| Prepare ${WORK_ZIP_NAME}"

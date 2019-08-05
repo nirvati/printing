@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # This file is part of the SavaPage project <https://www.savapage.org>.
-# Copyright (c) 2011-2018 Datraverse B.V.
+# Copyright (c) 2011-2019 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -55,6 +55,7 @@ done
 currentdir=`dirname ${SELF_PATH}`
 
 . $currentdir/.server-common.inc.sh
+. $currentdir/.java-version.inc.bsh
 . $currentdir/.app-version.inc.sh
 
 appServerCustomFile=$SERVER_HOME/custom/app-server.conf
@@ -78,7 +79,17 @@ else
     APP_JAVA_IO_TMPDIR=${JAVA_IO_TMPDIR}
 fi
 
-JVM_X_ARGS="-XX:+PrintGCDetails -XX:+PrintGCApplicationConcurrentTime -XX:+PrintGCApplicationStoppedTime -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=1M -Xloggc:"$SERVER_HOME"/logs/gc.log"
+# GC log parameters for Java 8 and 9+.
+readonly _java_version=$(_get_java_version)
+if [ ${_java_version} -gt "8" ]; then
+  JVM_X_ARGS="-Xlog:gc*:file="$SERVER_HOME"/logs/gc.log:tags,uptime,time:filecount=5,filesize=1024"
+else
+  JVM_X_ARGS="-XX:+PrintGCDetails -XX:+PrintGCApplicationConcurrentTime -XX:+PrintGCApplicationStoppedTime -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=1M -Xloggc:"$SERVER_HOME"/logs/gc.log"
+fi
+
+if [ ${_java_version} -gt "10" ]; then
+  JVM_X_ARGS="${JVM_X_ARGS} --add-opens jdk.management/com.sun.management.internal=ALL-UNNAMED"
+fi
 
 DAEMON_ARGS="-server $CUSTOM_JVM_ARGS $JVM_X_ARGS -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Djava.io.tmpdir="$APP_JAVA_IO_TMPDIR" -Dlog4j.configuration="file://$SERVER_HOME/lib/log4j.properties" -Dserver.home="$SERVER_HOME" -Dcom.sun.management.config.file="$SERVER_HOME/jmxremote.properties" -Djavax.net.ssl.keyStore="$SERVER_HOME/jmxremote.ks" -Djavax.net.ssl.keyStorePassword=savapage -Dwicket.configuration=deployment -Dsavapage.war.file=savapage-server-$APP_VERSION.war org.savapage.server.WebServer"
 

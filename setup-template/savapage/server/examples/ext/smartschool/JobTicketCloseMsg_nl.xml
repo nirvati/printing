@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- +====================================================================+ -->
+<!-- | This file is part of the SavaPage project <https://savapage.org> ..| -->
+<!-- | Copyright (c) 2011-2018 Datraverse B.V. | Author: Rijk Ravestein...| -->
+<!-- |....................................................................| -->
+<!-- | SavaPage is free software: you can redistribute it and/or modify ..| -->
+<!-- | it under the terms of the GNU Affero General Public License as ....| -->
+<!-- | published by the Free Software Foundation, either version 3 of ....| -->
+<!-- | the License, or (at your option) any later version. ...............| -->
+<!-- +====================================================================+ -->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+    <entry key="subject">Job Ticket $ticket.number;format="xml-encode"$
+        voltooid door $ticket.operator;format="xml-encode"$</entry>
+
+    <entry key="html"><![CDATA[<p>Beste $user.fullName;format="xml-encode"$,</p>
+<p>Uw $app.name$ Job Ticket $ticket.number;format="xml-encode"$ 
+(document '$ticket.name;format="xml-encode"$') is verwerkt.</p>
+--<br/>Met vriendelijke groet,
+<br/>$ticket.operator;format="xml-encode"$
+]]></entry>
+
+</properties>

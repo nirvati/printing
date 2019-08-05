@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # This file is part of the SavaPage project <https://www.savapage.org>.
-# Copyright (c) 2011-2017 Datraverse B.V.
+# Copyright (c) 2011-2018 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -58,12 +58,19 @@ mkdir --parent ${DIST_HOME}/sql
 #=======================================================================
 # 
 #=======================================================================
-readonly SCHEMA_VERSION="$(${_DIST_HOME_INTERNAL}/bin/savapage-util --db-version)"
+readonly _SAVAPAGE_UTIL_APP=${_DIST_HOME_INTERNAL}/bin/savapage-util
+
+echo "+-----------------------------------------------------------------"
+echo "| Generating Database scripts with:"
+echo "| ${_SAVAPAGE_UTIL_APP} ..."
+echo "+-----------------------------------------------------------------"
+
+readonly SCHEMA_VERSION="$(${_SAVAPAGE_UTIL_APP} --db-version)"
 
 echo "+-----------------------------------------------------------------"
 echo "| Initializing Derby Database version ${SCHEMA_VERSION} ..."
 echo "+-----------------------------------------------------------------"
-${_DIST_HOME_INTERNAL}/bin/savapage-util --db-type Internal --db-create --server-home ${DIST_HOME}
+${_SAVAPAGE_UTIL_APP} --db-type Internal --db-create --server-home ${DIST_HOME}
 
 #-----------------------------------------------------------------------------
 # NOTE: created scripts can be used to manually compose an update script.
@@ -76,7 +83,7 @@ SCHEMA_DB_HOME_NAME=Derby
 echo "+---------------------------------------------------------------------"
 echo "| Creating drop and create SQL scripts for ${SCHEMA_DB_HOME_NAME} schema version ${SCHEMA_VERSION} ..."
 echo "+---------------------------------------------------------------------"
-${_DIST_HOME_INTERNAL}/bin/savapage-util --db-type ${SCHEMA_DB_TYPE} --db-sql-create "${DIST_HOME}/sql/create-${SCHEMA_VERSION}.sql" --db-sql-drop "${DIST_HOME}/sql/drop-${SCHEMA_VERSION}.sql"
+${_SAVAPAGE_UTIL_APP} --db-type ${SCHEMA_DB_TYPE} --db-sql-create "${DIST_HOME}/sql/create-${SCHEMA_VERSION}.sql" --db-sql-drop "${DIST_HOME}/sql/drop-${SCHEMA_VERSION}.sql"
 
 echo "+---------------------------------------------------------------------"
 echo "| Copying SQL scripts to ${_SETUP_TEMPLATE_HOME} ..."
@@ -96,7 +103,7 @@ mkdir --parent ${DIST_HOME}/sql
 echo "+---------------------------------------------------------------------"
 echo "| Creating drop and create SQL scripts for ${SCHEMA_DB_HOME_NAME} schema version ${SCHEMA_VERSION} ..."
 echo "+---------------------------------------------------------------------"
-${_DIST_HOME_INTERNAL}/bin/savapage-util --db-type ${SCHEMA_DB_TYPE} --db-sql-create "${DIST_HOME}/sql/create-${SCHEMA_VERSION}.sql" --db-sql-drop "${DIST_HOME}/sql/drop-${SCHEMA_VERSION}.sql"
+${_SAVAPAGE_UTIL_APP} --db-type ${SCHEMA_DB_TYPE} --db-sql-create "${DIST_HOME}/sql/create-${SCHEMA_VERSION}.sql" --db-sql-drop "${DIST_HOME}/sql/drop-${SCHEMA_VERSION}.sql"
 
 echo "+---------------------------------------------------------------------"
 echo "| Copying  SQL scripts to ${_SETUP_TEMPLATE_HOME} ..."

@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # This file is part of the SavaPage project <https://www.savapage.org>.
-# Copyright (c) 2011-2017 Datraverse B.V.
+# Copyright (c) 2011-2018 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -58,8 +58,7 @@ cd ${_CURRENTDIR}/../..
 
 readonly _SP_SAVED_TRG_HOME=${_SAVED_BUILD_TARGETS_HOME}
 
-readonly _SP_DIR_PATH="${_SP_SAVED_TRG_HOME}/linux-armv6
-    ${_SP_SAVED_TRG_HOME}/savapage-manual/html
+readonly _SP_DIR_PATH="${_SP_SAVED_TRG_HOME}/savapage-manual/html
     ${_SP_SAVED_TRG_HOME}/savapage-licenses/html"
         
 for dirpath in ${_SP_DIR_PATH}

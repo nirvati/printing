@@ -1,0 +1,127 @@
+#
+# This file is part of the SavaPage project <https://www.savapage.org>.
+# Copyright (c) 2011-2019 Datraverse B.V.
+# Author: Rijk Ravestein.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+# For more information, please contact Datraverse B.V. at this
+# address: info@datraverse.com
+#
+
+#=======================================================================
+#                   SavaPage IPP Routing Plug-in
+#
+#=======================================================================
+#
+#           THIS FILE CONTAINS CONFIDENTIAL INFORMATION AND
+#              SHOULD ONLY BE ACCESSIBLE BY ADMINISTRATORS
+#
+#            DO NOT CHANGE THE PERMISSIONS SET ON THIS FILE
+#
+#=======================================================================
+
+#-------------------------------------------------------------------
+# Unique ID of this plug-in.
+#-------------------------------------------------------------------
+savapage.plugin.id=ipp-routing
+
+#-------------------------------------------------------------------
+# Descriptive name
+#-------------------------------------------------------------------
+savapage.plugin.name=IPP Routing
+
+#-------------------------------------------------------------------
+# Plug-in class
+#-------------------------------------------------------------------
+savapage.plugin.class=org.savapage.ext.print.IppRoutingPlugin
+
+#-------------------------------------------------------------------
+# true | false
+#-------------------------------------------------------------------
+#savapage.plugin.enable=false
+savapage.plugin.enable=true
+
+#-------------------------------------------------------------------
+# Is plug-in turned online when loaded? (true | false) 
+#-------------------------------------------------------------------
+savapage.plugin.online=true
+
+#-------------------------------------------------------------------
+# true | false
+#-------------------------------------------------------------------
+savapage.plugin.live=true
+
+#-----------------------------------------------------------------
+# Placeholders:
+#
+#   routing.id
+#       $pdf.qrcode$    : QR-code used in PDF.
+#
+#   routing.pdf.qrcode
+#       $uuid$          : Generated UUID
+#
+#   routing.pdf.qrcode.rest.post.request.entity
+#       $uuid$          : Generated UUID
+#       $user_id$       : User id
+#       $client_ip$     : Client IP address
+#       $printer_name$  : CUPS printer name
+#       $job_name$      : Print Job Name (document name) 
+#       $job_time$      : Print Job datetime in ISO_8601 format
+#-----------------------------------------------------------------
+
+#----------------------------------------------
+# ID stored as document ext_id (max 64 chars).
+#----------------------------------------------
+routing.id=$pdf.qrcode$
+
+#----------------------------------------------
+# A fixed (generated) QR-code.
+#----------------------------------------------
+routing.pdf.qrcode=$uuid$
+
+#----------------------------------------------
+# RESTfull POST request to register print job 
+# and "get" QR-code in return.
+#----------------------------------------------
+#routing.pdf.qrcode.rest.uri=https://localhost:8632/restful/v1/tests/echo
+#routing.pdf.qrcode.rest.user=user
+#routing.pdf.qrcode.rest.password=password
+#routing.pdf.qrcode.rest.post.request.entity=$uuid$
+#routing.pdf.qrcode.rest.post.request.mediatype=text/plain
+#routing.pdf.qrcode.rest.post.response.mediatype=text/plain
+
+# Square QR-code size (pixels).
+routing.pdf.qrcode.size=50
+
+# Quiet zone (pixels): when not specified, default is applied.
+# routing.pdf.qrcode.qz=0
+
+# TL (top-left, default), TR (top-right), 
+# BL (bottom-left), BR (bottom-right)
+routing.pdf.qrcode.pos=TL
+
+# Margins in PDF points: 1 inch == 72 points.
+routing.pdf.qrcode.pos.margin.x=0
+routing.pdf.qrcode.pos.margin.y=0
+
+#routing.pdf.header=Sample Header Text
+#routing.pdf.header.font.size=8
+#routing.pdf.header.margin.top=20
+
+#routing.pdf.footer=Sample Footer Text
+#routing.pdf.footer.font.size=6
+#routing.pdf.foooter.margin.bottom=10
+
+# end-of-file
