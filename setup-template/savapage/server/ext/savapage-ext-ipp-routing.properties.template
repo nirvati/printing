@@ -102,19 +102,19 @@ routing.pdf.qrcode=$uuid$
 #routing.pdf.qrcode.rest.post.request.mediatype=text/plain
 #routing.pdf.qrcode.rest.post.response.mediatype=text/plain
 
-# Square QR-code size (pixels).
-routing.pdf.qrcode.size=50
+# Square QR-code size (millimeters).
+routing.pdf.qrcode.size=12
 
-# Quiet zone (pixels): when not specified, default is applied.
+# Quiet zone (millimeters): when not specified, zero is applied.
 # routing.pdf.qrcode.qz=0
 
 # TL (top-left, default), TR (top-right), 
 # BL (bottom-left), BR (bottom-right)
 routing.pdf.qrcode.pos=TL
 
-# Margins in PDF points: 1 inch == 72 points.
-routing.pdf.qrcode.pos.margin.x=0
-routing.pdf.qrcode.pos.margin.y=0
+# Margin in millimeters
+routing.pdf.qrcode.pos.margin.x=10
+routing.pdf.qrcode.pos.margin.y=10
 
 #routing.pdf.header=Sample Header Text
 #routing.pdf.header.font.size=8
