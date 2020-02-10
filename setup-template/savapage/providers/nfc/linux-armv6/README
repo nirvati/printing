@@ -1,7 +1,10 @@
 #
 # This file is part of the SavaPage project <https://www.savapage.org>.
-# Copyright (c) 2011-2018 Datraverse B.V.
-# Author: Rijk Ravestein.
+# Copyright (c) 2011-2020 Datraverse B.V.
+# Authors: Rijk Ravestein, Eric Abreu.
+#
+# SPDX-FileCopyrightText: 2011-2020 Datraverse B.V. <info@datraverse.com>
+# SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -41,48 +44,26 @@ _______________________________________________________________________________
 
 (3) Install dependent packages.
 
-    $ sudo apt-get install libccid libacsccid1 pcscd
+    $ sudo apt-get install libccid pcscd
+    
+    If using an ACS USB CCID reader additionally install:
+    
+    $ sudo apt-get install libacsccid1
 
     - - - - - - - - - - - - - - - -
-    According to the README of the libacsccid1 package the following readers 
-    are supported: 
-          
-    ACR38U-CCID
-    ACR3801
-    ACR83U
-    ACR85 PINPad Reader
-    ACR88U
-    ACR100-CCID
-    ACR100 ICC Reader
-    ACR101 ICC Reader
-    ACR102 ICC Reader
-    ACR122U
-    ACR122T
-    ACR122U-SAM
-    ACR1222 Dual Reader
-    ACR1222 1SAM Dual Reader
-    ACR1222L 3S CL Reader
-    ACR125 nPA plus
-    ACR128U
-    ACR1281 CL Reader (qPBOC)
-    ACR1281 Dual Reader (qPBOC)
-    ACR1281 PICC Reader (BSI)
-    ACR1281 Dual Reader (BSI)
-    APG8201
-
-    - - - - - - - - - - - - - - - -
-    Readers tested:
+    Readers reported to work:
     
     ACS ACR122U-A2
     ACS ACR122U-A9
+    HID OMNIKEY® 5025CL (thanks to Eric Abreu)
 
 
 (4) Disable pn533 and nfc drivers in Raspbian kernel
 
-    When an ACS Reader (ACR122U) plugs in, the Raspbian kernel(>3.5) will
-    automatically load the pn533 driver. However, with the pn533 driver, 
-    pcscd will report a "Can't claim interface" error. Therefore the pn533 
-    and nfc driver should be disabled in the kernel.
+    When a CCID reader plugs in, the Raspbian kernel(>3.5) will automatically
+    load the pn533 driver. However, with the pn533 driver, pcscd will report 
+    a "Can't claim interface" error. Therefore the pn533 and nfc driver should
+    be disabled in the kernel.
 
     Edit the /etc/modprobe.d/blacklist.conf file like this:
      
@@ -99,9 +80,7 @@ _______________________________________________________________________________
     $ sudo reboot
 
 
-(6) Connect ACS USB NFC Reader and the speakers. 
-
-    Reader: ACS ACR122U
+(6) Connect the NFC Reader and the speakers. 
 
 
                                _______________
@@ -123,7 +102,12 @@ _______________________________________________________________________________
     $ git clone https://gitlab.com/savapage/xmlrpcpp.git
     $ git clone https://gitlab.com/savapage/savapage-nfc-reader.git
 
-(4) Build.
+
+(4) Install prerequisite packages as described on:
+ 
+    https://gitlab.com/savapage/savapage-nfc-reader
+
+(5) Build.
 
     $ cd xmlrpcpp
     $ make
@@ -150,7 +134,7 @@ _______________________________________________________________________________
 (3) Copy binary from build target.
 
     $ cd ~/savapage-git/savapage-nfc-reader/target
-    $ sudo cp savapage-nfc-reader /usr/local/bin/savapage/savapage-nfc
+    $ sudo cp savapage-nfc-reader /usr/local/bin/savapage/
 
 
 (4) Create savapage-nfc-reader.ini from the template and edit the settings.
@@ -171,10 +155,37 @@ _______________________________________________________________________________
 
 (5) Install the service.
 
-    NOTE: This installs a SysV service. Please call SavaPage Support 
-          if Systemd is needed.
+    (5.1) SysV
+
+    $ sudo /usr/local/bin/savapage/install-sysv
+
+
+    (5.2) Systemd
+
+    Create system account 'savapage-nfc' to be used in the service file:
+
+    $ sudo useradd -r savapage-nfc
+
+    Add user to group 'audio':
+
+    $ sudo usermod -aG audio savapage-nfc
+
+    Change primary user and group ownership:
+
+    $ sudo chown -R savapage-nfc:nogroup /usr/local/bin/savapage
     
-    $ sudo /usr/local/bin/savapage/install
+    Copy service file:
+    
+    $ sudo cp /usr/local/bin/savapage/savapage-nfc.service /etc/systemd/system
+    
+    Enable the card reader service to load at boot time and start it:
+
+    $ sudo systemctl enable savapage-nfc.service 
+    $ sudo systemctl start savapage-nfc.service
+    
+    Check status:
+    
+    $ sudo systemctl status savapage-nfc.service
 
 
 (6) Swipe a card.
@@ -229,7 +240,15 @@ _______________________________________________________________________________
 
 (1) Uninstall the service.
 
-    $ sudo /usr/local/bin/savapage/uninstall
+    (1.1) SysV
+
+    $ sudo /usr/local/bin/savapage/uninstall-sysv
+
+
+    (1.2) Systemd
+    
+    $ sudo systemctl disable savapage-nfc.service
+    $ sudo rm /etc/systemd/system/savapage-nfc.service
 
 
 (2) Remove SavaPage directory.
