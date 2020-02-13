@@ -1,7 +1,10 @@
 #
 # This file is part of the SavaPage project <https://www.savapage.org>.
-# Copyright (c) 2011-2019 Datraverse B.V.
+# Copyright (c) 2011-2020 Datraverse B.V.
 # Author: Rijk Ravestein.
+#
+# SPDX-FileCopyrightText: 2011-2020 Datraverse B.V. <info@datraverse.com>
+# SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -122,6 +125,14 @@ routing.pdf.qrcode.pos.margin.y=10
 
 #routing.pdf.footer=Sample Footer Text
 #routing.pdf.footer.font.size=6
-#routing.pdf.foooter.margin.bottom=10
+#routing.pdf.footer.margin.bottom=10
+
+#----------------------------------------------
+# Overrides PDF info properties
+#----------------------------------------------
+#routing.pdf.info.title=Title
+#routing.pdf.info.subject=Subject
+#routing.pdf.info.author=Author
+#routing.pdf.info.keywords=keywordA keywordB
 
 # end-of-file
