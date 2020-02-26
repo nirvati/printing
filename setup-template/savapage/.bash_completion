@@ -1,0 +1,332 @@
+#!/bin/bash
+#
+# This file is part of the SavaPage project <https://www.savapage.org>.
+# Copyright (c) 2011-2020 Datraverse B.V.
+# Author: Rijk Ravestein.
+#
+# SPDX-FileCopyrightText: 2011-2020 Datraverse B.V. <info@datraverse.com>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+# For more information, please contact Datraverse B.V. at this
+# address: info@datraverse.com
+#
+
+#---------------------------------------------------------------------------
+# Completion script for SavaPage CLI
+#---------------------------------------------------------------------------
+# COMPREPLY  : array with possible completions one completion per element.
+# COMP_WORDS : array of all the words typed after the name of the program.
+# COMP_CWORD : index of the COMP_WORDS array pointing to the word the current
+#              cursor is at, i.e. the index of the word the cursor was when
+#              the tab key was pressed.
+# COMP_LINE  : the current command line.
+#---------------------------------------------------------------------------
+
+#------------------------------------------------------
+# Generates and edits COMPREPLY for file or directory.
+#
+# ${1} : "file" | "directory"
+#------------------------------------------------------
+__sp_compreply_file_or_dir() {
+    
+    local readonly curr=${COMP_WORDS[COMP_CWORD]}
+    
+    # Override "internal field separator" SPACE default to LF
+    # to prevent chunking of filenames that contain spaces. 
+    IFS=$'\n'
+    COMPREPLY=($(compgen -A ${1} ${curr}))
+    unset IFS
+    
+    # Format visible  
+    local readonly nwords=${#COMPREPLY[@]}
+    local result=( )
+    
+    # Show file/directory without parent path.
+    if [ ${nwords} -gt 1 ]; then
+        local removepath=true
+    fi
+
+    for iter in "${COMPREPLY[@]}";
+    do
+        local item=${iter// /\\ }  # escape ' ' as '\ '
+        item=${item//\(/\\(} # escape '(' as '\('
+        item=${item//\)/\\)} # escape ')' as '\)'
+        
+        if [ "${removepath}" = true ]; then
+            item=`basename "${item}"`
+        fi
+
+        # Bash parameter expansion: expand ~ at beginning (#). 
+        # Append / for directory. 
+        if [ -d "${iter/#\~/$HOME}" ]; then
+            item="${item}/"
+        fi
+
+        result+=( "${item}" )
+
+    done
+
+    # If path is removed, add parent directory to persist current 
+    # non-matching choice at the cursor.
+    if [ "${removepath}" = true ]; then
+        result+=( "../" )
+    fi
+
+    COMPREPLY=("${result[@]}")
+}
+
+#------------------------------------------------------
+# Sets COMPREPLY for file.
+#------------------------------------------------------
+__sp_compreply_file() {
+    __sp_compreply_file_or_dir "file"
+}
+
+#------------------------------------------------------
+# Sets COMPREPLY for directory.
+#------------------------------------------------------
+__sp_compreply_dir() {
+    __sp_compreply_file_or_dir "directory"
+}
+
+#------------------------------------------------------
+# Echoes possible CLI option words.
+#
+# ${1} : string with all CLI option words.
+#------------------------------------------------------
+__sp_possible_option_words()
+{
+    local words=${1}" "
+
+    for entry in "${COMP_WORDS[@]}"
+    do
+        replace="${entry}"" "
+        words=${words/$replace}
+    done
+
+    echo ${words}
+}
+
+#------------------------------------------------------
+# Sets COMPREPLY default.
+#
+# ${1} : string with all CLI option words.
+#------------------------------------------------------
+__sp_compreply_words() {
+    
+    local readonly words=`__sp_possible_option_words "${1}"`
+    local readonly curr=${COMP_WORDS[COMP_CWORD]} # current (last) word
+    COMPREPLY=($(compgen -W "${words}" "\"${curr}\""))
+}
+
+#------------------------------------------------------
+# MAIN: savapage-db
+#------------------------------------------------------
+__savapage_db()
+{
+    local readonly opts="--db-check --db-check-fix \
+    --db-config-get --db-config-set --db-delete-logs \
+    --db-export --db-export-to --db-import --db-init \
+    --db-run-script --db-run-sql -h --help"
+
+    local readonly curr=${COMP_WORDS[COMP_CWORD]}
+    local readonly prev=${COMP_WORDS[COMP_CWORD-1]}
+
+    # Check mandatory option values
+    if [ -z "${curr}" ]; then
+        case ${prev} in
+        --db-config-get | --db-config-set | --db-delete-logs | --db-run-sql)
+            return # opt value required
+            ;;
+        esac
+    fi   
+   
+    case ${prev} in
+    --db-export-to | --db-import | --db-run-script)
+        __sp_compreply_file
+        ;;
+    *)
+        __sp_compreply_words "${opts}"
+        ;;
+    esac
+}
+
+#------------------------------------------------------
+# MAIN: savapage-nss
+#------------------------------------------------------
+__savapage_nss()
+{
+    local readonly opts="--users --user-groups --user-details \
+    --user-group-members --is-user-group --is-user-group-member \
+    -h --help"
+
+    local readonly curr=${COMP_WORDS[COMP_CWORD]}
+    local readonly prev=${COMP_WORDS[COMP_CWORD-1]}
+
+    # Check mandatory option values
+    if [ -z "${curr}" ]; then
+        case ${prev} in
+        --user-details | --user-group-members | --is-user-group | --is-user-group-member)
+            return # opt value required
+            ;;
+        esac
+    fi   
+   
+    __sp_compreply_words "${opts}"
+}
+
+#------------------------------------------------------
+# MAIN: savapage-pam
+#------------------------------------------------------
+__savapage_pam()
+{
+    local readonly opts="--debug -h --help"
+    __sp_compreply_words "${opts}"
+}
+
+#----------------------------------------
+# savapage-cmd --add-internal-user
+#----------------------------------------
+__sp_cmd_add_internal_user()
+{
+    local readonly opts="--username --password --full-name --email --email-other \
+    --card --card-format --card-first-byte --id --pin --yubikey --uuid --balance \
+    --balance-comment --credit-limit --credit-limit-amount --credit-limit-none \
+    --keep-card --keep-id --keep-email-other --keep-password --keep-pin --keep-uuid \
+    -batch -continue -input -charset -locale \
+    -h,--help"
+    
+    local readonly curr=${COMP_WORDS[COMP_CWORD]}
+    local readonly prev=${COMP_WORDS[COMP_CWORD-1]}
+
+    # Check mandatory option values
+    if [ -z "${curr}" ]; then
+        case ${prev} in
+        --username | --password | --full-name | --email | --email-other | --card)
+            return # opt value required
+            ;;
+        --id | --pin | --yubikey | --uuid | --balance | --balance-comment)
+            return # opt value required
+            ;;
+        --credit-limit-amount | -input | -charset | -locale)
+            return # opt value required
+            ;;    
+        esac
+    fi   
+   
+    case ${prev} in
+    --card-format)
+        COMPREPLY=($(compgen -W "${_ENUM_CARD_FORMAT}" ${curr}))
+        ;;
+    --card-first-byte)
+        COMPREPLY=($(compgen -W "${_ENUM_CARD_FIRST_BYTE}" ${curr}))
+        ;;
+    *)
+        local nwords=${#COMP_WORDS[@]}
+        local words=`__sp_possible_option_words "${opts}"`
+        if [ ${nwords} -gt 2 ]; then
+            local idx=${nwords}-1
+            COMPREPLY=($(compgen -W "${words}" "\"${COMP_WORDS[idx]}\""))
+        fi
+        ;;
+    esac   
+}
+
+#----------------------------------------
+# savapage-cmd --add-user-group
+#----------------------------------------
+__sp_cmd_add_user_group()
+{
+    local readonly opts="--groupname"
+    local readonly nwords=${#COMP_WORDS[@]}
+    
+    if [ ${nwords} -lt 4 ]; then
+        COMPREPLY=($(compgen -W "${opts}" "\"${COMP_WORDS[2]}\""))
+    fi
+}
+
+#------------------------------------------------------
+# MAIN: savapage-cmd
+#------------------------------------------------------
+__savapage_cmd()
+{
+    local readonly m01="--add-internal-user"
+    local readonly m02="--add-user-group"
+    local readonly m03="--change-base-currency"
+    local readonly m04="--delete-user"
+    local readonly m05="--delete-user-group"
+    local readonly m06="--delete-user-group-account"
+    local readonly m07="--erase-user"
+    local readonly m08="--get-config-property"
+    local readonly m09="--list-users"
+    local readonly m10="--list-user-groups"
+    local readonly m11="--list-user-group-members"
+    local readonly m12="--list-user-group-memberships"
+    local readonly m13="--list-user-source-groups"
+    local readonly m14="--list-user-source-group-members"
+    local readonly m15="--list-user-source-group-nesting"
+    local readonly m16="--printer-access-control"
+    local readonly m17="--printer-snmp"
+    local readonly m18="--set-config-property"
+    local readonly m19="--set-user-properties"
+    local readonly m20="--set-user-group-properties"
+    local readonly m21="--sync-user-group"
+    local readonly m22="--sync-users-and-groups"
+    local readonly m23="--system-status"
+
+    local readonly opts=" \
+    ${m01} ${m02} ${m03} ${m04} ${m05} ${m06} ${m07} ${m08} ${m09} ${m10} \
+    ${m11} ${m12} ${m13} ${m14} ${m15} ${m16} ${m17} ${m18} ${m19} ${m20} \
+    ${m21} ${m22} ${m23} \
+    -help,--help --help-all"
+
+    local readonly nwords=${#COMP_WORDS[@]} # number of words
+
+    case ${nwords} in
+    0|1)
+        ;;
+    2)
+        COMPREPLY=($(compgen -W "${opts}" "\"${COMP_WORDS[1]}\""))
+        ;;
+    *)
+        local readonly method="${COMP_WORDS[1]}"
+        case ${method} in
+        ${m01})
+            __sp_cmd_add_internal_user
+            ;;
+        ${m02})
+            __sp_cmd_add_user_group
+            ;;
+        ${m09} | ${m10} | ${m13} | ${m23})
+            : # no extra options 
+            ;;
+        *)
+            : # to be implemented
+            ;;
+        esac
+        ;;
+    esac
+}
+
+#------------------------------------------------------
+# SavaPage CLI complete
+#------------------------------------------------------
+complete -F __savapage_cmd savapage-cmd
+complete -F __savapage_db savapage-db
+complete -F __savapage_nss savapage-nss
+complete -F __savapage_pam savapage-pam
+
+# end-of-file
