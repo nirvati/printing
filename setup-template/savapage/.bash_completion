@@ -189,6 +189,68 @@ __savapage_nss()
 }
 
 #------------------------------------------------------
+# MAIN: savapage-nfc-reader
+#------------------------------------------------------
+__savapage_nfc_reader()
+{
+    local readonly opts="--host --port --timeout --reader-port \
+    -v --verbose -h --help"
+
+    local readonly curr=${COMP_WORDS[COMP_CWORD]}
+    local readonly prev=${COMP_WORDS[COMP_CWORD-1]}
+
+    # Check mandatory option values
+    if [ -z "${curr}" ]; then
+        case ${prev} in
+        --host | --port | --timeout | --reader-port)
+            return # opt value required
+            ;;
+        esac
+    fi   
+   
+    __sp_compreply_words "${opts}"
+}
+
+#------------------------------------------------------
+# MAIN: savapage-client
+#------------------------------------------------------
+__savapage_client()
+{
+    local readonly opts="--server-host --server-port --user --log-dir \
+    --passkey --print-dialog --print-dialog-btn --print-url-query \
+    --properties --anchor -d --debug -h --help --help-tui -x --hide-exit \
+    --notify-send -p --print-dialog"
+
+    local readonly curr=${COMP_WORDS[COMP_CWORD]}
+    local readonly prev=${COMP_WORDS[COMP_CWORD-1]}
+
+    # Check mandatory option values
+    if [ -z "${curr}" ]; then
+        case ${prev} in
+        --server-host | --server-port | --user | --print-dialog-btn | --print-url-query)
+            return # opt value required
+            ;;
+        esac
+    fi   
+
+    case ${prev} in
+    --log-dir)
+        __sp_compreply_dir
+        ;;
+    --properties)
+        __sp_compreply_file
+        ;;
+    --anchor)
+        COMPREPLY=($(compgen -W "ne nw se sw" ${curr}))
+        ;;
+    *)
+        __sp_compreply_words "${opts}"
+        ;;
+    esac
+}
+
+
+#------------------------------------------------------
 # MAIN: savapage-pam
 #------------------------------------------------------
 __savapage_pam()
@@ -328,5 +390,7 @@ complete -F __savapage_cmd savapage-cmd
 complete -F __savapage_db savapage-db
 complete -F __savapage_nss savapage-nss
 complete -F __savapage_pam savapage-pam
+complete -F __savapage_nfc_reader savapage-nfc-reader
+complete -F __savapage_client savapage-client
 
 # end-of-file
