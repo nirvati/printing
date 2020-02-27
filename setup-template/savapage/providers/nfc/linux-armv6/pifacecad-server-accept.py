@@ -40,7 +40,7 @@ try:
 except:
     pass
 
-os.system('aplay --quiet chime.wav')
+os.system('aplay --quiet clong-2.wav')
 
 if hasPiFaceCad:    
     time.sleep(5)

@@ -40,7 +40,7 @@ try:
 except:
     pass
 
-os.system('aplay --quiet disconnect_11.wav')
+os.system('aplay --quiet censor-beep-5.wav')
 
 if hasPiFaceCad:
     time.sleep(4)

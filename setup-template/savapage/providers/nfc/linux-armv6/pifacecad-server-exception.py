@@ -40,7 +40,7 @@ try:
 except:
     pass
 
-os.system('aplay --quiet buzzer_x.wav')
+os.system('aplay --quiet button-10.wav')
 
 if hasPiFaceCad:
     time.sleep(4)

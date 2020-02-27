@@ -26,7 +26,7 @@ address: info@datraverse.com
 import os
 import time
 
-os.system('aplay --quiet chime.wav')
+os.system('aplay --quiet clong-2.wav')
 
 hasPiGlow = False
 

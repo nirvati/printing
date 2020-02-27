@@ -26,7 +26,7 @@ address: info@datraverse.com
 import os
 import time
 
-os.system('aplay --quiet disconnect_11.wav')
+os.system('aplay --quiet censor-beep-5.wav')
 
 hasPiGlow = False
 
