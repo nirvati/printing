@@ -70,60 +70,113 @@ savapage.plugin.live=true
 # Placeholders:
 #
 #   routing.id
-#       $pdf.qrcode$    : QR-code used in PDF.
-#
-#   routing.pdf.qrcode
 #       $uuid$          : Generated UUID
 #
-#   routing.pdf.qrcode.rest.post.request.entity
+#   routing.pdf.qrcode.content
+#       $routing.id$    : routing.id
+#
+#   routing.rest.post.request.entity
 #       $uuid$          : Generated UUID
 #       $user_id$       : User id
 #       $client_ip$     : Client IP address
-#       $printer_name$  : CUPS printer name
+#       $queue_name$    : Print-in Queue name
+#       $printer_name$  : CUPS Printer name
 #       $job_name$      : Print Job Name (document name) 
 #       $job_time$      : Print Job datetime in ISO_8601 format
 #-----------------------------------------------------------------
 
-#----------------------------------------------
+#---------------------------------------------------
 # ID stored as document ext_id (max 64 chars).
-#----------------------------------------------
-routing.id=$pdf.qrcode$
-
-#----------------------------------------------
-# A fixed (generated) QR-code.
-#----------------------------------------------
-routing.pdf.qrcode=$uuid$
+#---------------------------------------------------
+# A fixed/generated routing ID.
+routing.id=$uuid$
 
 #----------------------------------------------
 # RESTfull POST request to register print job 
-# and "get" QR-code in return.
+# and "get" QR-code data in return.
 #----------------------------------------------
-#routing.pdf.qrcode.rest.uri=https://localhost:8632/restful/v1/tests/echo
-#routing.pdf.qrcode.rest.user=user
-#routing.pdf.qrcode.rest.password=password
-#routing.pdf.qrcode.rest.post.request.entity=$uuid$
-#routing.pdf.qrcode.rest.post.request.mediatype=text/plain
-#routing.pdf.qrcode.rest.post.response.mediatype=text/plain
+#routing.rest.uri=https://localhost:8632/restful/v1/tests/echo
+#routing.rest.user=user
+#routing.rest.password=password
 
+#routing.rest.post.request.entity=$uuid$
+#routing.rest.post.request.mediatype=text/plain
+
+#----------------------------------
+# Gets the routing.id as String.
+#----------------------------------
+#routing.rest.post.response.mediatype=text/plain
+
+#----------------------------------
+# Gets routing.* JSON data.
+#----------------------------------
+#routing.rest.post.response.mediatype=application/json
+#
+# JSON response by example:
+# { 
+#   "id": "68f18300-726e-11ea-9e43-406186940c49",
+#   "pdf": {
+#     "qrcode": {
+#       "content": "https://example.com/doc?id=68f18300-726e-11ea-9e43-406186940c49",
+#       "size": 20,
+#       "qz": 1,
+#       "pos": { "anchor": "TL", "margin": {"x": 95, "y": 10} }
+#     },
+#     "header": {
+#       "text": "Header", "font": { "size": 8}, "margin": { "top": 20}
+#     },
+#     "footer": {
+#       "text": "Footer", "font": { "size": 6}, "margin": { "bottom": 10}
+#     },
+#     "info": {
+#       "title": "Title",
+#       "subject": "Subject",
+#       "author": "Author",
+#       "keywords": [ "keywordA" "keywordB" ]
+#     }
+#   }
+# }
+#
+# NOTE: The routing "id" is mandatory. All other values override the ones that 
+# are configured in this file.
+#
+
+#---------------------------------------------------
+# QR code content
+#---------------------------------------------------
+routing.pdf.qrcode.content=$routing.id$
+#routing.pdf.qrcode.content=https://example.com/doc?id=$routing.id$
+
+
+#------------------------------------
 # Square QR-code size (millimeters).
+#------------------------------------
 routing.pdf.qrcode.size=12
 
+#----------------------------------
 # Quiet zone (millimeters): when not specified, zero is applied.
+#----------------------------------
 # routing.pdf.qrcode.qz=0
 
+#----------------------------------
 # TL (top-left, default), TR (top-right), 
 # BL (bottom-left), BR (bottom-right)
-routing.pdf.qrcode.pos=TL
+#----------------------------------
+routing.pdf.qrcode.pos.anchor=TL
 
+#----------------------------------
 # Margin in millimeters
+#----------------------------------
 routing.pdf.qrcode.pos.margin.x=10
 routing.pdf.qrcode.pos.margin.y=10
 
-#routing.pdf.header=Sample Header Text
+#----------------------------------
+#routing.pdf.header.text=Sample Header Text
 #routing.pdf.header.font.size=8
 #routing.pdf.header.margin.top=20
 
-#routing.pdf.footer=Sample Footer Text
+#----------------------------------
+#routing.pdf.footer.text=Sample Footer Text
 #routing.pdf.footer.font.size=6
 #routing.pdf.footer.margin.bottom=10
 
