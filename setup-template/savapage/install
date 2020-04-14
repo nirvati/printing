@@ -35,7 +35,7 @@ fi
 . ./.install-config.sh
 
 usage="_____________________________________________________________________________
-SavaPage Install (c) 2010-2019, Datraverse B.V.
+SavaPage Install (c) 2010-2020, Datraverse B.V.
 
 License: GNU AGPL version 3 or later <https://www.gnu.org/licenses/agpl.html>.
 This is free software: you are free to change and redistribute it.
@@ -123,19 +123,61 @@ fi
 #
 userid=`id | grep "${SP_SYS_ACCOUNT}"`
 if [ -z "${userid}" ]; then
-	echo
-	echo "Error: Please run this installer as system user \"${SP_SYS_ACCOUNT}\"." >&2
-	echo "If this user does not exist, please create the system account." >&2
-	echo "See the installation instructions in the manual for details." >&2
-	echo >&2
-	echo "Install aborted!" >&2
-	exit 1
+    echo
+    echo "Error: Please run this installer as system user \"${SP_SYS_ACCOUNT}\"." >&2
+    echo "If this user does not exist, please create the system account." >&2
+    echo "See the installation instructions in the manual for details." >&2
+    echo >&2
+    echo "Install aborted!" >&2
+    exit 1
 fi
+
+
+echo "
+  ____                   ____
+ / ___|  __ ___   ____ _|  _ \\ __ _  __ _  ___
+ \\___ \\ / _\` \\ \\ / / _\` | |_) / _\` |/ _\` |/ _ \\
+  ___) | (_| |\\ V / (_| |  __/ (_| | (_| |  __/
+ |____/ \\__,_| \\_/ \\__,_|_|   \\__,_|\\__, |\\___|
+                                    |___/
+"
+
+# Request agreement with AGPL
+echo "+------------------------------------------------------------------+"
+echo "| SavaPage is copyright (c) 2011-"`date +%Y`" Datraverse B.V. and licensed |"
+echo "| under the terms of the GNU Affero General Public License (AGPL)  |"
+echo "| version 3, or (at your option) any later version..               |"
+echo "|                                                                  |" 
+echo "| See <https://www.gnu.org/licenses/>                              |"
+echo "|                                                                  |" 
+echo "| A LICENSE copy of the AGPL is supplied along with this program.  |"
+echo "+------------------------------------------------------------------+"
+
+agreed=
+
+if test "${SP_INSTALL_SILENTLY}" = "on"
+then
+    agreed=1
+fi
+
+while [ -z "${agreed}" ]; do
+    echo "Do you agree with the AGPL license terms? [yes or no] "
+    read reply leftover
+    case $reply in
+        [yY] | [yY][eE][sS])
+            agreed=1
+            ;;
+        [nN] | [nN][oO])
+            echo "AGPL not accepted. Install aborted!"
+            exit 1
+            ;;
+    esac
+done
 
 #
 # Check if system account has access to install directory
 #
-echo "Installing in ${SP_INSTALL_DIR}"
+echo "\nInstalling in ${SP_INSTALL_DIR}"
 
 # Use stat -L to get information about the target of a symlink, and not the link itself.
 _STAT_OWNER=`stat -L -c %U ${SP_INSTALL_DIR}`
@@ -168,7 +210,7 @@ fi
 
 if [ $(( $_STAT_PERM & 0200 )) = "0" ]; then
 	echo "Error: user \"${SP_SYS_ACCOUNT}\" does not have write access to \"${SP_INSTALL_DIR}\"." >&2
-	exit 1        
+	exit 1
 fi
 
 #
@@ -243,6 +285,7 @@ if [ "${wrong_arch}" = "y" ]; then
 fi
 
 echo "Checking dependencies ..."
+sleep 2s
 
 # Java JRE
 hasjre=`which java 2> /dev/null`
@@ -417,38 +460,6 @@ fi
 
 # Check for SELinux (reserved)
 
-# Request agreement with AGPL
-echo "+------------------------------------------------------------------+"
-echo "| SavaPage is copyright (c) 2011-"`date +%Y`" Datraverse B.V. and licensed |"
-echo "| under the terms of the GNU Affero General Public License (AGPL)  |"
-echo "| version 3, or (at your option) any later version..               |"
-echo "|                                                                  |" 
-echo "| See <https://www.gnu.org/licenses/>                              |"
-echo "|                                                                  |" 
-echo "| A LICENSE copy of the AGPL is supplied along with this program.  |"
-echo "+------------------------------------------------------------------+"
-
-agreed=
-
-if test "${SP_INSTALL_SILENTLY}" = "on"
-then
-    agreed=1
-fi
-
-while [ -z "${agreed}" ]; do
-	echo "Do you agree with the AGPL license terms? [yes or no] "
-	read reply leftover
-	case $reply in
-		[yY] | [yY][eE][sS])
-			agreed=1
-			;;
-		[nN] | [nN][oO])
-			echo "AGPL not accepted. Install aborted!"
-			exit 1
-			;;
-	esac
-done
-	
 installovertop=
 #
 # Stop the server if already running.  Just in case someone is
