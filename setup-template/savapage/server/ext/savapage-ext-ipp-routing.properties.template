@@ -81,6 +81,7 @@ savapage.plugin.live=true
 #       $client_ip$     : Client IP address
 #       $queue_name$    : Print-in Queue name
 #       $printer_name$  : CUPS Printer name
+#       $printer_uri$   : CUPS Printer URI
 #       $job_name$      : Print Job Name (document name) 
 #       $job_time$      : Print Job datetime in ISO_8601 format
 #-----------------------------------------------------------------
@@ -101,6 +102,21 @@ routing.id=$uuid$
 
 #routing.rest.post.request.entity=$uuid$
 #routing.rest.post.request.mediatype=text/plain
+
+#----------------
+# JSON example 
+#----------------
+#routing.rest.uri=https://10.10.1.50/restful/v1/print
+#routing.rest.user=some.user
+#routing.rest.password=secret
+#routing.rest.post.request.entity={"printUser":"$user_id$",\
+#    "printIp":"$client_ip$",\
+#    "queueName":"$queue_name$",\
+#    "printerName":"$printer_name$",\
+#    "printerURI":"$printer_uri$",\
+#    "docTitle":"$job_name$",\
+#    "printTime":"$job_time$"}
+#routing.rest.post.request.mediatype=application/json
 
 #----------------------------------
 # Gets the routing.id as String.
