@@ -76,14 +76,15 @@ savapage.plugin.live=true
 #       $routing.id$    : routing.id
 #
 #   routing.rest.post.request.entity
-#       $uuid$          : Generated UUID
-#       $user_id$       : User id
-#       $client_ip$     : Client IP address
-#       $queue_name$    : Print-in Queue name
-#       $printer_name$  : CUPS Printer name
-#       $printer_uri$   : CUPS Printer URI
-#       $job_name$      : Print Job Name (document name) 
-#       $job_time$      : Print Job datetime in ISO_8601 format
+#       $uuid$             : Generated UUID
+#       $user_id$          : User id
+#       $client_ip$        : Client IP address
+#       $queue_name$       : Print-in Queue name
+#       $printer_name$     : CUPS Printer name
+#       $printer_uri$      : CUPS Printer URI
+#       $printer_uri_host$ : CUPS Printer URI host component
+#       $job_name$         : Print Job Name (document name) 
+#       $job_time$         : Print Job datetime in ISO_8601 format
 #-----------------------------------------------------------------
 
 #---------------------------------------------------
@@ -110,10 +111,11 @@ routing.id=$uuid$
 #routing.rest.user=some.user
 #routing.rest.password=secret
 #routing.rest.post.request.entity={"printUser":"$user_id$",\
-#    "printIp":"$client_ip$",\
+#    "clientIP":"$client_ip$",\
 #    "queueName":"$queue_name$",\
 #    "printerName":"$printer_name$",\
 #    "printerURI":"$printer_uri$",\
+#    "printerIP":"$printer_uri_host$",\
 #    "docTitle":"$job_name$",\
 #    "printTime":"$job_time$"}
 #routing.rest.post.request.mediatype=application/json
