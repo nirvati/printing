@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!--
 This file is part of the SavaPage project <https://www.savapage.org>
-Copyright (c) 2011-2020 Datraverse B.V. | Author: Rijk Ravestein 
+Copyright (c) 2020 Datraverse B.V. | Author: Rijk Ravestein 
 
-SPDX-FileCopyrightText: 2011-2020 Datraverse BV <info@datraverse.com>
+SPDX-FileCopyrightText: © 2020 Datraverse BV <info@datraverse.com>
 SPDX-License-Identifier: AGPL-3.0-or-later
 
 SavaPage is free software: you can redistribute it and/or modify
@@ -61,7 +61,18 @@ the License, or (at your option) any later version.
         <!-- If no location information is available, the value of this    -->
         <!-- key SHOULD be empty.                                          -->
         <!-- ............................................................. -->
-        <txt-record>note=Login to SavaPage App before printing.</txt-record>
+        <txt-record>note=Login to SavaPage App before printing</txt-record>
+
+        <!-- ............................................................. -->
+        <!--                   Uncomment line below                        -->
+        <!--                                                               -->
+        <!--                      $Customize$                              -->
+        <!--                                                               -->
+        <!--         User Web App URL to "Show Printer Web Page"           -->
+        <!-- ............................................................. -->
+        <!--
+        <txt-record>adminurl=https://your-savapage:8631/user</txt-record>
+        -->
 
         <!-- ............................................................. -->
         <!-- The value must be between 0 – 99. Lower numbers indicate      -->
@@ -105,7 +116,7 @@ the License, or (at your option) any later version.
         <!-- NOTE: image/urf SHOULD be present for AirPrint from iOS       -->
         <!-- devices to work.                                              -->
         <!-- ............................................................. -->
-        <txt-record>pdl=application/pdf,application/postscript,application/vnd.adobe-reader-postscript,image/urf</txt-record>
+        <txt-record>pdl=application/pdf,application/postscript,application/vnd.adobe-reader-postscript,image/urf,image/pwg-raster</txt-record>
 
         <!-- ============================================================= -->
         <!--             Printer Protocol TXT Record Keys                  -->
