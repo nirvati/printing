@@ -85,8 +85,8 @@ savapage.plugin.live=true
 #       $printer_uri_host$ : CUPS Printer URI host component
 #       $job_name$         : Print Job Name (document name) 
 #       $job_time$         : Print Job datetime in ISO_8601 format
-#       $page_width_mm$    : First page width (millimeters). 
-#       $page_height_mm$   : First page height (millimeters).
+#       $page_width_mm$    : Print Job first page width (millimeters).
+#       $page_height_mm$   : Print Job first page height (millimeters).
 #-----------------------------------------------------------------
 
 #---------------------------------------------------
