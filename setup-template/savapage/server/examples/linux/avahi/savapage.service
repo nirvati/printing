@@ -26,10 +26,10 @@ the License, or (at your option) any later version.
         <!--                 !!! Do NOT change !!!                         -->
         <!-- ============================================================= -->
         <type>_ipp._tcp</type>
-        <subtype>_universal._sub._ipp._tcp</subtype>
+        <subtype>_print._sub._ipp._tcp</subtype>
 
         <!-- ============================================================= -->
-        <!--         The SavaPage IP port (default 8631)                   -->
+        <!--         The SavaPage ipp:// port (default 8631)               -->
         <!--                                                               -->
         <!--                      $Customize$                              -->
         <!-- ============================================================= -->
@@ -64,14 +64,19 @@ the License, or (at your option) any later version.
         <txt-record>note=Login to SavaPage App before printing</txt-record>
 
         <!-- ............................................................. -->
-        <!--                   Uncomment line below                        -->
+        <!--                   Uncomment lines below                       -->
         <!--                                                               -->
         <!--                      $Customize$                              -->
         <!--                                                               -->
-        <!--         User Web App URL to "Show Printer Web Page"           -->
+        <!--                UUID for this print service                    -->
+        <!--      User Web App https:// URL to "Show Printer Web Page"     -->
+        <!--                                                               -->
+        <!-   Values MUST match 'printer-uuid' and 'printer-more-info' of  -->  
+        <!--             IPP 'Get-Printer-Attributes' operation            -->
         <!-- ............................................................. -->
         <!--
-        <txt-record>adminurl=https://your-savapage:8631/user</txt-record>
+        <txt-record>UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</txt-record>
+        <txt-record>adminurl=https://your-savapage:8632/user</txt-record>
         -->
 
         <!-- ............................................................. -->
