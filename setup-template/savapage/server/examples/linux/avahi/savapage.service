@@ -73,9 +73,13 @@ the License, or (at your option) any later version.
         <!--                      $Customize$                              -->
         <!--                                                               -->
         <!--                UUID for this print service                    -->
-        <!--      User Web App https:// URL to "Show Printer Web Page"     -->
+        <!--   See Configuration Property "ipp.printer-attr.printer-uuid"  -->
+        <!--              in Admin Web App Configuration Editor            -->
         <!--                                                               -->
-        <!--  Values MUST match 'printer-uuid' and 'printer-more-info' of  -->  
+        <!--               adminurl = User Web App https:// URL            -->
+        <!--                   to "Show Printer Web Page"                  -->
+        <!--                                                               -->
+        <!--  Values MUST match 'printer-uuid' and 'printer-more-info' of  -->
         <!--             IPP 'Get-Printer-Attributes' operation            -->
         <!-- ............................................................. -->
         <!--
