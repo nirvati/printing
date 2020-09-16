@@ -1,0 +1,47 @@
+#
+# This file is part of the SavaPage project <https://www.savapage.org>.
+# Copyright (c) 2011-2020 Datraverse B.V.
+# Authors: Eric Abreu, Rijk Ravestein.
+#
+# SPDX-FileCopyrightText: 2011-2020 Datraverse B.V. <info@datraverse.com>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+# For more information, please contact Datraverse B.V. at this
+# address: info@datraverse.com
+#
+[Unit]
+Description=SavaPage Network Card Reader
+After=network.target
+
+[Service]
+User=savapage-nfc
+
+# The WorkingDirectory directive allows savapage-nfc-reader 
+# to find savapage-nfc-reader.ini
+WorkingDirectory=/usr/local/bin/savapage
+
+# If you want to switch this service to debug mode just add the  
+# --verbose param to next line.
+ExecStart=/usr/local/bin/savapage/savapage-nfc-reader
+ExecReload=/bin/kill -HUP $MAINPID
+
+# Next line will restart the process if it’s not running, unless
+# we stopped it with “systemctl stop savapage-nfc.service”
+Restart=always
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target

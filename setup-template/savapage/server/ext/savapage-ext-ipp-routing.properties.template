@@ -1,7 +1,10 @@
 #
 # This file is part of the SavaPage project <https://www.savapage.org>.
-# Copyright (c) 2011-2019 Datraverse B.V.
+# Copyright (c) 2011-2020 Datraverse B.V.
 # Author: Rijk Ravestein.
+#
+# SPDX-FileCopyrightText: 2011-2020 Datraverse B.V. <info@datraverse.com>
+# SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -67,61 +70,142 @@ savapage.plugin.live=true
 # Placeholders:
 #
 #   routing.id
-#       $pdf.qrcode$    : QR-code used in PDF.
-#
-#   routing.pdf.qrcode
 #       $uuid$          : Generated UUID
 #
-#   routing.pdf.qrcode.rest.post.request.entity
-#       $uuid$          : Generated UUID
-#       $user_id$       : User id
-#       $client_ip$     : Client IP address
-#       $printer_name$  : CUPS printer name
-#       $job_name$      : Print Job Name (document name) 
-#       $job_time$      : Print Job datetime in ISO_8601 format
+#   routing.pdf.qrcode.content
+#       $routing.id$    : routing.id
+#
+#   routing.rest.post.request.entity
+#       $uuid$             : Generated UUID
+#       $user_id$          : User id
+#       $client_ip$        : Client IP address
+#       $queue_name$       : Print-in Queue name
+#       $printer_name$     : CUPS Printer name
+#       $printer_uri$      : CUPS Printer URI
+#       $printer_uri_host$ : CUPS Printer URI host component
+#       $job_name$         : Print Job Name (document name) 
+#       $job_time$         : Print Job datetime in ISO_8601 format
+#       $page_width_mm$    : Print Job first page width (millimeters).
+#       $page_height_mm$   : Print Job first page height (millimeters).
 #-----------------------------------------------------------------
 
-#----------------------------------------------
+#---------------------------------------------------
 # ID stored as document ext_id (max 64 chars).
-#----------------------------------------------
-routing.id=$pdf.qrcode$
-
-#----------------------------------------------
-# A fixed (generated) QR-code.
-#----------------------------------------------
-routing.pdf.qrcode=$uuid$
+#---------------------------------------------------
+# A fixed/generated routing ID.
+routing.id=$uuid$
 
 #----------------------------------------------
 # RESTfull POST request to register print job 
-# and "get" QR-code in return.
+# and "get" QR-code data in return.
 #----------------------------------------------
-#routing.pdf.qrcode.rest.uri=https://localhost:8632/restful/v1/tests/echo
-#routing.pdf.qrcode.rest.user=user
-#routing.pdf.qrcode.rest.password=password
-#routing.pdf.qrcode.rest.post.request.entity=$uuid$
-#routing.pdf.qrcode.rest.post.request.mediatype=text/plain
-#routing.pdf.qrcode.rest.post.response.mediatype=text/plain
+#routing.rest.uri=https://localhost:8632/restful/v1/tests/echo
+#routing.rest.user=user
+#routing.rest.password=password
 
-# Square QR-code size (pixels).
-routing.pdf.qrcode.size=50
+#routing.rest.post.request.entity=$uuid$
+#routing.rest.post.request.mediatype=text/plain
 
-# Quiet zone (pixels): when not specified, default is applied.
+#----------------
+# JSON example 
+#----------------
+#routing.rest.uri=https://10.10.1.50/restful/v1/print
+#routing.rest.user=some.user
+#routing.rest.password=secret
+#routing.rest.post.request.entity={"printUser":"$user_id$",\
+#    "clientIP":"$client_ip$",\
+#    "queueName":"$queue_name$",\
+#    "printerName":"$printer_name$",\
+#    "printerURI":"$printer_uri$",\
+#    "printerIP":"$printer_uri_host$",\
+#    "docTitle":"$job_name$",\
+#    "printTime":"$job_time$"}
+#routing.rest.post.request.mediatype=application/json
+
+#----------------------------------
+# Gets the routing.id as String.
+#----------------------------------
+#routing.rest.post.response.mediatype=text/plain
+
+#----------------------------------
+# Gets routing.* JSON data.
+#----------------------------------
+#routing.rest.post.response.mediatype=application/json
+#
+# JSON response by example:
+# { 
+#   "id": "68f18300-726e-11ea-9e43-406186940c49",
+#   "pdf": {
+#     "qrcode": {
+#       "content": "https://example.com/doc?id=68f18300-726e-11ea-9e43-406186940c49",
+#       "size": 20,
+#       "qz": 1,
+#       "pos": { "anchor": "TL", "margin": {"x": 95, "y": 10} }
+#     },
+#     "header": {
+#       "text": "Header", "font": { "size": 8}, "margin": { "top": 20}
+#     },
+#     "footer": {
+#       "text": "Footer", "font": { "size": 6}, "margin": { "bottom": 10}
+#     },
+#     "info": {
+#       "title": "Title",
+#       "subject": "Subject",
+#       "author": "Author",
+#       "keywords": [ "keywordA" "keywordB" ]
+#     }
+#   }
+# }
+#
+# NOTE: The routing "id" is mandatory. All other values override the ones that 
+# are configured in this file.
+#
+
+#---------------------------------------------------
+# QR code content
+#---------------------------------------------------
+routing.pdf.qrcode.content=$routing.id$
+#routing.pdf.qrcode.content=https://example.com/doc?id=$routing.id$
+
+
+#------------------------------------
+# Square QR-code size (millimeters).
+#------------------------------------
+routing.pdf.qrcode.size=12
+
+#----------------------------------
+# Quiet zone (millimeters): when not specified, zero is applied.
+#----------------------------------
 # routing.pdf.qrcode.qz=0
 
+#----------------------------------
 # TL (top-left, default), TR (top-right), 
 # BL (bottom-left), BR (bottom-right)
-routing.pdf.qrcode.pos=TL
+#----------------------------------
+routing.pdf.qrcode.pos.anchor=TL
 
-# Margins in PDF points: 1 inch == 72 points.
-routing.pdf.qrcode.pos.margin.x=0
-routing.pdf.qrcode.pos.margin.y=0
+#----------------------------------
+# Margin in millimeters
+#----------------------------------
+routing.pdf.qrcode.pos.margin.x=10
+routing.pdf.qrcode.pos.margin.y=10
 
-#routing.pdf.header=Sample Header Text
+#----------------------------------
+#routing.pdf.header.text=Sample Header Text
 #routing.pdf.header.font.size=8
 #routing.pdf.header.margin.top=20
 
-#routing.pdf.footer=Sample Footer Text
+#----------------------------------
+#routing.pdf.footer.text=Sample Footer Text
 #routing.pdf.footer.font.size=6
-#routing.pdf.foooter.margin.bottom=10
+#routing.pdf.footer.margin.bottom=10
+
+#----------------------------------------------
+# Overrides PDF info properties
+#----------------------------------------------
+#routing.pdf.info.title=Title
+#routing.pdf.info.subject=Subject
+#routing.pdf.info.author=Author
+#routing.pdf.info.keywords=keywordA keywordB
 
 # end-of-file

@@ -1,7 +1,10 @@
 #
 # This file is part of the SavaPage project <https://www.savapage.org>.
-# Copyright (c) 2011-2018 Datraverse B.V.
+# Copyright (c) 2020 Datraverse B.V.
 # Author: Rijk Ravestein.
+#
+# SPDX-FileCopyrightText: © 2020 Datraverse B.V. <info@datraverse.com>
+# SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -20,6 +23,13 @@
 # address: info@datraverse.com
 #
 
+#=======================================================================
+# IMPORTANT: Each key/value in this file can be overruled at runtime 
+# by specifying it as Configuration Property. When the Configuration 
+# Property value is empty (default), customization falls back to the
+# value in this properties file.
+#=======================================================================
+
 #-----------------------------------------------------------------------
 # jQuery Mobile Themes. 
 #
@@ -28,6 +38,7 @@
 #webapp.theme.admin=admin.min.css
 #webapp.theme.jobtickets=jobtickets.min.css
 #webapp.theme.pos=pos.min.css
+#webapp.theme.printsite=printsite.min.css
 #webapp.theme.user=user.min.css
 
 #-----------------------------------------------------------------------
@@ -38,8 +49,8 @@
 #webapp.custom.admin=admin.css
 #webapp.custom.jobtickets=jobtickets.css
 #webapp.custom.pos=pos.css
+#webapp.custom.printsite=printsite.css
 #webapp.custom.user=user.css
-
 
 #-----------------------------------------------------------------------
 # Custom HTML inject files.
@@ -54,6 +65,9 @@
 
 #webapp.html.pos.about=pos-about.html
 #webapp.html.pos.login=pos-login.html
+
+#webapp.html.printsite.about=printsite-about.html
+#webapp.html.printsite.login=printsite-login.html
 
 #webapp.html.user.about=user-about.html
 #webapp.html.user.login=user-login.html

@@ -260,7 +260,7 @@
 
     create table tbl_pos_purchase (
        pos_purchase_id int8 not null,
-        comment varchar(255),
+        payment_comment varchar(255),
         payment_type varchar(50),
         receipt_num varchar(255) not null,
         total_cost numeric(8, 2) not null,

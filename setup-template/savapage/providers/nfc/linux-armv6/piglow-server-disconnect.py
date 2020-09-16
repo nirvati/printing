@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 '''
 This file is part of the SavaPage project <https://www.savapage.org>.
-Copyright (c) 2011-2017 Datraverse B.V.
+Copyright (c) 2011-2020 Datraverse B.V.
 Author: Rijk Ravestein.
+
+SPDX-FileCopyrightText: 2011-2020 Datraverse B.V. <info@datraverse.com>
+SPDX-License-Identifier: AGPL-3.0-or-later
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -23,7 +26,7 @@ address: info@datraverse.com
 import os
 import time
 
-os.system('aplay --quiet disconnect_11.wav')
+os.system('aplay --quiet censor-beep-5.wav')
 
 hasPiGlow = False
 
