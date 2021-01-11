@@ -1,10 +1,10 @@
 #!/bin/sh
 #
 # This file is part of the SavaPage project <https://www.savapage.org>.
-# Copyright (c) 2011-2020 Datraverse B.V.
+# Copyright (c) 2020 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
-# SPDX-FileCopyrightText: 2011-2020 Datraverse B.V. <info@datraverse.com>
+# SPDX-FileCopyrightText: (c) 2020 Datraverse B.V. <info@datraverse.com>
 # SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # This program is free software: you can redistribute it and/or modify
@@ -43,7 +43,7 @@ SP_INSTALL_DIR=`dirname ${SP_SELF_PATH}`
 
 
 usage="_____________________________________________________________________________
-SavaPage Install (c) 2010-2019, Datraverse B.V.
+SavaPage Install (c) 2020, Datraverse B.V.
 		
 License: GNU AGPL version 3 or later <https://www.gnu.org/licenses/agpl.html>.
 This is free software: you are free to change and redistribute it.

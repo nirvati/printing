@@ -23,6 +23,7 @@ Make and copy PPD files:
 
     cd savapage-ppd
     make
+    mkdir ../savapage-server/client.home
     cp ppd/SAVAPAGE.ppd ../savapage-server/client.home/SAVAPAGE.ppd
 
 
@@ -36,7 +37,7 @@ Copy from an existing installation:
     sudo cp /opt/savapage/server/data/encryption.properties .
 
     sudo chown ${USER}: default-ssl-keystore*
-    sudo chown ${USER}: encryption.properties* 
+    sudo chown ${USER}: encryption.properties*
  
 
 ## jmx
