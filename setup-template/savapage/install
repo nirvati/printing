@@ -309,7 +309,6 @@ else
 	echo "binutils ... ok"
 fi
 
-
 #
 # Check for ImageMagick
 #
@@ -470,6 +469,12 @@ if [ -d "${SP_INSTALL_DIR}/server/bin/linux-${install_arch}" ]; then
 	echo "Removing the server's old bin files..."
 	rm -fr "${SP_INSTALL_DIR}/server/bin/linux-${install_arch}/" >/dev/null 2>&1 
 fi
+
+#
+# Clear/recreate server/tmp
+#
+rm -fr "${SP_INSTALL_DIR}/server/tmp/" >/dev/null 2>&1 
+mkdir "${SP_INSTALL_DIR}/server/tmp"
 
 #
 # Remove any existing documentation files
