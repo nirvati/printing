@@ -84,6 +84,7 @@ clean-patch:
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-en clean
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-es clean
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-fr clean
+	@make -C $(REPO_HOME_PUB)/savapage-i18n-hu clean
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-nl clean
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-pl clean
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-ru clean
@@ -112,6 +113,7 @@ mvn-package-patch:
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-en install
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-es install
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-fr install
+	@make -C $(REPO_HOME_PUB)/savapage-i18n-hu install
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-nl install
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-pl install
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-ru install

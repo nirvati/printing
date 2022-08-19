@@ -1,10 +1,10 @@
 #!/bin/sh
 #
 # This file is part of the SavaPage project <https://www.savapage.org>.
-# Copyright (c) 2011-2020 Datraverse B.V.
+# Copyright (c) 2011-2022 Datraverse B.V.
 # Author: Rijk Ravestein.
 #
-# SPDX-FileCopyrightText: 2011-2020 Datraverse B.V. <info@datraverse.com>
+# SPDX-FileCopyrightText: 2011-2022 Datraverse B.V. <info@datraverse.com>
 # SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # This program is free software: you can redistribute it and/or modify
@@ -35,7 +35,7 @@ fi
 . ./.install-config.sh
 
 usage="_____________________________________________________________________________
-SavaPage Install (c) 2010-2020, Datraverse B.V.
+SavaPage Install (c) 2010-2022, Datraverse B.V.
 
 License: GNU AGPL version 3 or later <https://www.gnu.org/licenses/agpl.html>.
 This is free software: you are free to change and redistribute it.
@@ -249,39 +249,9 @@ else
 fi
 
 if [ "${wrong_arch}" = "y" ]; then
-
     echo
-
-    if test "${SP_INSTALL_SILENTLY}" = "on"
-    then
-        echo -n "ERROR: "
-    else
-        echo -n "WARNING: "
-    fi
-
-    echo "This release is designed for ${install_arch} systems."    
-    
-    if test "${SP_INSTALL_SILENTLY}" = "on"
-    then
-		exit 1
-    fi
-    
-    echo "Did you mean to download the ${required_arch} version?"
-	agreed=
-	while [ -z "${agreed}" ]; do
-		echo
-		echo "Do you wish to proceed with the install? [yes or no] "
-		read reply leftover
-		case $reply in
-			[yY] | [yY][eE][sS])
-				agreed=1
-				;;
-			[nN] | [nN][oO])
-				echo "Install aborted!"
-				exit 1
-				;;
-		esac
-	done
+    echo "ERROR: This release is designed for ${install_arch} systems."
+    exit 1
 fi
 
 echo "Checking dependencies ..."
@@ -338,7 +308,6 @@ if [ -z "${hasstrings}" ]; then
 else
 	echo "binutils ... ok"
 fi
-
 
 #
 # Check for ImageMagick
@@ -500,6 +469,12 @@ if [ -d "${SP_INSTALL_DIR}/server/bin/linux-${install_arch}" ]; then
 	echo "Removing the server's old bin files..."
 	rm -fr "${SP_INSTALL_DIR}/server/bin/linux-${install_arch}/" >/dev/null 2>&1 
 fi
+
+#
+# Clear/recreate server/tmp
+#
+rm -fr "${SP_INSTALL_DIR}/server/tmp/" >/dev/null 2>&1 
+mkdir "${SP_INSTALL_DIR}/server/tmp"
 
 #
 # Remove any existing documentation files

@@ -115,7 +115,15 @@ javaArgs="$DAEMON_ARGS"                                    # arguments for Java 
 
 javaCommandLine="$javaCommand $javaArgs"                   # command line to start the Java service application
 javaCommandLineKeyword="org.savapage.server.WebServer"     # a keyword that occurs on the commandline, used to detect an already running service process and to distinguish it from others
- 
+
+# Clear server/tmp.
+function clearServerTmp {
+   # remove all files
+   find "${SERVER_HOME}/tmp" -mindepth 1 -maxdepth 1 -type f -exec rm {} \;
+   # remove all directories
+   find "${SERVER_HOME}/tmp" -mindepth 1 -maxdepth 1 -type d -exec rm -rf {} \;
+   return 0; }
+
 # Makes the file $1 writable by the group $serviceGroup.
 function makeFileWritable {
    local filename="$1"
@@ -150,6 +158,7 @@ function getServicePID {
 function startServiceProcess {
    cd $applDir || return 1
    rm -f $pidFile
+   clearServerTmp || return 1
    makeFileWritable $pidFile || return 1
    makeFileWritable $serviceLogFile || return 1
    cmd="umask 077;CLASSPATH=$CLASSPATH nohup $javaCommandLine >>$serviceLogFile 2>&1 & echo \$! >$pidFile"  

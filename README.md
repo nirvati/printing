@@ -76,6 +76,7 @@ SavaPage Software is produced by Community Partners and consumed by Community Me
             savapage-i18n/savapage-i18n-en
             savapage-i18n/savapage-i18n-es
             savapage-i18n/savapage-i18n-fr
+            savapage-i18n/savapage-i18n-hu
             savapage-i18n/savapage-i18n-nl
             savapage-i18n/savapage-i18n-pl
             savapage-i18n/savapage-i18n-ru
