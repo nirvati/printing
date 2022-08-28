@@ -127,9 +127,10 @@ routing.id=$uuid$
 #----------------------------------
 #routing.rest.post.response.mediatype=text/plain
 
-#----------------------------------
+#------------------------------------------------
 # Gets routing.* JSON data.
-#----------------------------------
+# See org.savapage.ext.print.IppRoutingDto POJO
+#------------------------------------------------
 #routing.rest.post.response.mediatype=application/json
 #
 # JSON response by example:
