@@ -236,7 +236,9 @@ fi
 
 wrong_arch=
 system_arch=`uname -m 2>/dev/null`
-if [ "${system_arch}" = "x86_64" ]; then
+
+# Note: aarch64 is 64-bit extension of the ARM architecture family.
+if [ "${system_arch}" = "x86_64" ] || [ "${system_arch}" = "aarch64" ]; then
     if [ "${install_arch}" = "i686" ]; then
         wrong_arch=y
         required_arch=x64
@@ -250,7 +252,7 @@ fi
 
 if [ "${wrong_arch}" = "y" ]; then
     echo
-    echo "ERROR: This release is designed for ${install_arch} systems."
+    echo "ERROR: SavaPage runs on ${install_arch} systems, not on ${system_arch}."
     exit 1
 fi
 
