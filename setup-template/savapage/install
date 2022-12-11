@@ -252,8 +252,22 @@ fi
 
 if [ "${wrong_arch}" = "y" ]; then
     echo
-    echo "ERROR: SavaPage runs on ${install_arch} systems, not on ${system_arch}."
-    exit 1
+    echo "WARNING: SavaPage runs on ${install_arch} systems. This system is identified as ${system_arch}."
+    agreed=
+    while [ -z "${agreed}" ]; do
+        echo
+        echo "Do you wish to proceed? [yes or no] "
+        read reply leftover
+        case $reply in
+            [yY] | [yY][eE][sS])
+                agreed=1
+                ;;
+            [nN] | [nN][oO])
+                echo "Install aborted!"
+                exit 1
+                ;;
+        esac
+    done
 fi
 
 echo "Checking dependencies ..."
