@@ -49,7 +49,7 @@ _CURRENTDIR=`dirname ${SP_SELF_PATH}`
 #=========================================================================
 # Location of SavaPage repositories
 #=========================================================================
-readonly _REPO_HOME=${_CURRENTDIR}/..
+readonly _REPO_HOME=${_CURRENTDIR}/repos
 
 #
 readonly _REPO_HOME_PUB=${_REPO_HOME}
@@ -57,14 +57,10 @@ readonly _REPO_HOME_PUB=${_REPO_HOME}
 readonly _REPO_HOME_COMMON=${_REPO_HOME_PUB}/savapage-common
 readonly _REPO_HOME_SERVER=${_REPO_HOME_PUB}/savapage-server
 readonly _REPO_HOME_CLIENT=${_REPO_HOME_PUB}/savapage-client
-readonly _REPO_HOME_CORE=${_REPO_HOME_PUB}/savapage-core
+readonly _REPO_HOME_CORE=${_REPO_HOME_PUB}/printing-core
 readonly _REPO_HOME_PPD=${_REPO_HOME_PUB}/savapage-ppd
 readonly _REPO_HOME_UTIL=${_REPO_HOME_PUB}/savapage-util
-readonly _REPO_HOME_NFC_READER=${_REPO_HOME_PUB}/savapage-nfc-reader
 
-readonly _REPO_HOME_EXT_MOLLIE=${_REPO_HOME_PUB}/savapage-ext-mollie
-readonly _REPO_HOME_EXT_BLOCKCHAIN_INFO=${_REPO_HOME_PUB}/savapage-ext-blockchain-info
-readonly _REPO_HOME_EXT_NOTIFICATION=${_REPO_HOME_PUB}/savapage-ext-notification
 readonly _REPO_HOME_EXT_OAUTH=${_REPO_HOME_PUB}/savapage-ext-oauth
 
 #=========================================================================
@@ -115,21 +111,12 @@ readonly _SAVAPAGE_EXT_JAR=savapage-ext-${APP_VERSION}.jar
 
 readonly _SAVAPAGE_I18N_DE_JAR=savapage-i18n-de-${APP_VERSION}.jar
 readonly _SAVAPAGE_I18N_EN_JAR=savapage-i18n-en-${APP_VERSION}.jar
-readonly _SAVAPAGE_I18N_ES_JAR=savapage-i18n-es-${APP_VERSION}.jar
-readonly _SAVAPAGE_I18N_FR_JAR=savapage-i18n-fr-${APP_VERSION}.jar
-readonly _SAVAPAGE_I18N_HU_JAR=savapage-i18n-hu-${APP_VERSION}.jar
-readonly _SAVAPAGE_I18N_NL_JAR=savapage-i18n-nl-${APP_VERSION}.jar
-readonly _SAVAPAGE_I18N_PL_JAR=savapage-i18n-pl-${APP_VERSION}.jar
-readonly _SAVAPAGE_I18N_RU_JAR=savapage-i18n-ru-${APP_VERSION}.jar
 
 readonly _SAVAPAGE_SERVER_WAR=savapage-server-${APP_VERSION}.war
 
 readonly _SAVAPAGE_CLIENT_JAR=savapage-client-${APP_VERSION}.jar
 
-readonly _SAVAPAGE_EXT_MOLLIE_JAR=savapage-ext-mollie-${APP_VERSION}.jar
-readonly _SAVAPAGE_EXT_BLOCKCHAIN_INFO_JAR=savapage-ext-blockchain-info-${APP_VERSION}.jar
 readonly _SAVAPAGE_EXT_OAUTH_JAR=savapage-ext-oauth-${APP_VERSION}.jar
-readonly _SAVAPAGE_EXT_NOTIFICATION_JAR=savapage-ext-notification-${APP_VERSION}.jar
 
 readonly _SAVAPAGE_AD_HOC_SERVER_JAR=savapage-server-${APP_VERSION}.jar
 

@@ -23,7 +23,7 @@
 # address: info@datraverse.com
 #
 
-REPO_HOME:=..
+REPO_HOME:=repos
 REPO_HOME_PUB:=$(REPO_HOME)
 REPO_COMMON:=$(REPO_HOME_PUB)/savapage-common
 
@@ -82,24 +82,15 @@ clean: cleanc mvn-clean ppd-clean
 clean-patch:
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-de clean
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-en clean
-	@make -C $(REPO_HOME_PUB)/savapage-i18n-es clean
-	@make -C $(REPO_HOME_PUB)/savapage-i18n-fr clean
-	@make -C $(REPO_HOME_PUB)/savapage-i18n-hu clean
-	@make -C $(REPO_HOME_PUB)/savapage-i18n-nl clean
-	@make -C $(REPO_HOME_PUB)/savapage-i18n-pl clean
-	@make -C $(REPO_HOME_PUB)/savapage-i18n-ru clean
 	@make -C $(REPO_HOME_PUB)/savapage-common clean
-	@make -C $(REPO_HOME_PUB)/savapage-core clean
+	@make -C $(REPO_HOME_PUB)/printing-core clean
 	@make -C $(REPO_HOME_PUB)/savapage-client clean
 	@make -C $(REPO_HOME_PUB)/savapage-ext clean
-	@make -C $(REPO_HOME_PUB)/savapage-ext-blockchain-info clean
-	@make -C $(REPO_HOME_PUB)/savapage-ext-mollie clean
-	@make -C $(REPO_HOME_PUB)/savapage-ext-notification clean
 	@make -C $(REPO_HOME_PUB)/savapage-ext-oauth clean
 	@make -C $(REPO_HOME_PUB)/savapage-server clean
 
 #----------------------------------------------------------------------
-# Note the INSTALL of savapage-common, savapage-core and savapage-ext, 
+# Note the INSTALL of savapage-common, printing-core and savapage-ext, 
 # this makes the pom/jar part of the LOCAL maven repository, so the
 # other maven projects can resolve this dependency. 
 #----------------------------------------------------------------------
@@ -111,18 +102,9 @@ mvn-package: mvn-package-patch
 mvn-package-patch:
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-de install
 	@make -C $(REPO_HOME_PUB)/savapage-i18n-en install
-	@make -C $(REPO_HOME_PUB)/savapage-i18n-es install
-	@make -C $(REPO_HOME_PUB)/savapage-i18n-fr install
-	@make -C $(REPO_HOME_PUB)/savapage-i18n-hu install
-	@make -C $(REPO_HOME_PUB)/savapage-i18n-nl install
-	@make -C $(REPO_HOME_PUB)/savapage-i18n-pl install
-	@make -C $(REPO_HOME_PUB)/savapage-i18n-ru install
 	@make -C $(REPO_HOME_PUB)/savapage-common install
-	@make -C $(REPO_HOME_PUB)/savapage-core install
+	@make -C $(REPO_HOME_PUB)/printing-core install
 	@make -C $(REPO_HOME_PUB)/savapage-ext install
-	@make -C $(REPO_HOME_PUB)/savapage-ext-blockchain-info repackage
-	@make -C $(REPO_HOME_PUB)/savapage-ext-mollie repackage
-	@make -C $(REPO_HOME_PUB)/savapage-ext-notification repackage
 	@make -C $(REPO_HOME_PUB)/savapage-ext-oauth repackage
 	@make -C $(REPO_HOME_PUB)/savapage-client repackage
 	@make -C $(REPO_HOME_PUB)/savapage-server repackage
@@ -184,9 +166,6 @@ $(C_TRG):
 .PHONY: cbuild
 cbuild: $(C_TRG) binaries savapage-pam savapage-nss savapage-notifier
 
-.PHONY: savapage-nfc-reader
-savapage-nfc-reader: $(C_TRG)/savapage-nfc-reader
-
 .PHONY: savapage-notifier
 savapage-notifier: $(C_TRG)/savapage-notifier
 
@@ -202,13 +181,9 @@ savapage-nss: $(C_TRG)/savapage-nss
 .PHONY: binaries
 binaries:
 	@make -C $(REPO_HOME_PUB)/xmlrpcpp
-	@make -C $(REPO_HOME_PUB)/savapage-nfc-reader PRODUCT_VERSION=$(PRODUCT_VERSION)
 	@make -C $(REPO_HOME_PUB)/savapage-cups-notifier PRODUCT_VERSION=$(PRODUCT_VERSION)
 	@make -C $(REPO_HOME_PUB)/savapage-nss  PRODUCT_VERSION=$(PRODUCT_VERSION) 
 	@make -C $(REPO_HOME_PUB)/savapage-pam  PRODUCT_VERSION=$(PRODUCT_VERSION)
-
-$(C_TRG)/savapage-nfc-reader: $(REPO_HOME_PUB)/savapage-nfc-reader/target/savapage-nfc-reader
-	@cp $< $@
 	
 $(C_TRG)/savapage-notifier: $(REPO_HOME_PUB)/savapage-cups-notifier/target/savapage-notifier
 	@cp $< $@
@@ -224,8 +199,7 @@ cleanc:
 	@rm -f $(C_TRG)/savapage-pam
 	@rm -f $(C_TRG)/savapage-nss
 	@rm -f $(C_TRG)/savapage-notifier
-	@make -C $(REPO_HOME_PUB)/xmlrpcpp clean	
-	@make -C $(REPO_HOME_PUB)/savapage-nfc-reader clean
+	@make -C $(REPO_HOME_PUB)/xmlrpcpp clean
 	@make -C $(REPO_HOME_PUB)/savapage-cups-notifier clean
 	@make -C $(REPO_HOME_PUB)/savapage-nss clean
 	@make -C $(REPO_HOME_PUB)/savapage-pam clean

@@ -54,7 +54,7 @@ _CURRENTDIR=$(dirname "${SP_SELF_PATH}")
 
 #--------------------------------------------------------------------
 # navigate to savapage development home
-cd ${_CURRENTDIR}/../..
+cd ${_CURRENTDIR}/repo
 
 #--------------------------------------------------------------------
 # create directory structure

@@ -1,0 +1,42 @@
+[submodule "repos/savapage-common"]
+	path = repos/savapage-common
+	url = https://gitlab.com/savapage/savapage-common
+[submodule "repos/savapage-cups-notifier"]
+	path = repos/savapage-cups-notifier
+	url = https://gitlab.com/savapage/savapage-cups-notifier
+[submodule "repos/savapage-ext"]
+	path = repos/savapage-ext
+	url = https://gitlab.com/savapage/savapage-ext
+[submodule "repos/savapage-i18n-de"]
+	path = repos/savapage-i18n-de
+	url = https://gitlab.com/savapage-i18n/savapage-i18n-de
+[submodule "repos/savapage-i18n-en"]
+	path = repos/savapage-i18n-en
+	url = https://gitlab.com/savapage-i18n/savapage-i18n-en
+[submodule "repos/savapage-server"]
+	path = repos/savapage-server
+	url = https://github.com/ikgp/savapage-server
+[submodule "repos/savapage-nss"]
+	path = repos/savapage-nss
+	url = https://gitlab.com/savapage/savapage-nss
+[submodule "repos/savapage-pam"]
+	path = repos/savapage-pam
+	url = https://gitlab.com/savapage/savapage-pam
+[submodule "repos/savapage-ppd"]
+	path = repos/savapage-ppd
+	url = https://gitlab.com/savapage/savapage-ppd
+[submodule "repos/savapage-util"]
+	path = repos/savapage-util
+	url = https://gitlab.com/savapage/savapage-util
+[submodule "repos/xmlrpcpp"]
+	path = repos/xmlrpcpp
+	url = https://gitlab.com/savapage/xmlrpcpp
+[submodule "repos/savapage-ext-oauth"]
+	path = repos/savapage-ext-oauth
+	url = https://gitlab.com/savapage-ext/savapage-ext-oauth
+[submodule "repos/savapage-client"]
+	path = repos/savapage-client
+	url = https://gitlab.com/savapage/savapage-client
+[submodule "repos/printing-core"]
+	path = repos/printing-core
+	url = https://github.com/nirvati/printing-core
