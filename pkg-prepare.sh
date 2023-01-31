@@ -59,12 +59,12 @@ _CURRENTDIR=`dirname ${SP_SELF_PATH}`
 rm -rf ${_PREP_HOME}
 
 #=========================================================================
-# savapage-server.war
+# printing-server.war
 #=========================================================================
 readonly WAR_ZIP_NAME=${_SAVAPAGE_SERVER_WAR}
 readonly WAR_HOME=${_PREP_HOME}/${WAR_ZIP_NAME}_WORK
 
-readonly WAR_ZIP_SRC=${_REPO_HOME_PUB}/savapage-server/target/${WAR_ZIP_NAME}
+readonly WAR_ZIP_SRC=${_REPO_HOME_PUB}/printing-server/target/${WAR_ZIP_NAME}
 
 #----------------------------------------
 # Make room

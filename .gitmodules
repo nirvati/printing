@@ -13,9 +13,6 @@
 [submodule "repos/savapage-i18n-en"]
 	path = repos/savapage-i18n-en
 	url = https://gitlab.com/savapage-i18n/savapage-i18n-en
-[submodule "repos/savapage-server"]
-	path = repos/savapage-server
-	url = https://github.com/ikgp/savapage-server
 [submodule "repos/savapage-nss"]
 	path = repos/savapage-nss
 	url = https://gitlab.com/savapage/savapage-nss
@@ -40,3 +37,6 @@
 [submodule "repos/printing-core"]
 	path = repos/printing-core
 	url = https://github.com/nirvati/printing-core
+[submodule "repos/printing-server"]
+	path = repos/printing-server
+	url = https://github.com/nirvati/printing-server

@@ -87,7 +87,7 @@ clean-patch:
 	@make -C $(REPO_HOME_PUB)/savapage-client clean
 	@make -C $(REPO_HOME_PUB)/savapage-ext clean
 	@make -C $(REPO_HOME_PUB)/savapage-ext-oauth clean
-	@make -C $(REPO_HOME_PUB)/savapage-server clean
+	@make -C $(REPO_HOME_PUB)/printing-server clean
 
 #----------------------------------------------------------------------
 # Note the INSTALL of savapage-common, printing-core and savapage-ext, 
@@ -107,7 +107,7 @@ mvn-package-patch:
 	@make -C $(REPO_HOME_PUB)/savapage-ext install
 	@make -C $(REPO_HOME_PUB)/savapage-ext-oauth repackage
 	@make -C $(REPO_HOME_PUB)/savapage-client repackage
-	@make -C $(REPO_HOME_PUB)/savapage-server repackage
+	@make -C $(REPO_HOME_PUB)/printing-server repackage
 
 .PHONY: mvn-clean
 mvn-clean: 

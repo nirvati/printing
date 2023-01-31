@@ -108,7 +108,7 @@ cp -R ${_SETUP_TEMPLATE_HOME} ${DIST_HOME}
 
 #------------------------------------------------------------------------
 # Copy the recomposed war file: this is the file mentioned 
-# in -Dsavapage.war.file=savapage-server-<version>.war
+# in -Dsavapage.war.file=printing-server-<version>.war
 #------------------------------------------------------------------------
 cp -R ${_PREP_HOME}/${_SAVAPAGE_SERVER_WAR} ${DIST_HOME_APP}/server/lib
 

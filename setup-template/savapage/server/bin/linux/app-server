@@ -95,7 +95,7 @@ if [ ${_java_version} -gt "10" ]; then
   JVM_X_ARGS="${JVM_X_ARGS} --add-opens jdk.management/com.sun.management.internal=ALL-UNNAMED"
 fi
 
-DAEMON_ARGS="-server $CUSTOM_JVM_ARGS $JVM_X_ARGS -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Djava.io.tmpdir="$APP_JAVA_IO_TMPDIR" -Dlog4j.configuration="file://$SERVER_HOME/lib/log4j.properties" -Dserver.home="$SERVER_HOME" -Dcom.sun.management.config.file="$SERVER_HOME/jmxremote.properties" -Djavax.net.ssl.keyStore="$SERVER_HOME/jmxremote.ks" -Djavax.net.ssl.keyStorePassword=savapage -Dwicket.configuration=deployment -Dsavapage.war.file=savapage-server-$APP_VERSION.war org.savapage.server.WebServer"
+DAEMON_ARGS="-server $CUSTOM_JVM_ARGS $JVM_X_ARGS -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Djava.io.tmpdir="$APP_JAVA_IO_TMPDIR" -Dlog4j.configuration="file://$SERVER_HOME/lib/log4j.properties" -Dserver.home="$SERVER_HOME" -Dcom.sun.management.config.file="$SERVER_HOME/jmxremote.properties" -Djavax.net.ssl.keyStore="$SERVER_HOME/jmxremote.ks" -Djavax.net.ssl.keyStorePassword=savapage -Dwicket.configuration=deployment -Dsavapage.war.file=printing-server-$APP_VERSION.war org.savapage.server.WebServer"
 
 #======================================================================= 
 # Continue with original script : set interface parameters

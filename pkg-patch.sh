@@ -68,7 +68,7 @@ mkdir --parent ${_PREP_PATCH_LIB_CLIENT_HOME}
 mkdir --parent ${_PREP_PATCH_LIB_WEB_HOME}
 mkdir --parent ${_PREP_PATCH_LIB_SERVER_EXT_HOME}
 
-# savapage-server-*.war
+# printing-server-*.war
 cp -p ${_PREP_HOME}/${_SAVAPAGE_SERVER_WAR} ${_PREP_PATCH_LIB_SERVER_HOME}
 
 # savapage-common-*.jar
@@ -97,7 +97,7 @@ cp -p ${_PREP_WEB_LIB_HOME}/${_SAVAPAGE_EXT_JAR} ${_PREP_PATCH_LIB_WEB_HOME}
 cp -p ${_PREP_HOME}/${_SAVAPAGE_EXT_MOLLIE_JAR} ${_PREP_PATCH_LIB_SERVER_EXT_HOME}
 cp -p ${_PREP_HOME}/${_SAVAPAGE_EXT_BLOCKCHAIN_INFO_JAR} ${_PREP_PATCH_LIB_SERVER_EXT_HOME}
 
-# savapage-server-*.jar
+# printing-server-*.jar
 cp -p ${_PREP_WEB_LIB_HOME}/${_SAVAPAGE_AD_HOC_SERVER_JAR} ${_PREP_PATCH_LIB_WEB_HOME}
 
 # create the *.tar.gz file

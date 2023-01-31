@@ -55,7 +55,7 @@ readonly _REPO_HOME=${_CURRENTDIR}/repos
 readonly _REPO_HOME_PUB=${_REPO_HOME}
 
 readonly _REPO_HOME_COMMON=${_REPO_HOME_PUB}/savapage-common
-readonly _REPO_HOME_SERVER=${_REPO_HOME_PUB}/savapage-server
+readonly _REPO_HOME_SERVER=${_REPO_HOME_PUB}/printing-server
 readonly _REPO_HOME_CLIENT=${_REPO_HOME_PUB}/savapage-client
 readonly _REPO_HOME_CORE=${_REPO_HOME_PUB}/printing-core
 readonly _REPO_HOME_PPD=${_REPO_HOME_PUB}/savapage-ppd
@@ -112,13 +112,13 @@ readonly _SAVAPAGE_EXT_JAR=savapage-ext-${APP_VERSION}.jar
 readonly _SAVAPAGE_I18N_DE_JAR=savapage-i18n-de-${APP_VERSION}.jar
 readonly _SAVAPAGE_I18N_EN_JAR=savapage-i18n-en-${APP_VERSION}.jar
 
-readonly _SAVAPAGE_SERVER_WAR=savapage-server-${APP_VERSION}.war
+readonly _SAVAPAGE_SERVER_WAR=printing-server-${APP_VERSION}.war
 
 readonly _SAVAPAGE_CLIENT_JAR=savapage-client-${APP_VERSION}.jar
 
 readonly _SAVAPAGE_EXT_OAUTH_JAR=savapage-ext-oauth-${APP_VERSION}.jar
 
-readonly _SAVAPAGE_AD_HOC_SERVER_JAR=savapage-server-${APP_VERSION}.jar
+readonly _SAVAPAGE_AD_HOC_SERVER_JAR=printing-server-${APP_VERSION}.jar
 
 # Tools
 readonly YUICOMPRESSOR_JAR=${_THIRD_PARTY_HOME}/java/yuicompressor/2.4.7/build/yuicompressor-2.4.7.jar

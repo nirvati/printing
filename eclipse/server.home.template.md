@@ -5,9 +5,9 @@
 
 # Running SavaPage server in Eclipse
 
-The `server.home.template` directory contains files needed to run `savapage-server` in Eclipse. 
+The `server.home.template` directory contains files needed to run `printing-server` in Eclipse. 
 
-Copy the content to `savapage-server/server.home` 
+Copy the content to `printing-server/server.home` 
 
 The files below have placeholder content, so consult the content of each file 
 and read the instructions carefully.
@@ -15,7 +15,7 @@ and read the instructions carefully.
   * `server.home/server.properties`
   * `server.home/lib/log4j.properties` 
  
-In addition the files from the sections below must be copied to `savapage-server/` from other places. 
+In addition the files from the sections below must be copied to `printing-server/` from other places. 
 
 ## PPD file
 
@@ -23,15 +23,15 @@ Make and copy PPD files:
 
     cd savapage-ppd
     make
-    mkdir ../savapage-server/client.home
-    cp ppd/SAVAPAGE.ppd ../savapage-server/client.home/SAVAPAGE.ppd
+    mkdir ../printing-server/client.home
+    cp ppd/SAVAPAGE.ppd ../printing-server/client.home/SAVAPAGE.ppd
 
 
 ## Encryption files
 
 Copy from an existing installation:
  
-    cd savapage-server/server.home/data
+    cd printing-server/server.home/data
 
     sudo cp /opt/savapage/server/data/default-ssl-keystore* .
     sudo cp /opt/savapage/server/data/encryption.properties .
@@ -42,7 +42,7 @@ Copy from an existing installation:
 
 ## jmx
 
-Edit `jmxremote.properties` and enter the `[edit this full path to]/savapage-server`
+Edit `jmxremote.properties` and enter the `[edit this full path to]/printing-server`
      
     # Password file read access must be restricted
     chmod 600 jmxremote.password
@@ -51,7 +51,7 @@ Edit `jmxremote.properties` and enter the `[edit this full path to]/savapage-ser
 
 Copy the empty database from `savapage-make/target`
 
-    cd savapage-server/server.home/data/internal
+    cd printing-server/server.home/data/internal
     cp -R savapage-make/target/savapage-*.*.*-derby/data/internal/Derby .
  
  
@@ -61,11 +61,11 @@ Make and copy executables:
 
     cd savapage-nss
     make
-    cp target/savapage-nss ../savapage-server/server.home/bin/linux-x64
+    cp target/savapage-nss ../printing-server/server.home/bin/linux-x64
     
     cd savapage-pam
     make
-    cp target/savapage-pam ../savapage-server/server.home/bin/linux-x64
+    cp target/savapage-pam ../printing-server/server.home/bin/linux-x64
 
 
 ## The CUPS notifier
